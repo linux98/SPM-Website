@@ -1,0 +1,11 @@
+# System & Temp files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.vscode/
+.idea/
+
+# Node
+node_modules/
+package-lock.json
