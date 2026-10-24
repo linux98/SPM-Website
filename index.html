@@ -3,6 +3,7 @@
 <html lang="th" data-theme="indigo">
 
 <head>
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png">
 
   <meta charset="UTF-8">
 
@@ -1228,18 +1229,38 @@
 
 
 
-    .hero-title {
-
+    .hero-title,
+    #spmHeroTitle,
+    .hero-portal h1,
+    .hero-portal h2 {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
       font-size: 46px;
-
       font-weight: 800;
-
-      line-height: 1.2;
-
+      line-height: 1.25;
       margin-bottom: 20px;
-
       letter-spacing: -0.5px;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.75);
+    }
 
+    .hero-title .gradient-gold-text,
+    #spmHeroTitle .gradient-gold-text {
+      background: linear-gradient(135deg, #ECC86A 0%, #FFF3B0 45%, #D4AF37 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      color: #ECC86A !important;
+      display: inline-block;
+      font-weight: 800;
+      text-shadow: none;
+    }
+
+    .hero-desc,
+    #spmHeroDesc,
+    .hero-portal p {
+      color: #E2E8F0 !important;
+      font-size: 16px;
+      line-height: 1.8;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
     }
 
 
@@ -8945,7 +8966,7 @@
 
         </div>
 
-        <h2 class="hero-title" id="spmHeroTitle">
+        <h2 class="hero-title" id="spmHeroTitle" style="color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-shadow: 0 3px 18px rgba(0,0,0,0.75);">
 
           ยกระดับมัธยมศึกษาสกลนคร<br>
 
@@ -15834,7 +15855,7 @@
 
       try {
 
-        const res = await fetch('/wp-json/spm/v1/settings');
+        const res = await fetch('/site/index.php/wp-json/spm/v1/settings');
 
         if (!res.ok) return;
 
@@ -15884,7 +15905,16 @@
 
         if (heroTitle && s.hero_title_1 && s.hero_title_2) {
 
-          heroTitle.innerHTML = `${s.hero_title_1}<br>สู่มาตรฐานสากลด้วย <span class="gradient-gold-text">${s.hero_title_2}</span>`;
+          heroTitle.style.color = '#FFFFFF';
+          heroTitle.style.webkitTextFillColor = '#FFFFFF';
+          const t1 = s.hero_title_1 || 'ยกระดับมัธยมศึกษาสกลนคร';
+          const t2 = s.hero_title_2 || 'สู่มาตรฐานสากลด้วย ดิจิทัลคอนเน็กต์';
+          if (t2.includes('ดิจิทัลคอนเน็กต์')) {
+            const prefix = t2.replace('ดิจิทัลคอนเน็กต์', '').trim();
+            heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${prefix} </span><span class="gradient-gold-text">ดิจิทัลคอนเน็กต์</span>`;
+          } else {
+            heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span class="gradient-gold-text">${t2}</span>`;
+          }
 
         }
 
@@ -16006,7 +16036,7 @@
 
       try {
 
-        const res = await fetch(`/wp-json/wp/v2/posts?_embed&per_page=6${catParam}`);
+        const res = await fetch(`/site/index.php/wp-json/wp/v2/posts?_embed&per_page=6${catParam}`);
 
         if (!res.ok) throw new Error("API not available");
 
@@ -16166,7 +16196,7 @@
 
       try {
 
-        const res = await fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}&_embed&per_page=5`);
+        const res = await fetch(`/site/index.php/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}&_embed&per_page=5`);
 
         if (!res.ok) throw new Error("Search failed");
 
@@ -17724,7 +17754,7 @@
       let ticketData = null;
       if (window.location.protocol !== 'file:') {
         try {
-          const res = await fetch('/wp-json/spm/v1/track', {
+          const res = await fetch('/site/index.php/wp-json/spm/v1/track', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ tracking_code: code, last4_id_card: '' })
