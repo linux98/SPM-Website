@@ -17555,6 +17555,78 @@
       }
     }
 
+        /* ==========================================================================
+       MODAL CONTROLLERS & SHORTCUTS (TRACKING, SAFETY SOS, CERTIFICATES)
+       ========================================================================== */
+    function openTrackingModal() {
+      const modal = document.getElementById('trackingModal');
+      if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        const inp = document.getElementById('ticketSearchInput');
+        if (inp) setTimeout(() => inp.focus(), 150);
+      }
+    }
+
+    function closeTrackingModal(e) {
+      if (e && e.target && e.target.id !== 'trackingModal' && !e.target.classList.contains('modal-close-btn') && !e.target.closest('button')) {
+        return;
+      }
+      const modal = document.getElementById('trackingModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    function openSafetyModal() {
+      const modal = document.getElementById('safetyReportModal');
+      if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeSafetyModal(e) {
+      if (e && e.target && e.target.id !== 'safetyReportModal' && !e.target.classList.contains('modal-close-btn') && !e.target.closest('button')) {
+        return;
+      }
+      const modal = document.getElementById('safetyReportModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    function submitSafetySos() {
+      const school = document.getElementById('sosSchool') ? document.getElementById('sosSchool').value.trim() : '';
+      const detail = document.getElementById('sosDetail') ? document.getElementById('sosDetail').value.trim() : '';
+
+      if (!detail && !school) {
+        alert('กรุณาระบุสถานศึกษาหรือรายละเอียดเหตุการณ์ด่วน');
+        return;
+      }
+
+      showTelegramToast('แจ้งเหตุด่วน MOE Safety', 'ระบบส่งข้อมูลแจ้งเตือนฉุกเฉินถึงศูนย์ความปลอดภัย สพม.สกลนคร เรียบร้อยแล้ว');
+      closeSafetyModal();
+
+      if (document.getElementById('sosSchool')) document.getElementById('sosSchool').value = '';
+      if (document.getElementById('sosDetail')) document.getElementById('sosDetail').value = '';
+      if (document.getElementById('sosPhone')) document.getElementById('sosPhone').value = '';
+    }
+
+    function fillCertSample(code) {
+      const inp = document.getElementById('certIdInput');
+      if (inp) {
+        inp.value = code;
+        verifyCertificate();
+      }
+    }
+
     function openEserviceNewTab() {
       const webAppUrl = getDocumantStudioUrl();
       const targetUrl = `${webAppUrl}?view=requester&service=${encodeURIComponent(currentActiveService.id)}&ref=spm_portal`;
@@ -17590,7 +17662,7 @@
         submittedAt: '22/10/2569 14:30 น.',
         slaDays: '2 วันทำการ',
         officerNotes: 'กรุณาแนบสำเนาบัตรประจำตัวประชาชน พร้อมลงลายมือชื่อรับรองสำเนาถูกต้อง เพื่อยืนยันตัวตนก่อนออกใบแทน ปพ.1',
-        actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track&code=TRK-2026-1015-0045`
+        actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track\u0026code=TRK-2026-1015-0045`
       },
       'TRK-2026-1022-0088': {
         code: 'TRK-2026-1022-0088',
@@ -17603,7 +17675,7 @@
         submittedAt: '24/10/2569 11:20 น.',
         slaDays: '3 วันทำการ',
         officerNotes: 'เจ้าหน้าที่กลุ่มบริหารงานบุคคลได้รับเรื่องแล้ว กำลังตรวจสอบความถูกต้องของรูปถ่ายและเอกสารแนบ',
-        actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track&code=TRK-2026-1022-0088`
+        actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track\u0026code=TRK-2026-1022-0088`
       },
       'REQ-2026-8812': {
         code: 'REQ-2026-8812',
@@ -17692,7 +17764,7 @@
           submittedAt: 'วันที่ยื่นคำขอ',
           slaDays: '2 วันทำการ',
           officerNotes: 'เจ้าหน้าที่ผู้รับผิดชอบรับเรื่องเข้าสู่กระบวนการแล้ว กำลังดำเนินการตรวจสอบตามระเบียบงานสารบรรณ',
-          actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track&code=${code}`
+          actionUrl: `${DEFAULT_DOCUMANTSTUDIO_URL}?action=track\u0026code=${code}`
         };
       }
 
@@ -17788,7 +17860,7 @@
                     <i class="fa-solid fa-cloud-arrow-up"></i> แนบเอกสารเพิ่มเติมทันที
                   </button>
                 ` : ''}
-                <a href="${DEFAULT_DOCUMANTSTUDIO_URL}?action=track&code=${t.code}" target="_blank" class="btn-sso-portal" style="font-size:12px; text-decoration:none;">
+                <a href="${DEFAULT_DOCUMANTSTUDIO_URL}?action=track\u0026code=${t.code}" target="_blank" class="btn-sso-portal" style="font-size:12px; text-decoration:none;">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดดูแฟ้มคำขอเต็ม (DocumantStudio)
                 </a>
               </div>
@@ -19234,7 +19306,9 @@
 
           const pos = m.getLatLng();
 
-          return Math.abs(pos.lat - lat) < 0.001 && Math.abs(pos.lng - lng) < 0.001;
+          const dLat = Math.abs(pos.lat - lat);
+          const dLng = Math.abs(pos.lng - lng);
+          return (dLat <= 0.001) ? (dLng <= 0.001) : false;
 
         });
 
