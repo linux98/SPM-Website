@@ -763,3 +763,838 @@ function spm_render_admin_settings_page() {
     </script>
     <?php
 }
+
+
+// =========================================================================
+// 5. BULLETPROOF FRONT PAGE CORRUPTION GUARD
+// =========================================================================
+add_action('template_redirect', function() {
+    if (is_front_page() || is_home() || (function_exists('is_page') && is_page(7))) {
+        remove_filter('the_content', 'wpautop');
+        remove_filter('the_content', 'wptexturize');
+    }
+}, 1);
+
+add_filter('the_content', function($content) {
+    if (is_front_page() || is_home() || (function_exists('is_page') && is_page(7))) {
+        $content = preg_replace_callback('/<script[\s\S]*?<\/script>/i', function($matches) {
+            return str_replace(array('&#038;', '&amp;'), '&', $matches[0]);
+        }, $content);
+    }
+    return $content;
+}, 9999);
+
+// =========================================================================
+// 6. LUXURY SINGLE POST TEMPLATE INTERCEPTOR (MATCHING SPM PORTAL AESTHETIC)
+// =========================================================================
+add_filter('template_include', function($template) {
+    if (is_single()) {
+        spm_render_luxury_single_post();
+        exit;
+    }
+    return $template;
+});
+
+function spm_format_thai_date_full($timestamp) {
+    $months = array(
+        1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม',
+        4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน',
+        7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน',
+        10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม'
+    );
+    $day = date('j', $timestamp);
+    $m = (int)date('n', $timestamp);
+    $year = (int)date('Y', $timestamp) + 543;
+    return $day . ' ' . $months[$m] . ' ' . $year;
+}
+
+function spm_render_luxury_single_post() {
+    global $post;
+    $post_id = $post->ID;
+    $title = get_the_title($post_id);
+    $content = apply_filters('the_content', $post->post_content);
+    $date_thai = spm_format_thai_date_full(strtotime($post->post_date));
+    $thumb = get_the_post_thumbnail_url($post_id, 'full');
+    if (!$thumb) {
+        $thumb = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+        $has_real_thumb = false;
+    } else {
+        $has_real_thumb = true;
+    }
+
+    $cats = get_the_category($post_id);
+    $cat_name = !empty($cats) ? $cats[0]->name : 'ข่าวประชาสัมพันธ์';
+    $cat_slug = !empty($cats) ? $cats[0]->slug : 'news';
+    $permalink = get_permalink($post_id);
+    $s = spm_get_settings();
+
+    // Related posts
+    $related = get_posts(array(
+        'posts_per_page' => 3,
+        'post__not_in'   => array($post_id),
+        'post_status'    => 'publish'
+    ));
+    ?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo esc_html($title); ?> - สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</title>
+
+    <!-- OpenGraph & Social Meta -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="<?php echo esc_attr($title); ?>">
+    <meta property="og:description" content="<?php echo esc_attr(wp_strip_all_tags(wp_trim_words($post->post_content, 35))); ?>">
+    <meta property="og:image" content="<?php echo esc_url($thumb); ?>">
+    <meta property="og:url" content="<?php echo esc_url($permalink); ?>">
+    <meta property="og:site_name" content="สพม.สกลนคร">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Sarabun:wght@300;400;500;600;700&family=K2D:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --indigo-950: #040814;
+            --indigo-900: #060B19;
+            --indigo-800: #0B1E4F;
+            --indigo-700: #122659;
+            --gold-500: #D4AF37;
+            --gold-400: #ECC86A;
+            --gold-300: #FFF3B0;
+            --gold-600: #B8860B;
+            --slate-900: #0F172A;
+            --slate-800: #1E293B;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748B;
+            --slate-200: #E2E8F0;
+            --slate-100: #F1F5F9;
+            --slate-50:  #F8FAFC;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', 'Google Sans', sans-serif;
+            background: #F8FAFC;
+            color: #1E293B;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Reading Progress Indicator */
+        .progress-bar-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            z-index: 10001;
+            background: transparent;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ECC86A 0%, #D4AF37 50%, #10B981 100%);
+            transition: width 0.1s;
+        }
+
+        /* 1. Top Government Utility Bar */
+        .top-gov-bar {
+            background: #040814;
+            color: #94A3B8;
+            font-size: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .top-gov-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .top-gov-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(236, 200, 106, 0.15);
+            border: 1px solid rgba(236, 200, 106, 0.3);
+            color: #ECC86A;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+        .top-gov-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+        }
+        .top-gov-links a {
+            color: #CBD5E1;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .top-gov-links a:hover {
+            color: #ECC86A;
+        }
+
+        /* 2. Sticky Glass Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background: rgba(6, 11, 25, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 12px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #152754 0%, #060B19 100%);
+            border: 1.5px solid #ECC86A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(236, 200, 106, 0.25);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .brand-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        .brand-text h1 {
+            color: #FFFFFF;
+            font-family: 'Google Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+        }
+        .brand-text span {
+            color: #94A3B8;
+            font-size: 11px;
+            font-weight: 500;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0.3px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #E2E8F0;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            color: #ECC86A;
+        }
+        .btn-portal-back {
+            background: linear-gradient(135deg, #ECC86A 0%, #D4AF37 50%, #B8860B 100%);
+            color: #060B19 !important;
+            padding: 8px 18px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-portal-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* 3. Article Hero Section (Sakon Kram Theme) */
+        .article-hero {
+            background: #040814;
+            background-image:
+                linear-gradient(135deg, rgba(4, 8, 20, 0.98) 0%, rgba(6, 11, 25, 0.94) 50%, rgba(11, 30, 79, 0.9) 100%),
+                radial-gradient(circle at 80% 20%, rgba(21, 39, 84, 0.6) 0%, transparent 60%);
+            color: #FFFFFF;
+            padding: 50px 0 75px 0;
+            position: relative;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+        }
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #94A3B8;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .breadcrumb a {
+            color: #CBD5E1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: #ECC86A;
+        }
+        .breadcrumb span.divider {
+            color: #475569;
+        }
+        .article-cat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(236, 200, 106, 0.15);
+            border: 1px solid rgba(236, 200, 106, 0.4);
+            color: #ECC86A;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .article-title {
+            font-family: 'Google Sans', 'Sarabun', sans-serif;
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1.35;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+        }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 13.5px;
+            color: #CBD5E1;
+            flex-wrap: wrap;
+        }
+        .article-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        /* 4. Main Article Content Container */
+        .article-body-wrap {
+            max-width: 920px;
+            margin: -40px auto 70px auto;
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+        }
+        .article-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(6, 11, 25, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+        .article-thumb-img {
+            width: 100%;
+            max-height: 520px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+        .article-content {
+            font-family: 'Sarabun', 'Google Sans', sans-serif;
+            font-size: 18.5px;
+            line-height: 1.95;
+            color: #1E293B;
+        }
+        .article-content p {
+            margin-bottom: 22px;
+        }
+        .article-content h1,
+        .article-content h2,
+        .article-content h3,
+        .article-content h4 {
+            font-family: 'Google Sans', 'Sarabun', sans-serif;
+            color: #060B19;
+            margin: 36px 0 18px 0;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+        .article-content h2 {
+            font-size: 25px;
+            border-left: 4px solid #D4AF37;
+            padding-left: 14px;
+        }
+        .article-content h3 {
+            font-size: 21px;
+            color: #0B1E4F;
+        }
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 14px;
+            margin: 24px 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+        }
+        .article-content blockquote {
+            border-left: 4px solid #ECC86A;
+            background: #FDF9EC;
+            padding: 18px 24px;
+            border-radius: 0 14px 14px 0;
+            margin: 28px 0;
+            color: #78350F;
+            font-style: italic;
+            font-size: 18px;
+        }
+        .article-content ul, .article-content ol {
+            margin-left: 28px;
+            margin-bottom: 22px;
+        }
+        .article-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Share & Actions Bar */
+        .article-footer-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 32px;
+            margin-top: 45px;
+            border-top: 1px solid #E2E8F0;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .share-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 600;
+            text-decoration: none;
+            color: #FFFFFF;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .share-fb { background: #1877F2; }
+        .share-line { background: #06C755; }
+        .share-copy { background: #334155; }
+        .share-print { background: #0F172A; }
+
+        .btn-back-news {
+            background: #F1F5F9;
+            color: #0F172A;
+            border: 1px solid #CBD5E1;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-back-news:hover {
+            background: #060B19;
+            color: #FFFFFF;
+            border-color: #060B19;
+        }
+
+        /* 5. Related News Section */
+        .related-sec {
+            margin-top: 50px;
+        }
+        .related-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #060B19;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .related-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px rgba(6, 11, 25, 0.08);
+            border-color: #ECC86A;
+        }
+        .related-thumb {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #060B19;
+        }
+        .related-content {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .related-card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #060B19;
+            line-height: 1.45;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .related-card-date {
+            font-size: 12.5px;
+            color: #64748B;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 6. Luxury Footer */
+        .footer {
+            background: #040814;
+            color: #94A3B8;
+            padding: 65px 0 35px 0;
+            border-top: 2px solid rgba(212, 175, 55, 0.35);
+            margin-top: 90px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer h4 {
+            color: #FFFFFF;
+            font-size: 16.5px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: -0.2px;
+        }
+        .footer p {
+            font-size: 13.5px;
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .footer a {
+            color: #CBD5E1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: #ECC86A;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 12.5px;
+            color: #64748B;
+        }
+
+        /* AI Floating Widget */
+        .ai-floating-btn {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            background: linear-gradient(135deg, #060B19 0%, #0B1E4F 100%);
+            border: 1.5px solid #ECC86A;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(6, 11, 25, 0.4);
+            z-index: 990;
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .ai-floating-btn:hover {
+            transform: scale(1.05);
+            border-color: #FFF3B0;
+        }
+        .ai-pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .article-card { padding: 25px 20px; }
+            .related-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .top-gov-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reading Progress Indicator -->
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="readingProgress"></div>
+    </div>
+
+    <!-- 1. Top Government Utility Bar -->
+    <div class="top-gov-bar">
+        <div class="container top-gov-wrap">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span class="top-gov-badge"><i class="fa-solid fa-landmark"></i> สพฐ. กระทรวงศึกษาธิการ</span>
+                <span style="color: #CBD5E1; font-weight: 500;">สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</span>
+            </div>
+            <div class="top-gov-links">
+                <a href="tel:042728118"><i class="fa-solid fa-phone" style="color: #ECC86A;"></i> สายด่วน 042-728118</a>
+                <span style="color:rgba(255,255,255,0.2);">|</span>
+                <a href="tel:1579" style="color: #F87171;"><i class="fa-solid fa-shield-halved"></i> MOE Safety 1579</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Sticky Glass Navbar -->
+    <nav class="navbar">
+        <div class="container nav-wrap">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="brand">
+                <div class="brand-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png" alt="ตรา สพม.สกลนคร">
+                </div>
+                <div class="brand-text">
+                    <h1>สพม.สกลนคร</h1>
+                    <span>สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="<?php echo esc_url(home_url('/')); ?>"><i class="fa-solid fa-house"></i> หน้าแรก</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#services')); ?>"><i class="fa-solid fa-cube"></i> บริการ 4 มิติ</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#cockpit')); ?>"><i class="fa-solid fa-users"></i> ผู้บริหารเขต</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#oit')); ?>"><i class="fa-solid fa-scale-balanced"></i> ITA & OIT</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#map')); ?>"><i class="fa-solid fa-school"></i> 45 สถานศึกษา</a></li>
+            </ul>
+            <div>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="btn-portal-back">
+                    <i class="fa-solid fa-arrow-left"></i> กลับสู่พอร์ทัลหลัก
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Article Hero Section -->
+    <header class="article-hero">
+        <div class="container" style="max-width: 920px;">
+            <div class="breadcrumb">
+                <a href="<?php echo esc_url(home_url('/')); ?>"><i class="fa-solid fa-house"></i> หน้าแรก</a>
+                <span class="divider">/</span>
+                <a href="<?php echo esc_url(home_url('/#news')); ?>">ข่าวประชาสัมพันธ์</a>
+                <span class="divider">/</span>
+                <span style="color: #ECC86A;"><?php echo esc_html($cat_name); ?></span>
+            </div>
+
+            <div class="article-cat-badge">
+                <i class="fa-solid fa-tag"></i> <?php echo esc_html($cat_name); ?>
+            </div>
+
+            <h1 class="article-title"><?php echo esc_html($title); ?></h1>
+
+            <div class="article-meta">
+                <span><i class="fa-regular fa-calendar" style="color: #ECC86A;"></i> <?php echo esc_html($date_thai); ?></span>
+                <span><i class="fa-solid fa-landmark" style="color: #60A5FA;"></i> สพม.สกลนคร</span>
+                <span><i class="fa-regular fa-clock" style="color: #FBBF24;"></i> อ่าน ~2 นาที</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4. Main Article Content Body -->
+    <main class="article-body-wrap">
+        <article class="article-card">
+            <?php if ($has_real_thumb): ?>
+                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($title); ?>" class="article-thumb-img">
+            <?php endif; ?>
+
+            <div class="article-content">
+                <?php echo $content; ?>
+            </div>
+
+            <!-- Footer Share & Action Bar -->
+            <div class="article-footer-bar">
+                <a href="<?php echo esc_url(home_url('/#news')); ?>" class="btn-back-news">
+                    <i class="fa-solid fa-arrow-left"></i> กลับหน้ารวมข่าว
+                </a>
+
+                <div class="share-group">
+                    <span style="font-size: 13px; font-weight: 700; color: #64748B;">แชร์ข่าวนี้:</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($permalink); ?>" target="_blank" class="share-btn share-fb">
+                        <i class="fa-brands fa-facebook"></i> Facebook
+                    </a>
+                    <a href="https://social-plugins.line.me/lineit/share?url=<?php echo urlencode($permalink); ?>" target="_blank" class="share-btn share-line">
+                        <i class="fa-brands fa-line"></i> LINE
+                    </a>
+                    <button onclick="navigator.clipboard.writeText('<?php echo esc_js($permalink); ?>'); alert('คัดลอกลิงก์ข่าวประชาสัมพันธ์เรียบร้อยแล้ว!');" class="share-btn share-copy">
+                        <i class="fa-solid fa-link"></i> คัดลอกลิงก์
+                    </button>
+                    <button onclick="window.print()" class="share-btn share-print" title="พิมพ์หน้านี้">
+                        <i class="fa-solid fa-print"></i> พิมพ์
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- 5. Related Articles Grid -->
+        <?php if (!empty($related)): ?>
+        <section class="related-sec">
+            <h3 class="related-title"><i class="fa-solid fa-newspaper" style="color: #ECC86A;"></i> ข่าวสารและประกาศอื่นที่เกี่ยวข้อง</h3>
+            <div class="related-grid">
+                <?php foreach ($related as $rel_post):
+                    $rel_thumb = get_the_post_thumbnail_url($rel_post->ID, 'medium');
+                    if (!$rel_thumb) $rel_thumb = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+                    $rel_date = spm_format_thai_date_full(strtotime($rel_post->post_date));
+                    $rel_cats = get_the_category($rel_post->ID);
+                    $rel_cat_name = !empty($rel_cats) ? $rel_cats[0]->name : 'ข่าวสาร';
+                ?>
+                <a href="<?php echo esc_url(get_permalink($rel_post->ID)); ?>" class="related-card">
+                    <img src="<?php echo esc_url($rel_thumb); ?>" alt="<?php echo esc_attr($rel_post->post_title); ?>" class="related-thumb">
+                    <div class="related-content">
+                        <span style="font-size:11px; font-weight:700; color:#B8860B; margin-bottom:4px;"><?php echo esc_html($rel_cat_name); ?></span>
+                        <h4 class="related-card-title"><?php echo esc_html($rel_post->post_title); ?></h4>
+                        <span class="related-card-date"><i class="fa-regular fa-calendar"></i> <?php echo esc_html($rel_date); ?></span>
+                    </div>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+    </main>
+
+    <!-- 6. Official SPM Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #ECC86A;">สพม.สกลนคร</span> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
+                    </h4>
+                    <p><?php echo esc_html(!empty($s['office_address']) ? $s['office_address'] : 'ศูนย์ราชการจังหวัดสกลนคร ถนนศูนย์ราชการ ตำบลธาตุเชิงชุม อำเภอเมือง จังหวัดสกลนคร 47000'); ?></p>
+                    <p><i class="fa-solid fa-phone" style="color: #ECC86A;"></i> โทรศัพท์: <?php echo esc_html(!empty($s['office_phone']) ? $s['office_phone'] : '042-728118'); ?></p>
+                    <p><i class="fa-solid fa-envelope" style="color: #ECC86A;"></i> อีเมลกลาง: <?php echo esc_html(!empty($s['office_email']) ? $s['office_email'] : 'saraban0242@moe.go.th'); ?></p>
+                </div>
+                <div>
+                    <h4>บริการด่วน</h4>
+                    <p><a href="<?php echo esc_url(home_url('/')); ?>">หน้าหลักพอร์ทัล</a></p>
+                    <p><a href="<?php echo esc_url(home_url('/#services')); ?>">ยื่นคำร้อง e-Service</a></p>
+                    <p><a href="<?php echo esc_url(home_url('/#oit')); ?>">ศูนย์ข้อมูลสาธารณะ OIT 43</a></p>
+                    <p><a href="<?php echo esc_url(home_url('/#map')); ?>">แผนที่พิกัด 45 สถานศึกษา</a></p>
+                </div>
+                <div>
+                    <h4>ช่องทางติดต่อราชการ</h4>
+                    <p><a href="<?php echo esc_url(!empty($s['facebook_url']) ? $s['facebook_url'] : 'https://facebook.com'); ?>" target="_blank"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Facebook สพม.สกลนคร</a></p>
+                    <p><a href="tel:1579" style="color: #F87171;"><i class="fa-solid fa-shield-halved"></i> ศูนย์ความปลอดภัย MOE Safety 1579</a></p>
+                    <p><i class="fa-regular fa-clock" style="color: #ECC86A;"></i> เวลาทำการ: จันทร์ - ศุกร์ 08:30 - 16:30 น.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <?php echo (int)date('Y') + 543; ?> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร. สงวนลิขสิทธิ์ตามกฎหมาย.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Concierge Floating Button -->
+    <a href="<?php echo esc_url(home_url('/#cockpit')); ?>" class="ai-floating-btn" title="กลับสู่พอร์ทัลเพื่อปรึกษาน้องภูพาน AI">
+        <span class="ai-pulse-dot"></span>
+        <i class="fa-solid fa-robot" style="color: #ECC86A;"></i>
+        <span>น้องภูพาน AI ประจำการ</span>
+    </a>
+
+    <script>
+        // Reading Progress Indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const bar = document.getElementById('readingProgress');
+            if (bar) bar.style.width = scrolled + '%';
+        });
+    </script>
+</body>
+</html>
+    <?php
+}
