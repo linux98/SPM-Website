@@ -14,7 +14,7 @@ function spm_get_default_settings() {
         'notice_link' => 'https://sesaosakon.go.th/site/e-service/',
         'top_ticker_org' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร)',
         'school_name_th' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร',
-        'school_name_en' => 'Sakonnakhonpatanasuksa School',
+        'school_name_en' => 'Secondary Educational Service Area Office Sakon Nakhon',
         'school_name_short' => 'สพม.สกลนคร • SESAO Sakon Nakhon',
 
         // Tab 2: แบนเนอร์หลัก & คำขวัญ (Hero & Mottos)
@@ -75,7 +75,7 @@ function spm_get_default_settings() {
         'srv_obec_desc' => 'เข้าถึงคลังสื่อการสอนอิเล็กทรอนิกส์ คลังข้อสอบ และแบบฝึกทักษะ 8 กลุ่มสาระ',
         'srv_obec_url' => 'https://contentcenter.obec.go.th',
 
-        'srv_mag_title' => 'วารสารและประชาสัมพันธ์ (SPS e-Magazine)',
+        'srv_mag_title' => 'วารสารและประชาสัมพันธ์ สพม.สกลนคร (SPM e-Magazine)',
         'srv_mag_desc' => 'อ่านจดหมายข่าว วารสารร่มจามจุรี และภาพข่าวกิจกรรมสำคัญของโรงเรียน',
         'srv_mag_url' => '/site/#news',
 
@@ -160,7 +160,7 @@ function spm_get_default_settings() {
         'school_code_10' => '1047540628',
         'school_code_smis' => '47012003',
         'school_code_obec' => '540628',
-        'school_code_line' => 'รหัสโรงเรียน 10 หลัก: 1047540628 | รหัส SMIS: 47012003 | รหัส OBEC: 540628',
+        'school_code_line' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร) | สพฐ. กระทรวงศึกษาธิการ',
         'footer_copyright' => '© 2026 สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (Sakonnakhonpatanasuksa School). All Rights Reserved.',
         'footer_colors' => 'สีประจำโรงเรียน: น้ำเงิน - ชมพู | ปัญญา นรานํ รตนํ',
 
@@ -173,9 +173,9 @@ function spm_get_default_settings() {
         'theme_preset' => 'spm_kram_gold',
         'theme_primary' => '#0F172A',
         'theme_primary_dark' => '#060B19',
-        'theme_secondary' => '#EC4899',
-        'theme_secondary_dark' => '#DB2777',
-        'theme_secondary_light' => '#F472B6',
+        'theme_secondary' => '#1E40AF',
+        'theme_secondary_dark' => '#1E3A8A',
+        'theme_secondary_light' => '#3B82F6',
         'theme_gold' => '#EAB308',
 
         // Tab 14: พิมพ์เขียวโรงเรียน & โคลนระบบ (Master School Blueprint Hub)
@@ -426,7 +426,7 @@ function spm_render_admin_page() {
             .spm-tab-btn { width: 100%; text-align: left; padding: 11px 14px; border-radius: 10px; border: none; background: transparent; color: #475569; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.15s; margin-bottom: 4px; }
             .spm-tab-btn:hover { background: #F8FAFC; color: #0F172A; }
             .spm-tab-btn.active { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #FFFFFF; font-weight: 700; box-shadow: 0 4px 12px rgba(15,23,42,0.25); }
-            .spm-tab-btn.active .spm-tab-icon { color: #F472B6; }
+            .spm-tab-btn.active .spm-tab-icon { color: #ECC86A; }
             .spm-content-pane { flex-grow: 1; min-width: 0; }
             .spm-tab-section { display: none; }
             .spm-tab-section.active { display: block; animation: spsFade 0.25s ease-out; }
@@ -437,7 +437,7 @@ function spm_render_admin_page() {
             .spm-label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px; }
             .sps-hint { font-size: 11.5px; color: #64748B; margin-top: 4px; line-height: 1.4; }
             .spm-input { width: 100%; padding: 11px 14px; border: 1.5px solid #CBD5E1; border-radius: 10px; font-size: 14px; transition: all 0.2s; outline: none; box-sizing: border-box; background: #FFFFFF; color: #0F172A; }
-            .spm-input:focus { border-color: #EC4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.15); }
+            .spm-input:focus { border-color: #ECC86A; box-shadow: 0 0 0 3px rgba(236,200,106,0.25); outline: none; }
             .sps-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
             .sps-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
             .sps-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
@@ -457,21 +457,21 @@ function spm_render_admin_page() {
         <!-- Top Header Banner -->
         <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 30px 36px; border-radius: 20px; margin: 20px 0 25px 0; box-shadow: 0 14px 30px rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; gap: 20px;">
             <div>
-                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(236,72,153,0.18); border: 1px solid rgba(236,72,153,0.35); padding: 5px 14px; border-radius: 20px; color: #F472B6; font-size: 12px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px;">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(236,72,153,0.18); border: 1px solid rgba(236,72,153,0.35); padding: 5px 14px; border-radius: 20px; color: #ECC86A; font-size: 12px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px;">
                     ⭐ SPS ULTIMATE NO-CODE COMMAND CENTER
                 </div>
                 <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 800; margin: 0 0 8px 0; display: flex; align-items: center; gap: 12px;">
                     🏫 ศูนย์บัญชาการจัดการเนื้อหา สพม. (แบบละเอียดสมบูรณ์)
                 </h1>
                 <p style="color: #94A3B8; margin: 0; font-size: 13.5px; line-height: 1.5;">
-                    ปรับแต่งทุกจุดบนเว็บไซต์ 12 หมวดหมู่กว่า 70 ค่าสำคัญ แก้ไขเสร็จกดบันทึก ข้อมูลอัปเดตขึ้นหน้าเว็บจริงสดใหม่ทันที
+                    ปรับแต่งทุกจุดบนศูนย์บัญชาการพอร์ทัลดิจิทัล สพม.สกลนคร ครอบคลุม 14 หมวดหมู่ 150+ รายการสำคัญ ข้อมูลอัปเดตขึ้นหน้าเว็บจริงสดใหม่ทันทีแบบเรียลไทม์
                 </p>
             </div>
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <a href="<?php echo esc_url(home_url('/')); ?>" target="_blank" style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #FFFFFF; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
                     👁️ ดูหน้าเว็บจริง
                 </a>
-                <a href="<?php echo esc_url(admin_url('post-new.php')); ?>" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%); color: #FFFFFF; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(236,72,153,0.35);">
+                <a href="<?php echo esc_url(admin_url('post-new.php')); ?>" style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); color: #FFFFFF; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(236,72,153,0.35);">
                     ✍️ เขียนข่าวใหม่
                 </a>
             </div>
@@ -485,10 +485,10 @@ function spm_render_admin_page() {
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1;">
                 <div>
                     <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 8px;">
-                        ⚡ ONE-CLICK SCHOOL BLUEPRINT TRANSFORMER (แนวทางที่ 2)
+                        ⚡ ⚡ ONE-CLICK DISTRICT & SCHOOL TRANSFORMER (43 โรงเรียนในสังกัด สพม.สกลนคร)
                     </div>
                     <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #FFFFFF; display: flex; align-items: center; gap: 10px;">
-                        <span>🏫 แปลงโฉมเว็บไซต์ตามโรงเรียนในสังกัด สพม.สกลนคร (คลิกเดียวจบ)</span>
+                        <span>🏫 ระบบสลับพิมพ์เขียวข้อมูลและจำลองอัตลักษณ์ 43 โรงเรียนในสังกัด สพม.สกลนคร (คลิกเดียวจบ)</span>
                     </h2>
                     <p style="margin: 6px 0 0; font-size: 13.5px; color: #C7D2FE; line-height: 1.5;">
                         ไม่ต้องแก้โค้ด ไม่ต้องใช้ไฟล์ JSON! เพียงเลือกชื่อโรงเรียนจากรายการด้านล่าง ระบบจะเปลี่ยนชื่อ สีประจำสถาบัน พิกัดดาวเทียม และคำขวัญให้ทันที
@@ -567,10 +567,10 @@ function spm_render_admin_page() {
                         <span class="spm-tab-icon">🎯</span> 2. แบนเนอร์ & คำขวัญ
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-identity', this)">
-                        <span class="spm-tab-icon">🏛️</span> 3. อัตลักษณ์ & ปรัชญา
+                        <span class="spm-tab-icon">🏛️</span> 3. อัตลักษณ์ & ค่านิยมองค์กร
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-exec', this)">
-                        <span class="spm-tab-icon">👔</span> 4. คณะผู้บริหารสถานศึกษา
+                        <span class="spm-tab-icon">👔</span> 4. คณะผู้บริหาร สพม.สกลนคร
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-services', this)">
                         <span class="spm-tab-icon">⚡</span> 5. บริการดิจิทัล 8 เสาหลัก
@@ -609,11 +609,11 @@ function spm_render_admin_page() {
                     
                     <!-- TAB 1: ประกาศด่วน & หัวเว็บ -->
                     <div id="tab-notice" class="spm-tab-section active">
-                        <div class="spm-card" style="border-left: 5px solid #F43F5E;">
+                        <div class="spm-card" style="border-left: 5px solid #1E40AF;">
                             <div class="spm-card-head">
                                 <span>📢 แถบประกาศด่วนบนสุดของเว็บไซต์ (Emergency Notice & Alert)</span>
                                 <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; cursor: pointer; color: #0F172A; background: #FEE2E2; padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid #FECACA;">
-                                    <input type="checkbox" name="notice_enabled" value="1" <?php checked($s['notice_enabled'], '1'); ?> style="width: 17px; height: 17px; accent-color: #F43F5E;">
+                                    <input type="checkbox" name="notice_enabled" value="1" <?php checked($s['notice_enabled'], '1'); ?> style="width: 17px; height: 17px; accent-color: #ECC86A;">
                                     เปิดแสดงแถบประกาศด่วน
                                 </label>
                             </div>
@@ -648,7 +648,7 @@ function spm_render_admin_page() {
                             </div>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">ชื่อย่อสถานศึกษา (Acronym):</label>
+                                    <label class="spm-label">ชื่อย่อหน่วยงาน (Acronym เช่น สพม.สกลนคร):</label>
                                     <input type="text" name="school_name_short" value="<?php echo esc_attr($s['school_name_short'] ?? 'สพม.สกลนคร • SESAO Sakon Nakhon'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -661,7 +661,7 @@ function spm_render_admin_page() {
 
                     <!-- TAB 2: แบนเนอร์ & คำขวัญ -->
                     <div id="tab-hero" class="spm-tab-section">
-                        <div class="spm-card" style="border-left: 5px solid #EC4899;">
+                        <div class="spm-card" style="border-left: 5px solid #ECC86A;">
                             <h3 class="spm-card-head">🎯 แบนเนอร์หลักหน้าแรก (Hero Banner Showcase)</h3>
                             <div style="margin-bottom: 16px;">
                                 <label class="spm-label">ป้ายกำกับหัวแบนเนอร์ (Top Tag Badge):</label>
@@ -674,7 +674,7 @@ function spm_render_admin_page() {
                                 </div>
                                 <div>
                                     <label class="spm-label">หัวข้อแบนเนอร์ บรรทัดที่ 2 (เน้นสีสัน):</label>
-                                    <input type="text" name="hero_title_2" value="<?php echo esc_attr($s['hero_title_2'] ?? 'สร้างสรรค์คนดี มีปัญญา ก้าวทันโลกดิจิทัล'); ?>" class="spm-input" style="font-weight: 700; color: #EC4899;">
+                                    <input type="text" name="hero_title_2" value="<?php echo esc_attr($s['hero_title_2'] ?? 'สร้างสรรค์คนดี มีปัญญา ก้าวทันโลกดิจิทัล'); ?>" class="spm-input" style="font-weight: 700; color: #D4AF37;">
                                 </div>
                             </div>
                             <div style="margin-bottom: 16px;">
@@ -723,7 +723,7 @@ function spm_render_admin_page() {
                     <!-- TAB 3: อัตลักษณ์ & ปรัชญา -->
                     <div id="tab-identity" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #8B5CF6;">
-                            <h3 class="spm-card-head">🏛️ อัตลักษณ์ คำขวัญ และปรัชญาสถานศึกษา</h3>
+                            <h3 class="spm-card-head">🏛️ อัตลักษณ์ วิสัยทัศน์ และค่านิยม สพม.สกลนคร</h3>
                             <div style="margin-bottom: 16px;">
                                 <label class="spm-label">คำขวัญโรงเรียน (School Motto):</label>
                                 <input type="text" name="school_motto" value="<?php echo esc_attr($s['school_motto']); ?>" class="spm-input">
@@ -733,12 +733,12 @@ function spm_render_admin_page() {
                                 <input type="text" name="school_philosophy" value="<?php echo esc_attr($s['school_philosophy']); ?>" class="spm-input" style="font-weight: 700;">
                             </div>
                             <div style="margin-bottom: 16px;">
-                                <label class="spm-label">วิสัยทัศน์สถานศึกษา (School Vision):</label>
+                                <label class="spm-label">วิสัยทัศน์ สพม.สกลนคร (Vision):</label>
                                 <textarea name="school_vision" rows="2" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['school_vision']); ?></textarea>
                             </div>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">เอกลักษณ์ของสถานศึกษา (Identity):</label>
+                                    <label class="spm-label">เอกลักษณ์ สพม.สกลนคร (Identity):</label>
                                     <input type="text" name="school_identity" value="<?php echo esc_attr($s['school_identity'] ?? 'สิ่งแวดล้อมดี มีเทคโนโลยี ก้าวสู่วิถีคุณภาพ'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -759,7 +759,7 @@ function spm_render_admin_page() {
                         </div>
                     </div>
 
-                    <!-- TAB 4: คณะผู้บริหารสถานศึกษา -->
+                    <!-- TAB 4: คณะผู้บริหาร สพม.สกลนคร -->
                     <div id="tab-exec" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #0EA5E9;">
                             <h3 class="spm-card-head">👔 ทำเนียบผู้อำนวยการและสาส์นจากผู้บริหาร</h3>
@@ -859,7 +859,7 @@ function spm_render_admin_page() {
                             <!-- Srv 7 & 8 -->
                             <div class="sps-grid-2">
                                 <div style="background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0;">
-                                    <strong style="color: #0284C7; font-size: 13.5px; display: block; margin-bottom: 8px;">📰 7. วารสารดิจิทัล (SPS e-Magazine)</strong>
+                                    <strong style="color: #0284C7; font-size: 13.5px; display: block; margin-bottom: 8px;">📰 7. วารสารดิจิทัล สพม.สกลนคร (SPM e-Magazine)</strong>
                                     <input type="text" name="srv_mag_title" value="<?php echo esc_attr($s['srv_mag_title'] ?? 'วารสารและประชาสัมพันธ์ (SPS e-Magazine)'); ?>" class="spm-input" style="margin-bottom: 8px;">
                                     <input type="text" name="srv_mag_url" value="<?php echo esc_attr($s['srv_mag_url'] ?? '/site/#news'); ?>" class="spm-input">
                                 </div>
@@ -931,7 +931,7 @@ function spm_render_admin_page() {
                                     <input type="text" name="stat_classrooms" value="<?php echo esc_attr($s['stat_classrooms'] ?? '60 ห้อง'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">พื้นที่สถานศึกษา:</label>
+                                    <label class="spm-label">พื้นที่รับผิดชอบและขอบเขตบริการ (อำเภอ / ตร.กม.):</label>
                                     <input type="text" name="stat_area" value="<?php echo esc_attr($s['stat_area'] ?? '68 ไร่'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -1083,7 +1083,7 @@ function spm_render_admin_page() {
 
                     <!-- TAB 9: คำถามที่พบบ่อย (FAQ) -->
                     <div id="tab-faq" class="spm-tab-section">
-                        <div class="spm-card" style="border-left: 5px solid #EC4899;">
+                        <div class="spm-card" style="border-left: 5px solid #ECC86A;">
                             <h3 class="spm-card-head">❓ คำถามที่พบบ่อยหน้าแรก (FAQ Accordion 3 ข้อ)</h3>
                             
                             <!-- FAQ 1 -->
@@ -1202,7 +1202,7 @@ function spm_render_admin_page() {
                         </div>
 
                         <div class="spm-card">
-                            <h3 class="spm-card-head">📜 รหัสสถานศึกษาและส่วนท้ายเว็บ (School Codes & Footer)</h3>
+                            <h3 class="spm-card-head">📜 รหัสหน่วยงานและส่วนท้ายเว็บ สพม.สกลนคร (District Codes & Footer)</h3>
                             <div class="sps-grid-3">
                                 <div>
                                     <label class="spm-label">รหัสโรงเรียน 10 หลัก:</label>
@@ -1219,7 +1219,7 @@ function spm_render_admin_page() {
                             </div>
                             <div style="margin-bottom: 16px;">
                                 <label class="spm-label">ข้อความรหัสรวมท้ายเว็บ (School Codes Line):</label>
-                                <input type="text" name="school_code_line" value="<?php echo esc_attr($s['school_code_line'] ?? 'รหัสโรงเรียน 10 หลัก: 1047540628 | รหัส SMIS: 47012003 | รหัส OBEC: 540628'); ?>" class="spm-input">
+                                <input type="text" name="school_code_line" value="<?php echo esc_attr($s['school_code_line'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร) | สพฐ. กระทรวงศึกษาธิการ'); ?>" class="spm-input">
                             </div>
                             <div class="sps-grid-2">
                                 <div>
@@ -1257,15 +1257,15 @@ function spm_render_admin_page() {
 
                     <!-- TAB 13: ธีมสี & เอกลักษณ์โรงเรียน (Theme & Identity Colors) -->
                     <div id="tab-theme" class="spm-tab-section">
-                        <div class="spm-card" style="border-left: 5px solid #EC4899;">
+                        <div class="spm-card" style="border-left: 5px solid #ECC86A;">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
                                 <div>
-                                    <h3 class="spm-card-head" style="margin-bottom: 4px;">🎨 ปรับแต่งชุดสีประจำสถานศึกษา (School Color Identity & Theme Engine)</h3>
+                                    <h3 class="spm-card-head" style="margin-bottom: 4px;">🎨 ปรับแต่งธีมสีน้ำเงินคราม-เหลืองทอง และอัตลักษณ์ สพม.สกลนคร (Sakon Kram & Royal Gold Identity)</h3>
                                     <p style="font-size: 13.5px; color: #64748B; margin: 0;">
                                         เปลี่ยนชุดสีอัตลักษณ์ของโรงเรียนได้ทันที ระบบจะอัปเดตสีพื้นหลัง สีปุ่ม กรอบประกาย และเอฟเฟกต์ทั้งหมดบนเว็บไซต์ให้สอดคล้องกับสีประจำสถาบันของท่านโดยอัตโนมัติ
                                     </p>
                                 </div>
-                                <span style="background: #FDF2F8; border: 1px solid #FBCFE8; color: #BE185D; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px;">
+                                <span style="background: rgba(236,200,106,0.15); border: 1px solid rgba(236,200,106,0.4); color: #B45309; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px;">
                                     LIVE DYNAMIC STYLING
                                 </span>
                             </div>
@@ -1277,10 +1277,10 @@ function spm_render_admin_page() {
                                 </label>
                                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;">
                                     <!-- Preset 1: SPS Pink & Navy -->
-                                    <div onclick="applyThemePreset('spm_kram_gold')" style="cursor: pointer; padding: 12px 14px; border-radius: 12px; border: 2px solid #E2E8F0; background: #FFFFFF; display: flex; align-items: center; gap: 12px; transition: all 0.2s;" onmouseover="this.style.borderColor='#EC4899'" onmouseout="this.style.borderColor='#E2E8F0'">
+                                    <div onclick="applyThemePreset('spm_kram_gold')" style="cursor: pointer; padding: 12px 14px; border-radius: 12px; border: 2px solid #E2E8F0; background: #FFFFFF; display: flex; align-items: center; gap: 12px; transition: all 0.2s;" onmouseover="this.style.borderColor='#ECC86A'" onmouseout="this.style.borderColor='#E2E8F0'">
                                         <div style="display: flex; gap: 4px;">
                                             <span style="width: 22px; height: 22px; border-radius: 50%; background: #0F172A; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></span>
-                                            <span style="width: 22px; height: 22px; border-radius: 50%; background: #EC4899; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></span>
+                                            <span style="width: 22px; height: 22px; border-radius: 50%; background: #ECC86A; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></span>
                                         </div>
                                         <div>
                                             <div style="font-weight: 700; font-size: 13px; color: #0F172A;">สกลนครพัฒนศึกษา</div>
@@ -1369,22 +1369,22 @@ function spm_render_admin_page() {
                                 <div>
                                     <label class="spm-label">สีรอง / ไฮไลต์ (Secondary - Buttons & Accents):</label>
                                     <div style="display: flex; gap: 10px; align-items: center;">
-                                        <input type="color" id="picker_theme_secondary" value="<?php echo esc_attr($s['theme_secondary'] ?? '#EC4899'); ?>" onchange="document.getElementById('input_theme_secondary').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
-                                        <input type="text" id="input_theme_secondary" name="theme_secondary" value="<?php echo esc_attr($s['theme_secondary'] ?? '#EC4899'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary').value = this.value;">
+                                        <input type="color" id="picker_theme_secondary" value="<?php echo esc_attr($s['theme_secondary'] ?? '#1E40AF'); ?>" onchange="document.getElementById('input_theme_secondary').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
+                                        <input type="text" id="input_theme_secondary" name="theme_secondary" value="<?php echo esc_attr($s['theme_secondary'] ?? '#1E40AF'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary').value = this.value;">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="spm-label">สีรองเข้ม (Secondary Dark - Active/Hover):</label>
                                     <div style="display: flex; gap: 10px; align-items: center;">
-                                        <input type="color" id="picker_theme_secondary_dark" value="<?php echo esc_attr($s['theme_secondary_dark'] ?? '#DB2777'); ?>" onchange="document.getElementById('input_theme_secondary_dark').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
-                                        <input type="text" id="input_theme_secondary_dark" name="theme_secondary_dark" value="<?php echo esc_attr($s['theme_secondary_dark'] ?? '#DB2777'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary_dark').value = this.value;">
+                                        <input type="color" id="picker_theme_secondary_dark" value="<?php echo esc_attr($s['theme_secondary_dark'] ?? '#1E3A8A'); ?>" onchange="document.getElementById('input_theme_secondary_dark').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
+                                        <input type="text" id="input_theme_secondary_dark" name="theme_secondary_dark" value="<?php echo esc_attr($s['theme_secondary_dark'] ?? '#1E3A8A'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary_dark').value = this.value;">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="spm-label">สีรองสว่าง (Secondary Light - Badges):</label>
                                     <div style="display: flex; gap: 10px; align-items: center;">
-                                        <input type="color" id="picker_theme_secondary_light" value="<?php echo esc_attr($s['theme_secondary_light'] ?? '#F472B6'); ?>" onchange="document.getElementById('input_theme_secondary_light').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
-                                        <input type="text" id="input_theme_secondary_light" name="theme_secondary_light" value="<?php echo esc_attr($s['theme_secondary_light'] ?? '#F472B6'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary_light').value = this.value;">
+                                        <input type="color" id="picker_theme_secondary_light" value="<?php echo esc_attr($s['theme_secondary_light'] ?? '#3B82F6'); ?>" onchange="document.getElementById('input_theme_secondary_light').value = this.value;" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px;">
+                                        <input type="text" id="input_theme_secondary_light" name="theme_secondary_light" value="<?php echo esc_attr($s['theme_secondary_light'] ?? '#3B82F6'); ?>" class="spm-input" onchange="document.getElementById('picker_theme_secondary_light').value = this.value;">
                                     </div>
                                 </div>
                                 <div>
@@ -1403,7 +1403,7 @@ function spm_render_admin_page() {
                         <div class="spm-card" style="border-left: 5px solid #3B82F6;">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
                                 <div>
-                                    <h3 class="spm-card-head" style="margin-bottom: 4px;">🏛️ พิมพ์เขียวสถานศึกษาต้นแบบ (Master School Blueprint Engine)</h3>
+                                    <h3 class="spm-card-head" style="margin-bottom: 4px;">🏛️ พิมพ์เขียวศูนย์บัญชาการ สพม.สกลนคร (Master District Blueprint Engine)</h3>
                                     <p style="font-size: 13.5px; color: #64748B; margin: 0;">
                                         ระบบถ่ายทอดและโคลนนิ่งเทมเพลตเว็บไซต์อัจฉริยะ ให้โรงเรียนในสังกัดและเครือข่ายนำไปใช้งานได้ทันทีในคลิกเดียว (Turnkey Ready-to-use)
                                     </p>
@@ -1516,7 +1516,7 @@ function spm_render_admin_page() {
                 <div style="display: flex; align-items: center; gap: 14px; color: #E2E8F0; font-size: 13.5px;">
                     <span style="font-size: 22px;">💾</span>
                     <div>
-                        <strong style="color: #FFFFFF;">พร้อมบันทึกการเปลี่ยนแปลงทั้งหมด (70+ รายการ)</strong>
+                        <strong style="color: #FFFFFF;">พร้อมบันทึกการเปลี่ยนแปลงศูนย์บัญชาการ (150+ รายการ)</strong>
                         <div style="font-size: 12px; color: #94A3B8;">กดบันทึกแล้วระบบจะอัปเดตข้อมูลขึ้นหน้าเว็บจริงแบบเรียลไทม์</div>
                     </div>
                 </div>
@@ -1524,7 +1524,7 @@ function spm_render_admin_page() {
                     <a href="<?php echo esc_url(home_url('/')); ?>" target="_blank" style="color: #94A3B8; text-decoration: none; font-size: 13px; font-weight: 600; padding: 10px 16px;">
                         ยกเลิก / ไปหน้าเว็บ
                     </a>
-                    <button type="submit" name="spm_save_settings" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%); color: #FFFFFF; border: none; padding: 13px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(236,72,153,0.45); display: inline-flex; align-items: center; gap: 8px;">
+                    <button type="submit" name="spm_save_settings" style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); color: #FFFFFF; border: none; padding: 13px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(236,72,153,0.45); display: inline-flex; align-items: center; gap: 8px;">
                         💾 บันทึกข้อมูลทั้งหมดทันที
                     </button>
                 </div>
@@ -2230,10 +2230,10 @@ function spm_render_luxury_single_post() {
             --slate-200: #E2E8F0;
             --slate-100: #F1F5F9;
             --slate-50: #F8FAFC;
-            --pink-600: #DB2777;
-            --pink-500: #EC4899;
-            --pink-400: #F472B6;
-            --pink-100: #FCE7F3;
+            --kram-800: #1E3A8A;
+            --kram-700: #1E40AF;
+            --gold-500: #ECC86A;
+            --gold-100: #FFFBEB;
             --gold-500: #F59E0B;
             --gold-400: #FBBF24;
             --emerald-500: #10B981;
@@ -2276,7 +2276,7 @@ function spm_render_luxury_single_post() {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+            background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);
             color: #FFFFFF;
             padding: 2px 8px;
             border-radius: 999px;
@@ -2350,7 +2350,7 @@ function spm_render_luxury_single_post() {
             gap: 6px;
         }
         .nav-links a:hover {
-            color: #F472B6;
+            color: #ECC86A;
         }
         .nav-actions {
             display: flex;
@@ -2358,7 +2358,7 @@ function spm_render_luxury_single_post() {
             gap: 10px;
         }
         .btn-portal {
-            background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+            background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);
             color: #FFFFFF !important;
             padding: 8px 16px;
             border-radius: 999px;
@@ -2384,7 +2384,7 @@ function spm_render_luxury_single_post() {
         .progress-bar-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #EC4899, #F59E0B);
+            background: linear-gradient(90deg, #1E40AF, #ECC86A);
             transition: width 0.1s;
         }
 
@@ -2410,7 +2410,7 @@ function spm_render_luxury_single_post() {
             transition: color 0.2s;
         }
         .breadcrumb a:hover {
-            color: #F472B6;
+            color: #ECC86A;
         }
         .breadcrumb span {
             color: #64748B;
@@ -2421,7 +2421,7 @@ function spm_render_luxury_single_post() {
             gap: 6px;
             background: rgba(236, 72, 153, 0.2);
             border: 1px solid rgba(236, 72, 153, 0.4);
-            color: #F472B6;
+            color: #ECC86A;
             padding: 4px 14px;
             border-radius: 999px;
             font-size: 12px;
@@ -2489,7 +2489,7 @@ function spm_render_luxury_single_post() {
         }
         .article-content h2 {
             font-size: 24px;
-            border-left: 4px solid #EC4899;
+            border-left: 4px solid #ECC86A;
             padding-left: 14px;
         }
         .article-content h3 {
@@ -2659,7 +2659,7 @@ function spm_render_luxury_single_post() {
             transition: color 0.2s;
         }
         .footer a:hover {
-            color: #F472B6;
+            color: #ECC86A;
         }
         .footer-bottom {
             text-align: center;
@@ -2691,14 +2691,14 @@ function spm_render_luxury_single_post() {
         }
         .ai-floating-btn:hover {
             transform: scale(1.04);
-            border-color: #EC4899;
+            border-color: #ECC86A;
         }
         .ai-pulse-dot {
             width: 8px;
             height: 8px;
-            background: #EC4899;
+            background: #ECC86A;
             border-radius: 50%;
-            box-shadow: 0 0 8px #EC4899;
+            box-shadow: 0 0 8px #ECC86A;
         }
 
         @media (max-width: 900px) {
@@ -2720,7 +2720,7 @@ function spm_render_luxury_single_post() {
     <div class="top-ticker">
         <div class="container ticker-wrap">
             <div>
-                <span class="ticker-badge" style="background: linear-gradient(135deg, #1E293B 0%, #334155 100%); border: 1px solid rgba(255,255,255,0.15);"><i class="fa-solid fa-graduation-cap" style="color: #F472B6;"></i> สพม.สกลนคร</span>
+                <span class="ticker-badge" style="background: linear-gradient(135deg, #1E293B 0%, #334155 100%); border: 1px solid rgba(255,255,255,0.15);"><i class="fa-solid fa-graduation-cap" style="color: #ECC86A;"></i> สพม.สกลนคร</span>
                 <span style="color: #CBD5E1; font-weight: 500;">สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร • ข่าวสารและประกาศทางการ</span>
             </div>
             <div>
@@ -2765,7 +2765,7 @@ function spm_render_luxury_single_post() {
                 <span>/</span>
                 <a href="<?php echo esc_url(home_url('/#news')); ?>">ข่าวประชาสัมพันธ์</a>
                 <span>/</span>
-                <span style="color: #F472B6;"><?php echo esc_html($cat_name); ?></span>
+                <span style="color: #ECC86A;"><?php echo esc_html($cat_name); ?></span>
             </div>
 
             <div class="article-cat-badge">
@@ -2775,7 +2775,7 @@ function spm_render_luxury_single_post() {
             <h1 class="article-title"><?php echo esc_html($title); ?></h1>
 
             <div class="article-meta">
-                <span><i class="fa-regular fa-calendar" style="color: #F472B6;"></i> <?php echo esc_html($date_thai); ?></span>
+                <span><i class="fa-regular fa-calendar" style="color: #ECC86A;"></i> <?php echo esc_html($date_thai); ?></span>
                 <span><i class="fa-solid fa-school" style="color: #60A5FA;"></i> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</span>
                 <span><i class="fa-regular fa-clock" style="color: #FBBF24;"></i> อ่าน ~2 นาที</span>
             </div>
@@ -2817,7 +2817,7 @@ function spm_render_luxury_single_post() {
         <!-- 5. Related Articles -->
         <?php if (!empty($related)): ?>
         <section class="related-sec">
-            <h3 class="related-title"><i class="fa-solid fa-newspaper" style="color: #EC4899;"></i> ข่าวสารและประกาศอื่นๆ</h3>
+            <h3 class="related-title"><i class="fa-solid fa-newspaper" style="color: #ECC86A;"></i> ข่าวสารและประกาศอื่นๆ</h3>
             <div class="related-grid">
                 <?php foreach ($related as $rel_post): 
                     $rel_thumb = get_the_post_thumbnail_url($rel_post->ID, 'medium');
@@ -2843,11 +2843,11 @@ function spm_render_luxury_single_post() {
             <div class="footer-grid">
                 <div>
                     <h4 style="display: flex; align-items: center; gap: 8px;">
-                        <span style="color: #EC4899;">สพม.สกลนคร</span> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
+                        <span style="color: #ECC86A;">สพม.สกลนคร</span> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
                     </h4>
                     <p><?php echo esc_html($s['address']); ?></p>
-                    <p><i class="fa-solid fa-phone" style="color: #EC4899;"></i> โทรศัพท์: <?php echo esc_html($s['phone']); ?> | โทรสาร: <?php echo esc_html($s['fax']); ?></p>
-                    <p><i class="fa-solid fa-envelope" style="color: #EC4899;"></i> อีเมล: <?php echo esc_html($s['email']); ?></p>
+                    <p><i class="fa-solid fa-phone" style="color: #ECC86A;"></i> โทรศัพท์: <?php echo esc_html($s['phone']); ?> | โทรสาร: <?php echo esc_html($s['fax']); ?></p>
+                    <p><i class="fa-solid fa-envelope" style="color: #ECC86A;"></i> อีเมล: <?php echo esc_html($s['email']); ?></p>
                 </div>
                 <div>
                     <h4>ลิงก์ด่วน</h4>
@@ -2871,7 +2871,7 @@ function spm_render_luxury_single_post() {
     <!-- AI Concierge Floating Button -->
     <a href="<?php echo esc_url(home_url('/#news')); ?>" class="ai-floating-btn" title="กลับสู่หน้าแรกเพื่อสอบถามน้องภูพาน AI AI">
         <span class="ai-pulse-dot"></span>
-        <i class="fa-solid fa-robot" style="color: #F472B6;"></i>
+        <i class="fa-solid fa-robot" style="color: #ECC86A;"></i>
         <span>น้องภูพาน AI AI ประจำการ</span>
     </a>
 
