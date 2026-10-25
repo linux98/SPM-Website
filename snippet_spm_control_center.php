@@ -1,3 +1,4 @@
+<?php
 /**
  * SPS Portal Content Manager & Luxury News Portal Engine
  * ระบบศูนย์บัญชาการจัดการเนื้อหาพอร์ทัล สพม.สกลนคร แบบละเอียดยิบ (SPS Ultimate Control Center)
@@ -318,88 +319,6 @@ add_action('rest_api_init', function() {
         'permission_callback' => '__return_true'
     ));
 
-    
-    // 3.1 POST /wp-json/spm/v1/track (Server-Side Proxy for DocumantStudio Quick Track)
-    register_rest_route('spm/v1', '/track', array(
-        'methods'  => 'POST',
-        'callback' => function($request) {
-            $params = $request->get_json_params();
-            if (empty($params)) $params = $request->get_params();
-            $trackingCode = isset($params['tracking_code']) ? sanitize_text_field($params['tracking_code']) : '';
-            $last4 = isset($params['last4_id_card']) ? sanitize_text_field($params['last4_id_card']) : '';
-
-            if (empty($trackingCode)) {
-                return new WP_REST_Response(array('ok' => false, 'error' => array('message' => 'กรุณาระบุรหัสติดตามคำขอ')), 400);
-            }
-
-            $settings = spm_get_settings();
-            $gasUrl = !empty($settings['documantstudio_webapp_url']) 
-                ? $settings['documantstudio_webapp_url'] 
-                : 'https://script.google.com/macros/s/AKfycbzQJTG5qq-ZH4OJ6XpcMA8_e2cBQmAJjUjRmIvDvywAN0CsGRjIaV0Ibxgj_4bIhWmv/exec';
-
-            $targetUrl = add_query_arg(array(
-                'command' => 'request.quickTrack',
-                'payload' => wp_json_encode(array('trackingCode' => $trackingCode, 'last4IdCard' => $last4))
-            ), $gasUrl);
-
-            $response = wp_remote_get($targetUrl, array('timeout' => 20, 'redirection' => 5, 'sslverify' => false));
-            if (is_wp_error($response)) {
-                return new WP_REST_Response(array('ok' => false, 'error' => array('message' => 'การเชื่อมต่อกับ DocumantStudio ขัดข้อง: ' . $response->get_error_message())), 500);
-            }
-            $body = wp_remote_retrieve_body($response);
-            $data = json_decode($body, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                return new WP_REST_Response(array('ok' => false, 'error' => array('message' => 'รูปแบบข้อมูลตอบกลับจากระบบไม่ถูกต้อง')), 502);
-            }
-            return new WP_REST_Response($data, 200);
-        },
-        'permission_callback' => '__return_true'
-    ));
-
-    // 3.2 GET /wp-json/spm/v1/services (Dynamic e-Service Catalog Proxy)
-    register_rest_route('spm/v1', '/services', array(
-        'methods'  => 'GET',
-        'callback' => function() {
-            $settings = spm_get_settings();
-            $gasUrl = !empty($settings['documantstudio_webapp_url']) 
-                ? $settings['documantstudio_webapp_url'] 
-                : 'https://script.google.com/macros/s/AKfycbzQJTG5qq-ZH4OJ6XpcMA8_e2cBQmAJjUjRmIvDvywAN0CsGRjIaV0Ibxgj_4bIhWmv/exec';
-            $targetUrl = add_query_arg(array('command' => 'catalog.listServices'), $gasUrl);
-            $response = wp_remote_get($targetUrl, array('timeout' => 15, 'redirection' => 5, 'sslverify' => false));
-            if (!is_wp_error($response)) {
-                $body = wp_remote_retrieve_body($response);
-                $data = json_decode($body, true);
-                if (isset($data['ok']) && $data['ok'] && !empty($data['data'])) {
-                    return new WP_REST_Response($data['data'], 200);
-                }
-            }
-            return new WP_REST_Response(array(), 200);
-        },
-        'permission_callback' => '__return_true'
-    ));
-
-    // 3.3 POST /wp-json/spm/v1/telegram-test
-    register_rest_route('spm/v1', '/telegram-test', array(
-        'methods'  => 'POST',
-        'callback' => function() {
-            $settings = spm_get_settings();
-            $bot_token = $settings['telegram_bot_token'] ?? '';
-            $chat_id = $settings['telegram_chat_id'] ?? '';
-            if (empty($bot_token) || empty($chat_id)) {
-                return new WP_REST_Response(array('status' => 'error', 'message' => 'กรุณากรอก Telegram Bot Token และ Chat ID ก่อนทดสอบ'), 400);
-            }
-            $msg = "🔔 ทดสอบการแจ้งเตือนจากศูนย์บัญชาการ สพม.สกลนคร\n⏰ เวลา: " . date_i18n('j F Y H:i:s') . "\n✅ ระบบพร้อมทำงาน!";
-            $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
-            $res = wp_remote_post($url, array(
-                'body' => array('chat_id' => $chat_id, 'text' => $msg, 'parse_mode' => 'HTML')
-            ));
-            if (is_wp_error($res)) {
-                return new WP_REST_Response(array('status' => 'error', 'message' => $res->get_error_message()), 500);
-            }
-            return new WP_REST_Response(array('status' => 'success', 'message' => 'ส่งข้อความทดสอบเข้า Telegram เรียบร้อยแล้ว!'), 200);
-        },
-        'permission_callback' => function() { return current_user_can('manage_options'); }
-    ));
     
     register_rest_route('spm/v1', '/settings', array(
         'methods' => 'POST',
