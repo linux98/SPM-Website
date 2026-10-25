@@ -815,12 +815,7 @@ function spm_render_luxury_single_post() {
     $content = apply_filters('the_content', $post->post_content);
     $date_thai = spm_format_thai_date_full(strtotime($post->post_date));
     $thumb = get_the_post_thumbnail_url($post_id, 'full');
-    if (!$thumb) {
-        $thumb = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
-        $has_real_thumb = false;
-    } else {
-        $has_real_thumb = true;
-    }
+    $has_real_thumb = !empty($thumb);
 
     $cats = get_the_category($post_id);
     $cat_name = !empty($cats) ? $cats[0]->name : 'ข่าวประชาสัมพันธ์';
@@ -851,7 +846,7 @@ function spm_render_luxury_single_post() {
     <meta property="og:site_name" content="สพม.สกลนคร">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath fill='%23ECC86A' d='M320 32c-8.1 0-16.1 1.4-23.7 4.1L35.4 130.6C14.7 138 0 157.9 0 180s14.7 42 35.4 49.4l76.6 27.4v75.5c0 30.6 17.7 58.7 45.4 72l128 61.3c21.8 10.4 47.4 10.4 69.2 0l128-61.3c27.7-13.3 45.4-41.4 45.4-72V256.8l76.6-27.4c20.7-7.4 35.4-27.3 35.4-49.4s-14.7-42-35.4-49.4L343.7 36.1C336.1 33.4 328.1 32 320 32z'/%3E%3C/svg%3E">
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -983,23 +978,36 @@ function spm_render_luxury_single_post() {
             gap: 14px;
             text-decoration: none;
         }
-        .brand-logo {
-            width: 46px;
-            height: 46px;
+        .brand-emblem {
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #152754 0%, #060B19 100%);
-            border: 1.5px solid #ECC86A;
+            background: #060B19;
+            background-image: linear-gradient(145deg, rgba(18, 57, 158, 0.8), rgba(6, 11, 25, 0.95));
+            border: 1.5px solid var(--gold-400);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--gold-400);
+            font-size: 20px;
             box-shadow: 0 4px 14px rgba(236, 200, 106, 0.25);
-            overflow: hidden;
             flex-shrink: 0;
         }
-        .brand-logo img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
+        .related-thumb-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #060B19 0%, #0F172A 100%);
+            color: var(--gold-400);
+            font-size: 28px;
+        }
+        .related-thumb-fallback span {
+            font-size: 11px;
+            color: #94A3B8;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
         .brand-text h1 {
             color: #FFFFFF;
@@ -1436,8 +1444,8 @@ function spm_render_luxury_single_post() {
     <nav class="navbar">
         <div class="container nav-wrap">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="brand">
-                <div class="brand-logo">
-                    <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png" alt="ตรา สพม.สกลนคร">
+                <div class="brand-emblem">
+                    <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div class="brand-text">
                     <h1>สพม.สกลนคร</h1>
@@ -1526,13 +1534,19 @@ function spm_render_luxury_single_post() {
             <div class="related-grid">
                 <?php foreach ($related as $rel_post):
                     $rel_thumb = get_the_post_thumbnail_url($rel_post->ID, 'medium');
-                    if (!$rel_thumb) $rel_thumb = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
                     $rel_date = spm_format_thai_date_full(strtotime($rel_post->post_date));
                     $rel_cats = get_the_category($rel_post->ID);
                     $rel_cat_name = !empty($rel_cats) ? $rel_cats[0]->name : 'ข่าวสาร';
                 ?>
                 <a href="<?php echo esc_url(get_permalink($rel_post->ID)); ?>" class="related-card">
-                    <img src="<?php echo esc_url($rel_thumb); ?>" alt="<?php echo esc_attr($rel_post->post_title); ?>" class="related-thumb">
+                    <?php if ($rel_thumb): ?>
+                        <img src="<?php echo esc_url($rel_thumb); ?>" alt="<?php echo esc_attr($rel_post->post_title); ?>" class="related-thumb">
+                    <?php else: ?>
+                        <div class="related-thumb related-thumb-fallback">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>สพม.สกลนคร</span>
+                        </div>
+                    <?php endif; ?>
                     <div class="related-content">
                         <span style="font-size:11px; font-weight:700; color:#B8860B; margin-bottom:4px;"><?php echo esc_html($rel_cat_name); ?></span>
                         <h4 class="related-card-title"><?php echo esc_html($rel_post->post_title); ?></h4>
@@ -1551,7 +1565,7 @@ function spm_render_luxury_single_post() {
             <div class="footer-grid">
                 <div>
                     <h4 style="display: flex; align-items: center; gap: 8px;">
-                        <span style="color: #ECC86A;">สพม.สกลนคร</span> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
+                        <span class="brand-emblem" style="width:28px; height:28px; font-size:13px; display:inline-flex; border-radius:7px; vertical-align:middle; margin-right:6px;"><i class="fa-solid fa-graduation-cap"></i></span> สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
                     </h4>
                     <p><?php echo esc_html(!empty($s['office_address']) ? $s['office_address'] : 'ศูนย์ราชการจังหวัดสกลนคร ถนนศูนย์ราชการ ตำบลธาตุเชิงชุม อำเภอเมือง จังหวัดสกลนคร 47000'); ?></p>
                     <p><i class="fa-solid fa-phone" style="color: #ECC86A;"></i> โทรศัพท์: <?php echo esc_html(!empty($s['office_phone']) ? $s['office_phone'] : '042-728118'); ?></p>
