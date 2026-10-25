@@ -8853,6 +8853,134 @@
       }
     }
 
+  
+    /* ==========================================================================
+       BREAKTHROUGH INNOVATIONS CSS (SPS TO SPM MASTER ARCHITECTURE)
+       1. Smart Teacher 3D Holographic Card
+       2. E-Certificate Verification SHA-256
+       3. Speech Recognition AI Microphone
+       ========================================================================== */
+    .teacher-3d-card {
+      background: linear-gradient(145deg, #040814 0%, #060B19 50%, #112255 100%);
+      border: 2px solid #ECC86A;
+      border-radius: 18px;
+      padding: 24px;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(6, 11, 25, 0.5), inset 0 0 20px rgba(236, 200, 106, 0.15);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .teacher-3d-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(236, 200, 106, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .teacher-3d-card:hover {
+      transform: translateY(-4px) rotateX(2deg) rotateY(2deg);
+    }
+    .teacher-card-badge {
+      background: linear-gradient(135deg, #ECC86A, #B8860B);
+      color: #060B19;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .teacher-avatar-frame {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      border: 2px solid #ECC86A;
+      background: linear-gradient(135deg, #1B3074, #060B19);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #ECC86A;
+      box-shadow: 0 4px 14px rgba(236, 200, 106, 0.3);
+      flex-shrink: 0;
+    }
+
+    /* E-Certificate Styles */
+    .cert-holo-stage {
+      background: #FFFFFF;
+      border: 3px double #ECC86A;
+      border-radius: 16px;
+      padding: 26px;
+      position: relative;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .cert-holo-stage::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, #1B3074, #ECC86A, #10B981, #ECC86A, #1B3074);
+    }
+    .cert-seal-stamp {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FFFDF0 0%, #ECC86A 100%);
+      border: 2px solid #B8860B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #060B19;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(236, 200, 106, 0.4);
+      flex-shrink: 0;
+    }
+    .cert-hash-pill {
+      font-family: monospace;
+      font-size: 11px;
+      background: #F1F5F9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #CBD5E1;
+      color: #334155;
+      word-break: break-all;
+    }
+
+    /* Speech Recognition Mic Pulse */
+    .chat-mic-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      transition: var(--transition-smooth);
+      flex-shrink: 0;
+    }
+    .chat-mic-btn:hover {
+      border-color: var(--gold-500);
+      color: var(--gold-600);
+    }
+    .chat-mic-btn.listening {
+      background: #EF4444 !important;
+      border-color: #DC2626 !important;
+      color: #FFFFFF !important;
+      animation: micPulse 1.2s infinite;
+    }
+    @keyframes micPulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    }
+
   </style>
 
 </head>
@@ -8886,6 +9014,16 @@
       </div>
 
       <div class="top-gov-tools">
+        <!-- Quick Innovations Links -->
+        <button onclick="openTeacherIdModal()" class="accessibility-btn" title="บัตรข้าราชการครูดิจิทัล (Smart Teacher ID)" style="display:flex; align-items:center; gap:5px; font-weight:700; color:var(--gold-400); border-color:var(--gold-500); padding:3px 8px;">
+          <i class="fa-solid fa-id-card"></i> <span>บัตรครูดิจิทัล</span>
+        </button>
+        <button onclick="openCertModal()" class="accessibility-btn" title="ศูนย์ตรวจสอบวุฒิบัตร (SHA-256)" style="display:flex; align-items:center; gap:5px; font-weight:700; color:#10B981; border-color:#10B981; padding:3px 8px;">
+          <i class="fa-solid fa-certificate"></i> <span>ตรวจวุฒิบัตร</span>
+        </button>
+        <button onclick="openDailyAgendaModal()" class="accessibility-btn" title="วาระงานราชการรายวัน" style="display:flex; align-items:center; gap:5px; font-weight:700; color:#60A5FA; border-color:#3B82F6; padding:3px 8px;">
+          <i class="fa-solid fa-calendar-check"></i> <span>วาระงาน</span>
+        </button>
 
         <!-- Voice AI Reader Toggle -->
 
@@ -20056,6 +20194,7 @@
 
     <div class="chat-input-bar">
 
+      <button type="button" class="chat-mic-btn" id="phuphanMicBtn" onclick="togglePhuphanSpeechRecognition()" title="กดเพื่อสั่งการด้วยเสียงพูด (Web Speech AI)"><i class="fa-solid fa-microphone"></i></button>
       <input type="text" id="phuphanInput" class="chat-input-box" placeholder="พิมพ์คำถามที่นี่ เช่น 'ขอเบอร์กลุ่มบุคคล', 'เกณฑ์ ว.PA'..." onkeypress="if(event.key==='Enter') sendPhuPhanMessage()">
 
       <button class="chat-send-btn" onclick="sendPhuPhanMessage()" title="ส่งข้อความ">
@@ -20447,6 +20586,409 @@
 
 
 
+
+  <!-- ========================================================================
+       MASTER ARCHITECTURE INNOVATIONS: 3 MODALS (TEACHER ID, CERT, AGENDA)
+       ======================================================================== -->
+  <!-- 1. Smart Teacher & Staff ID Card Modal (3D Holographic) -->
+  <div class="modal-overlay" id="teacherIdModal" onclick="closeTeacherIdModal(event)">
+    <div class="modal-box" style="max-width: 580px; width: 100%;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #060B19 0%, #101E42 100%); border-bottom: 2px solid var(--gold-500); padding: 18px 22px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.2); border: 1.5px solid var(--gold-400); display: flex; align-items: center; justify-content: center; color: var(--gold-400); font-size: 18px;">
+            <i class="fa-solid fa-id-card-clip"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 16.5px; font-weight: 800; color: #FFFFFF; margin: 0;">บัตรข้าราชการครูและบุคลากรทางการศึกษาดิจิทัล</h3>
+            <span style="font-size: 11.5px; color: var(--gold-300);">SESAO Sakon Nakhon Smart Teacher & Staff Digital ID (3D Interactive)</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeTeacherIdModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 24px;">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
+            ค้นหาด้วยเลขประจำตัวข้าราชการ หรือเลขบัตรประชาชน 13 หลัก:
+          </label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="teacherIdSearchInput" placeholder="เช่น 1479900123456 หรือ TCH-4701" maxlength="13" style="flex: 1; padding: 11px 14px; border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 14px; font-weight: 700; background: var(--bg-surface); color: var(--text-main); outline: none;">
+            <button type="button" onclick="lookupTeacherId()" class="btn-gold-primary" style="padding: 10px 20px; font-size: 13.5px; white-space: nowrap;">
+              <i class="fa-solid fa-magnifying-glass"></i> ตรวจสอบบัตร
+            </button>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+            💡 ตัวอย่างรหัสทดสอบ: <strong>1479900123456</strong>, <strong>TCH-4701</strong>, หรือ <strong>TCH-4702</strong>
+          </div>
+        </div>
+        <div id="teacherIdCardResultContainer" style="margin-top: 20px;">
+          <!-- Default preview on open -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. E-Certificate & Training Verification Hub (SHA-256) -->
+  <div class="modal-overlay" id="certVerifyModal" onclick="closeCertVerifyModal(event)">
+    <div class="modal-box" style="max-width: 650px; width: 100%;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #060B19 0%, #101E42 100%); border-bottom: 2px solid var(--gold-500); padding: 18px 22px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.2); border: 1.5px solid var(--gold-400); display: flex; align-items: center; justify-content: center; color: var(--gold-400); font-size: 18px;">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 16.5px; font-weight: 800; color: #FFFFFF; margin: 0;">ศูนย์ตรวจสอบวุฒิบัตรและเกียรติบัตรออนไลน์ (SHA-256)</h3>
+            <span style="font-size: 11.5px; color: var(--gold-300);">ระบบตรวจสอบความถูกต้องเอกสารอิเล็กทรอนิกส์ สพม.สกลนคร</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeCertVerifyModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 24px;">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
+            กรอกรหัสวุฒิบัตร (Certificate Code) หรือ เลขที่เอกสาร:
+          </label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="certVerifyInput" placeholder="เช่น SPM-2569-TRAIN01 หรือ OBEC-2569-GOLD" style="flex: 1; padding: 11px 14px; border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 14px; font-weight: 700; background: var(--bg-surface); color: var(--text-main); outline: none;">
+            <button type="button" onclick="verifySpMCertificate()" class="btn-gold-primary" style="padding: 10px 20px; font-size: 13.5px; white-space: nowrap;">
+              <i class="fa-solid fa-shield-halved"></i> ตรวจสอบ
+            </button>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+            💡 ตัวอย่างรหัสทดสอบ: <strong>SPM-2569-TRAIN01</strong>, <strong>OBEC-2569-GOLD</strong> หรือ <strong>SPM-DPA-2569</strong>
+          </div>
+        </div>
+        <div id="certVerifyResultContainer" style="margin-top: 20px;">
+          <!-- Default preview on open -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Daily Agenda Modal (วาระงานราชการรายวัน) -->
+  <div class="modal-overlay" id="dailyAgendaModal" onclick="closeDailyAgendaModal(event)">
+    <div class="modal-box" style="max-width: 620px; width: 100%;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #060B19 0%, #101E42 100%); border-bottom: 2px solid var(--gold-500); padding: 18px 22px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.2); border: 1.5px solid var(--gold-400); display: flex; align-items: center; justify-content: center; color: var(--gold-400); font-size: 18px;">
+            <i class="fa-solid fa-calendar-day"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 16.5px; font-weight: 800; color: #FFFFFF; margin: 0;">วาระงานราชการและกำหนดการสำคัญประจำวัน</h3>
+            <span style="font-size: 11.5px; color: var(--gold-300);">สพม.สกลนคร • SESAO Sakon Nakhon Daily Agenda & e-Filenote</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeDailyAgendaModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 24px;" id="dailyAgendaBody">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+<script>
+
+    /* ==========================================================================
+       BREAKTHROUGH INNOVATIONS CONTROLLER JS (SPS TO SPM MASTER ARCHITECTURE)
+       ========================================================================== */
+    const MOCK_TEACHERS = {
+      '1479900123456': {
+        name: 'ดร. สมชาย สกลคุณากร',
+        position: 'ครูชำนาญการพิเศษ (คศ.3)',
+        school: 'โรงเรียนสกลราชวิทยานุกูล',
+        cluster: 'สหวิทยาเขตพระธาตุเชิงชุม',
+        subject: 'กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี',
+        pobecId: 'POBEC-4701-8842',
+        dpaStatus: 'ผ่านการประเมิน ว.PA (รอบปี 2568)',
+        avatar: 'fa-user-tie'
+      },
+      'TCH-4701': {
+        name: 'นางกานดา มณีรัตน์',
+        position: 'ครูเชี่ยวชาญ (คศ.4)',
+        school: 'โรงเรียนธาตุนารายณ์วิทยา',
+        cluster: 'สหวิทยาเขตพระธาตุนารายณ์เจงเวง',
+        subject: 'กลุ่มสาระการเรียนรู้คณิตศาสตร์',
+        pobecId: 'POBEC-4702-1190',
+        dpaStatus: 'ผ่านเกณฑ์วิทยฐานะเชี่ยวชาญ',
+        avatar: 'fa-user-graduate'
+      },
+      'TCH-4702': {
+        name: 'นายวรวิทย์ ไชยนาศรี',
+        position: 'รองผู้อำนวยการสถานศึกษา',
+        school: 'โรงเรียนสว่างแดนดิน',
+        cluster: 'สหวิทยาเขตสว่างแดนดิน',
+        subject: 'กลุ่มบริหารวิชาการและแผน',
+        pobecId: 'POBEC-4703-5521',
+        dpaStatus: 'ผ่านการประเมินผู้บริหารสถานศึกษา',
+        avatar: 'fa-chalkboard-user'
+      }
+    };
+
+    function openTeacherIdModal() {
+      const m = document.getElementById('teacherIdModal');
+      if (m) {
+        m.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lookupTeacherId('1479900123456');
+      }
+    }
+    function closeTeacherIdModal(e) {
+      if (!e || e.target.id === 'teacherIdModal' || e.target.classList.contains('modal-close-btn')) {
+        const m = document.getElementById('teacherIdModal');
+        if (m) m.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    function lookupTeacherId(forceId) {
+      const input = document.getElementById('teacherIdSearchInput');
+      const box = document.getElementById('teacherIdCardResultContainer');
+      const id = (forceId || (input ? input.value.trim() : '')) || '1479900123456';
+      const t = MOCK_TEACHERS[id] || {
+        name: 'นายข้าราชการครู สพม.สกลนคร',
+        position: 'ครู คศ.2 (ปฏิบัติการ)',
+        school: 'โรงเรียนในสังกัด สพม.สกลนคร',
+        cluster: 'สหวิทยาเขตในสังกัด 8 เขต',
+        subject: 'กลุ่มสาระการเรียนรู้แกนกลาง',
+        pobecId: 'POBEC-' + id.substring(0, 6),
+        dpaStatus: 'สถานะ: ข้าราชการครูสังกัด สพม.สกลนคร',
+        avatar: 'fa-user'
+      };
+
+      box.innerHTML = `
+        <div class="teacher-3d-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div class="teacher-avatar-frame">
+                <i class="fa-solid ${t.avatar}"></i>
+              </div>
+              <div>
+                <span class="teacher-card-badge">SMART TEACHER ID &bull; สพม.สกลนคร</span>
+                <h4 style="margin:4px 0 0 0; font-size:17.5px; font-weight:800; color:#FFFFFF;">${t.name}</h4>
+                <div style="font-size:12px; color:#ECC86A; font-weight:700;">${t.position}</div>
+              </div>
+            </div>
+            <span style="background:rgba(16,185,129,0.25); border:1px solid #10B981; color:#34D399; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap;">
+              <i class="fa-solid fa-circle-check"></i> ข้าราชการครู
+            </span>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; margin-bottom:14px; font-size:12.5px; line-height:1.6;">
+            <div><strong style="color:#ECC86A;">สถานศึกษา:</strong> ${t.school} (${t.cluster})</div>
+            <div><strong style="color:#ECC86A;">กลุ่มสาระ/งาน:</strong> ${t.subject}</div>
+            <div><strong style="color:#ECC86A;">P-OBEC ID:</strong> ${t.pobecId} &bull; <strong style="color:#ECC86A;">ว.PA:</strong> ${t.dpaStatus}</div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:11.5px; color:#94A3B8; border-top:1px dashed rgba(255,255,255,0.15); padding-top:12px;">
+            <div>
+              <i class="fa-solid fa-fingerprint" style="color:#ECC86A;"></i> Digital Barcode: <code>${id}</code>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button type="button" onclick="window.open('https://dpa-obec.com', '_blank')" class="btn-brand-tool" style="padding:4px 10px; font-size:11px; background:rgba(255,255,255,0.1); color:#FFFFFF; border-color:rgba(255,255,255,0.2);">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบ DPA
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const MOCK_CERTS = {
+      'SPM-2569-TRAIN01': {
+        code: 'SPM-2569-TRAIN01',
+        name: 'ดร. สมชาย สกลคุณากร',
+        title: 'วุฒิบัตรการอบรมเชิงปฏิบัติการการจัดการเรียนรู้ดิจิทัลด้วย AI และ Big Data',
+        event: 'โครงการยกระดับคุณภาพการศึกษามัธยมศึกษาสู่มาตรฐานสากล สพม.สกลนคร',
+        date: '15 ตุลาคม 2569',
+        director: 'นายนรงณ์ เห็นหลอด',
+        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+      },
+      'OBEC-2569-GOLD': {
+        code: 'OBEC-2569-GOLD',
+        name: 'นางกานดา มณีรัตน์',
+        title: 'เกียรติบัตรรางวัลครูผู้สอนดีเด่นระดับเขตพื้นที่การศึกษา (OBEC AWARDS)',
+        event: 'การคัดเลือกผลงานวิชาการและนวัตกรรมการจัดการเรียนรู้ สพม.สกลนคร',
+        date: '20 ตุลาคม 2569',
+        director: 'นายนรงณ์ เห็นหลอด',
+        hash: 'b5d4045c3f466fa91fe2cc6abe79232a1a57cdf104f7a26e716e0a1e2789df78'
+      },
+      'SPM-DPA-2569': {
+        code: 'SPM-DPA-2569',
+        name: 'นายวรวิทย์ ไชยนาศรี',
+        title: 'หนังสือรับรองการผ่านเกณฑ์การประเมินวิทยฐานะตามข้อตกลงในการพัฒนางาน (ว.PA)',
+        event: 'คณะกรรมการประเมินวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษา สพม.สกลนคร',
+        date: '22 ตุลาคม 2569',
+        director: 'นายนรงณ์ เห็นหลอด',
+        hash: '7d793037a0760186574b0282f2f435e7b1e516b9cfba8fef377751ab823665f1'
+      }
+    };
+
+    function openCertModal() {
+      const m = document.getElementById('certVerifyModal');
+      if (m) {
+        m.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        verifySpMCertificate('SPM-2569-TRAIN01');
+      }
+    }
+    function closeCertVerifyModal(e) {
+      if (!e || e.target.id === 'certVerifyModal' || e.target.classList.contains('modal-close-btn')) {
+        const m = document.getElementById('certVerifyModal');
+        if (m) m.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    function verifySpMCertificate(forceCode) {
+      const input = document.getElementById('certVerifyInput');
+      const box = document.getElementById('certVerifyResultContainer');
+      const code = (forceCode || (input ? input.value.trim().toUpperCase() : '')) || 'SPM-2569-TRAIN01';
+      const c = MOCK_CERTS[code] || {
+        code: code,
+        name: 'ผู้เข้ารับการอบรม สพม.สกลนคร',
+        title: 'วุฒิบัตรการผ่านการพัฒนาศักยภาพข้าราชการครูและบุคลากรทางการศึกษา',
+        event: 'โครงการส่งเสริมและพัฒนาการจัดการศึกษา สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร',
+        date: '24 ตุลาคม 2569',
+        director: 'นายนรงณ์ เห็นหลอด',
+        hash: 'a1b2c3d4e5f6789012345678abcdef0123456789abcdef0123456789abcdef01'
+      };
+
+      box.innerHTML = `
+        <div class="cert-holo-stage">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+            <div>
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#ECFDF5; border:1px solid #10B981; color:#047857; padding:4px 12px; border-radius:20px; font-size:11.5px; font-weight:700; margin-bottom:8px;">
+                <i class="fa-solid fa-circle-check"></i> เอกสารแท้จริง ผ่านการรับรอง SHA-256 สมบูรณ์
+              </span>
+              <h4 style="margin:2px 0 0 0; font-size:18px; font-weight:800; color:#0F172A;">${c.name}</h4>
+              <div style="font-size:12.5px; color:#64748B;">รหัสวุฒิบัตร: <strong>${c.code}</strong></div>
+            </div>
+            <div class="cert-seal-stamp">
+              <i class="fa-solid fa-award"></i>
+            </div>
+          </div>
+
+          <div style="margin:16px 0; padding:16px; background:#FFFDF0; border-radius:12px; border:1px solid #FEF3C7;">
+            <div style="font-size:12px; color:#D97706; font-weight:700;">หลักสูตร / รางวัลที่ได้รับ:</div>
+            <div style="font-size:15px; font-weight:800; color:#0F172A; margin:4px 0;">${c.title}</div>
+            <div style="font-size:13px; color:#475569;">${c.event}</div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:12.5px; border-top:1px solid #E2E8F0; padding-top:14px;">
+            <div>
+              <div style="color:#64748B;">ออกให้ ณ วันที่: <strong>${c.date}</strong></div>
+              <div style="color:#64748B;">ผู้ลงนาม: <strong>${c.director}</strong> (ผอ.สพม.สกลนคร)</div>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:10px; color:#94A3B8; display:block;">SHA-256 DIGITAL HASH</span>
+              <span class="cert-hash-pill">${c.hash.substring(0, 24)}...</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function openDailyAgendaModal() {
+      const m = document.getElementById('dailyAgendaModal');
+      const body = document.getElementById('dailyAgendaBody');
+      if (m && body) {
+        body.innerHTML = `
+          <div style="margin-bottom:16px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:12px; padding:14px; font-size:13px;">
+            <strong style="color:var(--gold-600);"><i class="fa-solid fa-bullhorn"></i> วาระประจำวัน สพม.สกลนคร:</strong> วันนี้มีการประชุมข้อราชการสำคัญและติดตามการดำเนินงาน 45 สถานศึกษา
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; gap:12px; padding:12px; border-radius:10px; background:var(--bg-canvas); border:1px solid var(--border-subtle);">
+              <span style="background:#3B82F6; color:#FFF; font-weight:800; font-size:11px; padding:4px 8px; border-radius:6px; height:fit-content; white-space:nowrap;">09:00 น.</span>
+              <div>
+                <h5 style="margin:0; font-size:14px; font-weight:800; color:var(--text-main);">ประชุมคณะกรรมการ ก.ต.ป.น. สพม.สกลนคร ครั้งที่ 4/2569</h5>
+                <p style="margin:2px 0 0 0; font-size:12px; color:var(--text-muted);">ณ ห้องประชุมพุทธรักษา สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; padding:12px; border-radius:10px; background:var(--bg-canvas); border:1px solid var(--border-subtle);">
+              <span style="background:#10B981; color:#FFF; font-weight:800; font-size:11px; padding:4px 8px; border-radius:6px; height:fit-content; white-space:nowrap;">13:30 น.</span>
+              <div>
+                <h5 style="margin:0; font-size:14px; font-weight:800; color:var(--text-main);">นิเทศ ติดตามการจัดการเรียนรู้ห้องเรียนดิจิทัลและระบบความปลอดภัย MOE Safety</h5>
+                <p style="margin:2px 0 0 0; font-size:12px; color:var(--text-muted);">สหวิทยาเขตพระธาตุนารายณ์เจงเวง และ สหวิทยาเขตพระธาตุเชิงชุม</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; padding:12px; border-radius:10px; background:var(--bg-canvas); border:1px solid var(--border-subtle);">
+              <span style="background:#F59E0B; color:#FFF; font-weight:800; font-size:11px; padding:4px 8px; border-radius:6px; height:fit-content; white-space:nowrap;">15:30 น.</span>
+              <div>
+                <h5 style="margin:0; font-size:14px; font-weight:800; color:var(--text-main);">รับส่งหนังสือสั่งการราชการด่วนที่สุดผ่านระบบ e-Filenote และสารบรรณดิจิทัล</h5>
+                <p style="margin:2px 0 0 0; font-size:12px; color:var(--text-muted);">กลุ่มอำนวยการ สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</p>
+              </div>
+            </div>
+          </div>
+        `;
+        m.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeDailyAgendaModal(e) {
+      if (!e || e.target.id === 'dailyAgendaModal' || e.target.classList.contains('modal-close-btn')) {
+        const m = document.getElementById('dailyAgendaModal');
+        if (m) m.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    let isPhuphanRecognizing = false;
+    let phuphanSpeechRecognition = null;
+
+    function togglePhuphanSpeechRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert('เบราว์เซอร์ของท่านยังไม่รองรับระบบสั่งการด้วยเสียงพูด กรุณาใช้งานผ่าน Google Chrome หรือ Microsoft Edge ครับ');
+        return;
+      }
+
+      const micBtn = document.getElementById('phuphanMicBtn');
+      const input = document.getElementById('phuphanInput');
+
+      if (isPhuphanRecognizing) {
+        if (phuphanSpeechRecognition) phuphanSpeechRecognition.stop();
+        isPhuphanRecognizing = false;
+        if (micBtn) micBtn.classList.remove('listening');
+        return;
+      }
+
+      try {
+        phuphanSpeechRecognition = new SpeechRecognition();
+        phuphanSpeechRecognition.lang = 'th-TH';
+        phuphanSpeechRecognition.continuous = false;
+        phuphanSpeechRecognition.interimResults = false;
+
+        phuphanSpeechRecognition.onstart = function() {
+          isPhuphanRecognizing = true;
+          if (micBtn) micBtn.classList.add('listening');
+          if (input) input.placeholder = '🎙️ กำลังฟังเสียงของคุณ... กรุณาพูดคำถามได้เลยครับ';
+        };
+
+        phuphanSpeechRecognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript;
+          if (input) {
+            input.value = transcript;
+            sendPhuPhanMessage();
+          }
+        };
+
+        phuphanSpeechRecognition.onerror = function(err) {
+          console.warn('Speech recognition error:', err);
+          isPhuphanRecognizing = false;
+          if (micBtn) micBtn.classList.remove('listening');
+          if (input) input.placeholder = 'พิมพ์คำถามที่นี่ เช่น ขอเบอร์กลุ่มบุคคล, เกณฑ์ ว.PA...';
+        };
+
+        phuphanSpeechRecognition.onend = function() {
+          isPhuphanRecognizing = false;
+          if (micBtn) micBtn.classList.remove('listening');
+          if (input) input.placeholder = 'พิมพ์คำถามที่นี่ เช่น ขอเบอร์กลุ่มบุคคล, เกณฑ์ ว.PA...';
+        };
+
+        phuphanSpeechRecognition.start();
+      } catch (err) {
+        console.warn('Recognition start exception:', err);
+      }
+    }
+
+</script>
 </body>
 
 </html>
