@@ -128,7 +128,7 @@ function spm_get_default_settings() {
         'ev3_desc' => 'ร่วมสร้างความร่วมมือระหว่างบ้านและโรงเรียนในการดูแลช่วยเหลือนักเรียน',
 
         // Tab 9: คำถามที่พบบ่อย (FAQ 3 ข้อ)
-        'faq1_q' => 'การเข้าระบบดูเกรดออนไลน์ของโรงเรียน ต้องใช้รหัสอะไร?',
+        'faq1_q' => 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?',
         'faq1_a' => 'สำหรับนักเรียนให้กรอกเลขประจำตัวนักเรียน 5 หลัก หรือเลขประจำตัวประชาชน 13 หลัก ส่วนผู้ปกครองใช้เลขประจำตัวประชาชน 13 หลักพร้อมวันเดือนปีเกิดของนักเรียน (เช่น 31/12/2553) หากเข้าไม่ได้ติดต่อขอปรับรหัสได้ที่นายทะเบียนวัดผล',
         
         'faq2_q' => 'การติดต่อขอเอกสาร ปพ.1 และ ปพ.7 ต้องเตรียมอะไรบ้าง?',
@@ -169,7 +169,7 @@ function spm_get_default_settings() {
         'ai_bot_status' => 'ออนไลน์ พร้อมตอบคำถาม 24 ชม.',
         'ai_welcome_text' => 'สวัสดีครับ! ผมคือ น้องภูพาน AI AI ผู้ช่วยดิจิทัลสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ยินดีต้อนรับนักเรียน ผู้ปกครอง และคุณครูครับ มีเรื่องไหนให้ผมช่วยแนะนำไหมครับ?',
 
-        // Tab 13: ธีมสี & เอกลักษณ์โรงเรียน (Theme & Identity Colors)
+        // Tab 13: ธีมสีน้ำเงินคราม-เหลืองทอง & อัตลักษณ์ สพม. (Sakon Kram & Royal Gold)
         'theme_preset' => 'spm_kram_gold',
         'theme_primary' => '#0F172A',
         'theme_primary_dark' => '#060B19',
@@ -178,7 +178,7 @@ function spm_get_default_settings() {
         'theme_secondary_light' => '#3B82F6',
         'theme_gold' => '#EAB308',
 
-        // Tab 14: พิมพ์เขียวโรงเรียน & โคลนระบบ (Master School Blueprint Hub)
+        // Tab 14: พิมพ์เขียวดิจิทัล & ศูนย์จำลองข้อมูลเครือข่าย สพม.
         'blueprint_version' => '2.0.0-PRO',
         'school_jurisdiction' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร)',
         'school_district' => 'อำเภอเมืองสกลนคร',
@@ -424,9 +424,10 @@ function spm_render_admin_page() {
             .spm-admin-wrap { display: flex; gap: 24px; align-items: flex-start; margin-top: 20px; }
             .spm-sidebar { width: 260px; flex-shrink: 0; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; padding: 12px; box-shadow: 0 4px 16px rgba(15,23,42,0.04); position: sticky; top: 40px; }
             .spm-tab-btn { width: 100%; text-align: left; padding: 11px 14px; border-radius: 10px; border: none; background: transparent; color: #475569; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.15s; margin-bottom: 4px; }
-            .spm-tab-btn:hover { background: #F8FAFC; color: #0F172A; }
-            .spm-tab-btn.active { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #FFFFFF; font-weight: 700; box-shadow: 0 4px 12px rgba(15,23,42,0.25); }
-            .spm-tab-btn.active .spm-tab-icon { color: #ECC86A; }
+            .spm-tab-btn:hover { background: #F1F5F9; color: #060B19; }
+            .spm-tab-btn.active { background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); color: #FFFFFF; font-weight: 700; border-left: 4px solid #ECC86A; box-shadow: 0 4px 14px rgba(6,11,25,0.35); }
+            .spm-tab-btn.active .spm-tab-icon { color: #ECC86A; font-weight: 800; }
+            .spm-tab-btn.active span { color: #FFFFFF; }
             .spm-content-pane { flex-grow: 1; min-width: 0; }
             .spm-tab-section { display: none; }
             .spm-tab-section.active { display: block; animation: spsFade 0.25s ease-out; }
@@ -441,7 +442,7 @@ function spm_render_admin_page() {
             .sps-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
             .sps-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
             .sps-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
-            .spm-sticky-bar { position: fixed; bottom: 0; left: 160px; right: 0; background: rgba(15,23,42,0.95); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; border-top: 1px solid rgba(255,255,255,0.12); box-shadow: 0 -10px 30px rgba(0,0,0,0.25); }
+            .spm-sticky-bar { position: fixed; bottom: 0; left: 160px; right: 0; background: rgba(6,11,25,0.96); backdrop-filter: blur(14px); border-top: 1px solid rgba(236,200,106,0.35); -webkit-backdrop-filter: blur(14px); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; border-top: 1px solid rgba(255,255,255,0.12); box-shadow: 0 -10px 30px rgba(0,0,0,0.25); }
             
             @media (max-width: 960px) {
                 .spm-admin-wrap { flex-direction: column; }
@@ -454,97 +455,58 @@ function spm_render_admin_page() {
             }
         </style>
 
-        <!-- Top Header Banner -->
-        <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 30px 36px; border-radius: 20px; margin: 20px 0 25px 0; box-shadow: 0 14px 30px rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; gap: 20px;">
-            <div>
-                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(236,72,153,0.18); border: 1px solid rgba(236,72,153,0.35); padding: 5px 14px; border-radius: 20px; color: #ECC86A; font-size: 12px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px;">
-                    ⭐ SPS ULTIMATE NO-CODE COMMAND CENTER
+        <!-- Top Header Banner (Executive Sakon Kram & Royal Gold) -->
+        <div style="background: linear-gradient(135deg, #060B19 0%, #0B132B 50%, #1E293B 100%); padding: 32px 36px; border-radius: 20px; margin: 20px 0 22px 0; box-shadow: 0 16px 36px rgba(6,11,25,0.3); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(236,200,106,0.35); flex-wrap: wrap; gap: 20px; position: relative; overflow: hidden;">
+            <div style="position: absolute; right: -30px; bottom: -30px; font-size: 150px; color: rgba(236,200,106,0.03); pointer-events: none; font-weight: 900;">สพม.</div>
+            <div style="position: relative; z-index: 1;">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(236,200,106,0.15); border: 1px solid rgba(236,200,106,0.4); padding: 6px 16px; border-radius: 999px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(236,200,106,0.15);">
+                    <span style="font-size: 13.5px; font-weight: 800; color: #ECC86A; letter-spacing: 0.5px;">⭐ SPM SAKON NAKHON DIGITAL COMMAND CENTER</span>
                 </div>
                 <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 800; margin: 0 0 8px 0; display: flex; align-items: center; gap: 12px;">
-                    🏫 ศูนย์บัญชาการจัดการเนื้อหา สพม. (แบบละเอียดสมบูรณ์)
+                    🏛️ ศูนย์บัญชาการดิจิทัล สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
                 </h1>
-                <p style="color: #94A3B8; margin: 0; font-size: 13.5px; line-height: 1.5;">
-                    ปรับแต่งทุกจุดบนศูนย์บัญชาการพอร์ทัลดิจิทัล สพม.สกลนคร ครอบคลุม 14 หมวดหมู่ 150+ รายการสำคัญ ข้อมูลอัปเดตขึ้นหน้าเว็บจริงสดใหม่ทันทีแบบเรียลไทม์
+                <p style="color: #CBD5E1; margin: 0; font-size: 14px; line-height: 1.6; max-width: 720px;">
+                    ระบบบริหารจัดการและเผยแพร่ข้อมูลกลางระดับเขตพื้นที่การศึกษา ครอบคลุม 14 หมวดหมู่ 150+ รายการสำคัญ ปรับปรุงข้อมูลสดใหม่แบบเรียลไทม์เพื่อ 43 โรงเรียนและบริการประชาชน
                 </p>
             </div>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <a href="<?php echo esc_url(home_url('/')); ?>" target="_blank" style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #FFFFFF; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
-                    👁️ ดูหน้าเว็บจริง
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1;">
+                <a href="<?php echo esc_url(home_url('/')); ?>" target="_blank" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(236,200,106,0.4); color: #ECC86A; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                    👁️ ดูหน้าเว็บจริง ↗
                 </a>
-                <a href="<?php echo esc_url(admin_url('post-new.php')); ?>" style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); color: #FFFFFF; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(236,72,153,0.35);">
-                    ✍️ เขียนข่าวใหม่
+                <a href="<?php echo esc_url(admin_url('post-new.php')); ?>" style="background: linear-gradient(135deg, #ECC86A 0%, #D4AF37 100%); color: #060B19; padding: 11px 22px; border-radius: 10px; text-decoration: none; font-size: 13.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 18px rgba(212,175,55,0.4);">
+                    ✍️ เขียนข่าวสาร สพม.
                 </a>
             </div>
         </div>
 
-                <!-- ONE-CLICK SCHOOL PRESET TRANSFORMER (แนวทางที่ 2: ดรอปดาวน์เปลี่ยนโรงเรียนในคลิกเดียว) -->
-        <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%); padding: 24px 28px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 10px 25px -5px rgba(67, 56, 202, 0.45); border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF; position: relative; overflow: hidden;">
-            <div style="position: absolute; right: -20px; bottom: -20px; font-size: 140px; color: rgba(255,255,255,0.04); pointer-events: none;">
-                🏫
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1;">
+        <!-- Executive District Key Metrics Bar -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 25px;">
+            <div style="background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); border: 1px solid rgba(236,200,106,0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 15px rgba(6,11,25,0.15);">
+                <div style="font-size: 32px; background: rgba(236,200,106,0.12); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(236,200,106,0.3);">🏛️</div>
                 <div>
-                    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 8px;">
-                        ⚡ ⚡ ONE-CLICK DISTRICT & SCHOOL TRANSFORMER (43 โรงเรียนในสังกัด สพม.สกลนคร)
-                    </div>
-                    <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #FFFFFF; display: flex; align-items: center; gap: 10px;">
-                        <span>🏫 ระบบสลับพิมพ์เขียวข้อมูลและจำลองอัตลักษณ์ 43 โรงเรียนในสังกัด สพม.สกลนคร (คลิกเดียวจบ)</span>
-                    </h2>
-                    <p style="margin: 6px 0 0; font-size: 13.5px; color: #C7D2FE; line-height: 1.5;">
-                        ไม่ต้องแก้โค้ด ไม่ต้องใช้ไฟล์ JSON! เพียงเลือกชื่อโรงเรียนจากรายการด้านล่าง ระบบจะเปลี่ยนชื่อ สีประจำสถาบัน พิกัดดาวเทียม และคำขวัญให้ทันที
-                    </p>
-                </div>
-                
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                    <select id="spsQuickSchoolSelect" onchange="onSelectSchoolPreset(this.value)" style="background: #FFFFFF; color: #0F172A; font-family: 'Google Sans', 'K2D', sans-serif; font-size: 14.5px; font-weight: 700; padding: 12px 18px; border-radius: 12px; border: 2px solid #818CF8; min-width: 330px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
-                        <option value="">-- 🏫 เลือกโรงเรียนที่ต้องการแปลงโฉม --</option>
-                        <option value="sps">🌸 1. สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (น้ำเงิน-ชมพู • อ.เมือง)</option>
-                        <option value="pkw">🌿 2. โรงเรียนพังโคนวิทยาคม (เขียว-ขาว • อ.พังโคน)</option>
-                        <option value="skr">👑 3. โรงเรียนสกลราชวิทยานุกูล (ขาว-กรมท่า • อ.เมือง)</option>
-                        <option value="tnw">🍊 4. โรงเรียนธาตุนารายณ์วิทยา (แสด-เทา • อ.เมือง)</option>
-                        <option value="swd">⭐ 5. โรงเรียนสว่างแดนดิน (น้ำเงิน-เหลือง • อ.สว่างแดนดิน)</option>
-                        <option value="wnw">🔥 6. โรงเรียนวานรนิวาสพิทยาสรรพ์ (ฟ้า-แดง • อ.วานรนิวาส)</option>
-                        <option value="akn">🍃 7. โรงเรียนอากาศอำนวยศึกษา (ชมพู-เขียว • อ.อากาศอำนวย)</option>
-                        <option value="kud">💜 8. โรงเรียนกุดบากพัฒนาศึกษา (ม่วง-ขาว • อ.กุดบาก)</option>
-                        <option value="ksm">🌊 9. โรงเรียนกุสุมาลย์วิทยาคม (ฟ้า-ขาว • อ.กุสุมาลย์)</option>
-                        <option value="wrp">❤️ 10. โรงเรียนมัธยมวาริชภูมิ (แดง-ขาว • อ.วาริชภูมิ)</option>
-                        <option value="ktk">🔶 11. โรงเรียนคำตากล้าราชประชาสงเคราะห์ (ส้ม-น้ำเงิน • อ.คำตากล้า)</option>
-                        <option value="wcs">🌍 12. โรงเรียนมัธยมศึกษามาตรฐานสากล (World-Class Standard)</option>
-                    </select>
-
-                    <button type="button" id="btnApplySchoolPreset" onclick="applySelectedSchoolPreset()" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; font-family: 'Google Sans', 'K2D', sans-serif; border: none; padding: 13px 26px; border-radius: 12px; font-size: 14.5px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(16,185,129,0.45); display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;">
-                        <span>🚀 แปลงโฉมเว็บไซต์ทันที</span>
-                    </button>
+                    <div style="font-size: 20px; font-weight: 800; color: #ECC86A;">43 โรงเรียน</div>
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 600;">6 สหวิทยาเขตในสังกัด</div>
                 </div>
             </div>
-
-            <!-- Live Details Preview Card -->
-            <div id="schoolPresetPreviewBox" style="display: none; margin-top: 18px; padding: 16px 20px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid rgba(255,255,255,0.18);">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                            <span id="previewBadge" style="font-size: 20px;"></span>
-                            <h4 id="previewSchoolName" style="margin: 0; font-size: 18px; font-weight: 800; color: #FFFFFF;"></h4>
-                            <span id="previewDistrict" style="background: rgba(255,255,255,0.18); color: #E0E7FF; font-size: 12px; padding: 3px 12px; border-radius: 20px; font-weight: 600;"></span>
-                        </div>
-                        <div id="previewMotto" style="font-size: 13px; color: #C7D2FE; margin-top: 4px;"></div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 18px;">
-                        <div>
-                            <div style="font-size: 11px; color: #A5B4FC; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">สีประจำสถาบัน:</div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span id="previewColor1" style="width: 24px; height: 24px; border-radius: 50%; display: inline-block; border: 2px solid #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></span>
-                                <span id="previewColor2" style="width: 24px; height: 24px; border-radius: 50%; display: inline-block; border: 2px solid #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></span>
-                                <span id="previewColorText" style="font-size: 13px; font-weight: 700; color: #FFFFFF; margin-left: 6px;"></span>
-                            </div>
-                        </div>
-                        <div style="border-left: 1px solid rgba(255,255,255,0.2); padding-left: 18px;">
-                            <div style="font-size: 11px; color: #A5B4FC; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">พิกัดดาวเทียม & สภาพอากาศ:</div>
-                            <div id="previewCoords" style="font-size: 13px; font-weight: 700; color: #34D399; display: flex; align-items: center; gap: 6px;">
-                                🛰️ <span></span>
-                            </div>
-                        </div>
-                    </div>
+            <div style="background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); border: 1px solid rgba(236,200,106,0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 15px rgba(6,11,25,0.15);">
+                <div style="font-size: 32px; background: rgba(236,200,106,0.12); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(236,200,106,0.3);">👥</div>
+                <div>
+                    <div style="font-size: 20px; font-weight: 800; color: #ECC86A;">2,450+ ท่าน</div>
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 600;">ข้าราชการครู & บุคลากร</div>
+                </div>
+            </div>
+            <div style="background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); border: 1px solid rgba(236,200,106,0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 15px rgba(6,11,25,0.15);">
+                <div style="font-size: 32px; background: rgba(236,200,106,0.12); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(236,200,106,0.3);">🎓</div>
+                <div>
+                    <div style="font-size: 20px; font-weight: 800; color: #ECC86A;">38,500+ คน</div>
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 600;">นักเรียนครอบคลุม 18 อำเภอ</div>
+                </div>
+            </div>
+            <div style="background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); border: 1px solid rgba(236,200,106,0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 15px rgba(6,11,25,0.15);">
+                <div style="font-size: 32px; background: rgba(236,200,106,0.12); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(236,200,106,0.3);">⭐</div>
+                <div>
+                    <div style="font-size: 20px; font-weight: 800; color: #ECC86A;">ITA ระดับ AA</div>
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 600;">98.50 คะแนนความโปร่งใส</div>
                 </div>
             </div>
         </div>
@@ -579,7 +541,7 @@ function spm_render_admin_page() {
                         <span class="spm-tab-icon">🌿</span> 6. สิ่งแวดล้อม Solar Rooftop
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-analytics', this)">
-                        <span class="spm-tab-icon">📊</span> 7. สถิติเปิด & TCAS มหาลัย
+                        <span class="spm-tab-icon">📊</span> 7. ข้อมูลสารสนเทศ บิ๊กดาต้า & สถิติการศึกษา
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-timeline', this)">
                         <span class="spm-tab-icon">📅</span> 8. ปฏิทินปฏิบัติงาน & กิจกรรม
@@ -621,7 +583,7 @@ function spm_render_admin_page() {
                                 <div>
                                     <label class="spm-label">ป้ายกำกับประกาศ (Badge Text):</label>
                                     <input type="text" name="notice_badge" value="<?php echo esc_attr($s['notice_badge'] ?? '📢 ประกาศด่วน'); ?>" class="spm-input">
-                                    <div class="sps-hint">เช่น 📢 ประกาศด่วน, 🎓 รับสมัคร ม.1-4, ⚠️ ปิดเรียน</div>
+                                    <div class="sps-hint">เช่น 📢 ประกาศด่วน, 📄 หนังสือราชการเร่งด่วน, 🏆 ข่าวผลงานรางวัล, 📝 ประชุมราชการ สพม.</div>
                                 </div>
                                 <div>
                                     <label class="spm-label">ลิงก์ปลายทางเมื่อคลิกประกาศ (URL):</label>
@@ -635,14 +597,14 @@ function spm_render_admin_page() {
                         </div>
 
                         <div class="spm-card">
-                            <h3 class="spm-card-head">🏛️ ข้อมูลชื่อโรงเรียนและหน่วยงานต้นสังกัด (Top Ticker & Identity)</h3>
+                            <h3 class="spm-card-head">🏛️ ข้อมูลชื่อสำนักงานเขตและหน่วยงานต้นสังกัด (District Identity)</h3>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">ชื่อโรงเรียนภาษาไทย:</label>
+                                    <label class="spm-label">ชื่อหน่วยงาน (ภาษาไทย):</label>
                                     <input type="text" name="school_name_th" value="<?php echo esc_attr($s['school_name_th'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร'); ?>" class="spm-input" style="font-weight: 700;">
                                 </div>
                                 <div>
-                                    <label class="spm-label">ชื่อโรงเรียนภาษาอังกฤษ:</label>
+                                    <label class="spm-label">ชื่อหน่วยงาน (ภาษาอังกฤษ):</label>
                                     <input type="text" name="school_name_en" value="<?php echo esc_attr($s['school_name_en'] ?? 'Sakonnakhonpatanasuksa School'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -725,11 +687,11 @@ function spm_render_admin_page() {
                         <div class="spm-card" style="border-left: 5px solid #8B5CF6;">
                             <h3 class="spm-card-head">🏛️ อัตลักษณ์ วิสัยทัศน์ และค่านิยม สพม.สกลนคร</h3>
                             <div style="margin-bottom: 16px;">
-                                <label class="spm-label">คำขวัญโรงเรียน (School Motto):</label>
+                                <label class="spm-label">คำขวัญประจำ สพม.สกลนคร (District Motto):</label>
                                 <input type="text" name="school_motto" value="<?php echo esc_attr($s['school_motto']); ?>" class="spm-input">
                             </div>
                             <div style="margin-bottom: 16px;">
-                                <label class="spm-label">คติพจน์ประจำโรงเรียน (School Philosophy):</label>
+                                <label class="spm-label">ค่านิยมองค์กร (Core Values - SPM SAKON):</label>
                                 <input type="text" name="school_philosophy" value="<?php echo esc_attr($s['school_philosophy']); ?>" class="spm-input" style="font-weight: 700;">
                             </div>
                             <div style="margin-bottom: 16px;">
@@ -742,17 +704,17 @@ function spm_render_admin_page() {
                                     <input type="text" name="school_identity" value="<?php echo esc_attr($s['school_identity'] ?? 'สิ่งแวดล้อมดี มีเทคโนโลยี ก้าวสู่วิถีคุณภาพ'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">อัตลักษณ์ของผู้เรียน (Learner Uniqueness):</label>
+                                    <label class="spm-label">อัตลักษณ์องค์กร สพม.สกลนคร (Organizational Identity):</label>
                                     <input type="text" name="school_uniqueness" value="<?php echo esc_attr($s['school_uniqueness'] ?? 'ยิ้มง่าย ไหว้สวย รวยน้ำใจ ใฝ่เรียนรู้'); ?>" class="spm-input">
                                 </div>
                             </div>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">สีประจำโรงเรียน (School Colors):</label>
+                                    <label class="spm-label">สีประจำเขตพื้นที่ (District Colors: น้ำเงินคราม - เหลืองทอง):</label>
                                     <input type="text" name="school_colors" value="<?php echo esc_attr($s['school_colors'] ?? 'น้ำเงิน - ชมพู'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">ต้นไม้ / ดอกไม้ประจำโรงเรียน:</label>
+                                    <label class="spm-label">ต้นไม้ / ดอกไม้ประจำจังหวัดและเขตพื้นที่:</label>
                                     <input type="text" name="school_tree" value="<?php echo esc_attr($s['school_tree'] ?? 'ต้นราชพฤกษ์ (ดอกคูน)'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -785,24 +747,24 @@ function spm_render_admin_page() {
                         </div>
 
                         <div class="spm-card">
-                            <h3 class="spm-card-head">👥 รองผู้อำนวยการ 4 กลุ่มบริหารงาน</h3>
+                            <h3 class="spm-card-head">👥 รองผู้อำนวยการ สพม.สกลนคร (4 ด้านภารกิจ)</h3>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">1. กลุ่มบริหารงานวิชาการ:</label>
+                                    <label class="spm-label">1. รอง ผอ.สพม.สกลนคร (ด้านส่งเสริมการจัดการศึกษาและวิชาการ):</label>
                                     <input type="text" name="deputy_academic" value="<?php echo esc_attr($s['deputy_academic'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานวิชาการ'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">2. กลุ่มบริหารงานงบประมาณ:</label>
+                                    <label class="spm-label">2. รอง ผอ.สพม.สกลนคร (ด้านนโยบาย แผน และงบประมาณ):</label>
                                     <input type="text" name="deputy_budget" value="<?php echo esc_attr($s['deputy_budget'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานงบประมาณ'); ?>" class="spm-input">
                                 </div>
                             </div>
                             <div class="sps-grid-2">
                                 <div>
-                                    <label class="spm-label">3. กลุ่มบริหารงานบุคคล:</label>
+                                    <label class="spm-label">3. รอง ผอ.สพม.สกลนคร (ด้านบริหารงานบุคคล):</label>
                                     <input type="text" name="deputy_personnel" value="<?php echo esc_attr($s['deputy_personnel'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานบุคคล'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">4. กลุ่มบริหารงานทั่วไป:</label>
+                                    <label class="spm-label">4. รอง ผอ.สพม.สกลนคร (ด้านบริหารทั่วไปและอำนวยการ):</label>
                                     <input type="text" name="deputy_general" value="<?php echo esc_attr($s['deputy_general'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานทั่วไป'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -812,7 +774,7 @@ function spm_render_admin_page() {
                     <!-- TAB 5: บริการดิจิทัล 8 เสาหลัก -->
                     <div id="tab-services" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #10B981;">
-                            <h3 class="spm-card-head">⚡ ระบบบริการดิจิทัล 8 ด้าน (One-Stop Digital Services)</h3>
+                            <h3 class="spm-card-head">⚡ ศูนย์บริการดิจิทัล e-Services & ภารกิจหลัก สพม.สกลนคร</h3>
                             
                             <!-- Srv 1 & 2 -->
                             <div class="sps-grid-2">
@@ -875,9 +837,9 @@ function spm_render_admin_page() {
                     <!-- TAB 6: สิ่งแวดล้อม Solar Rooftop -->
                     <div id="tab-green" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #10B981;">
-                            <h3 class="spm-card-head">🌿 สถานีสิ่งแวดล้อม & พลังงานสะอาด (Green Campus & Solar)</h3>
+                            <h3 class="spm-card-head">🌿 การบริหารจัดการสิ่งแวดล้อม พิกัดดาวเทียม & เครือข่ายสถานศึกษา</h3>
                             <div style="margin-bottom: 16px;">
-                                <label class="spm-label">ชื่อสถานี / หัวข้อระบบโซลาร์เซลล์:</label>
+                                <label class="spm-label">ระบบพลังงานสะอาด / Solar Rooftop สพม.สกลนคร:</label>
                                 <input type="text" name="solar_station_title" value="<?php echo esc_attr($s['solar_station_title'] ?? 'พลังงานสะอาด Solar Rooftop อาคาร 2 & 3'); ?>" class="spm-input">
                             </div>
                             <div class="sps-grid-2">
@@ -903,7 +865,7 @@ function spm_render_admin_page() {
                         </div>
                     </div>
 
-                    <!-- TAB 7: สถิติเปิด & TCAS มหาลัย -->
+                    <!-- TAB 7: ข้อมูลสารสนเทศ บิ๊กดาต้า & สถิติการศึกษา -->
                     <div id="tab-analytics" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #F59E0B;">
                             <h3 class="spm-card-head">📊 สถิติตัวเลขหน้าเว็บหลัก (Key Numerical Counters)</h3>
@@ -917,7 +879,7 @@ function spm_render_admin_page() {
                                     <input type="text" name="stat_teachers" value="<?php echo esc_attr($s['stat_teachers']); ?>" class="spm-input" style="font-weight: 700; color: #F59E0B;">
                                 </div>
                                 <div>
-                                    <label class="spm-label">อัตราศึกษาต่อ (TCAS):</label>
+                                    <label class="spm-label">ผลสัมฤทธิ์คุณภาพการศึกษา (ประเมินระดับชาติ):</label>
                                     <input type="text" name="stat_tcas" value="<?php echo esc_attr($s['stat_tcas']); ?>" class="spm-input" style="font-weight: 700; color: #F59E0B;">
                                 </div>
                             </div>
@@ -927,7 +889,7 @@ function spm_render_admin_page() {
                                     <input type="text" name="stat_awards" value="<?php echo esc_attr($s['stat_awards']); ?>" class="spm-input" style="font-weight: 700; color: #F59E0B;">
                                 </div>
                                 <div>
-                                    <label class="spm-label">จำนวนห้องเรียนคุณภาพ:</label>
+                                    <label class="spm-label">จำนวนสถานศึกษาในสังกัด (43 โรงเรียน):</label>
                                     <input type="text" name="stat_classrooms" value="<?php echo esc_attr($s['stat_classrooms'] ?? '60 ห้อง'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -938,11 +900,11 @@ function spm_render_admin_page() {
                         </div>
 
                         <div class="spm-card">
-                            <h3 class="spm-card-head">🎓 สถิติการเข้าศึกษาต่อมหาวิทยาลัย 4 กลุ่มเป้าหมาย (TCAS Analytics)</h3>
+                            <h3 class="spm-card-head">🎓 สถิติข้อมูลทางการศึกษา 4 ด้านสำคัญ (District Education Analytics)</h3>
                             <!-- Uni 1 -->
                             <div class="sps-grid-3">
                                 <div>
-                                    <label class="spm-label">กลุ่มมหาวิทยาลัยที่ 1:</label>
+                                    <label class="spm-label">ข้อมูลด้านที่ 1 (สหวิทยาเขต):</label>
                                     <input type="text" name="tcas_uni_1_name" value="<?php echo esc_attr($s['tcas_uni_1_name'] ?? 'มหาวิทยาลัยขอนแก่น (มข.)'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -958,7 +920,7 @@ function spm_render_admin_page() {
                             <!-- Uni 2 -->
                             <div class="sps-grid-3">
                                 <div>
-                                    <label class="spm-label">กลุ่มมหาวิทยาลัยที่ 2:</label>
+                                    <label class="spm-label">ข้อมูลด้านที่ 2 (โรงเรียนในสังกัด):</label>
                                     <input type="text" name="tcas_uni_2_name" value="<?php echo esc_attr($s['tcas_uni_2_name'] ?? 'จุฬาลงกรณ์ฯ / ธรรมศาสตร์ / มหิดล'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -974,7 +936,7 @@ function spm_render_admin_page() {
                             <!-- Uni 3 -->
                             <div class="sps-grid-3">
                                 <div>
-                                    <label class="spm-label">กลุ่มมหาวิทยาลัยที่ 3:</label>
+                                    <label class="spm-label">ข้อมูลด้านที่ 3 (ข้าราชการครู):</label>
                                     <input type="text" name="tcas_uni_3_name" value="<?php echo esc_attr($s['tcas_uni_3_name'] ?? 'มหาวิทยาลัยมหาสารคาม / เกษตรศาสตร์'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -990,7 +952,7 @@ function spm_render_admin_page() {
                             <!-- Uni 4 -->
                             <div class="sps-grid-3">
                                 <div>
-                                    <label class="spm-label">กลุ่มมหาวิทยาลัยที่ 4:</label>
+                                    <label class="spm-label">ข้อมูลด้านที่ 4 (นักเรียนในสังกัด):</label>
                                     <input type="text" name="tcas_uni_4_name" value="<?php echo esc_attr($s['tcas_uni_4_name'] ?? 'สถาบันอุดมศึกษาอื่นๆ & สายวิชาชีพ'); ?>" class="spm-input">
                                 </div>
                                 <div>
@@ -1008,7 +970,7 @@ function spm_render_admin_page() {
                     <!-- TAB 8: ปฏิทินปฏิบัติงาน & กิจกรรม -->
                     <div id="tab-timeline" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #6366F1;">
-                            <h3 class="spm-card-head">📅 3 กิจกรรมเด่นในปฏิทินปฏิบัติงานหน้าแรก (Academic Timeline)</h3>
+                            <h3 class="spm-card-head">📅 วาระงานผู้บริหาร ปฏิทินปฏิบัติงาน & กิจกรรมสำคัญ สพม.สกลนคร</h3>
                             
                             <!-- Event 1 -->
                             <div style="background: #F8FAFC; padding: 18px; border-radius: 12px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
@@ -1089,7 +1051,7 @@ function spm_render_admin_page() {
                             <!-- FAQ 1 -->
                             <div style="background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
                                 <label class="spm-label">คำถามข้อที่ 1:</label>
-                                <input type="text" name="faq1_q" value="<?php echo esc_attr($s['faq1_q'] ?? 'การเข้าระบบดูเกรดออนไลน์ของโรงเรียน ต้องใช้รหัสอะไร?'); ?>" class="spm-input" style="font-weight: 600; margin-bottom: 8px;">
+                                <input type="text" name="faq1_q" value="<?php echo esc_attr($s['faq1_q'] ?? 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?'); ?>" class="spm-input" style="font-weight: 600; margin-bottom: 8px;">
                                 <label class="spm-label">คำตอบข้อที่ 1:</label>
                                 <textarea name="faq1_a" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['faq1_a'] ?? 'สำหรับนักเรียนให้กรอกเลขประจำตัวนักเรียน 5 หลัก หรือเลขประจำตัวประชาชน 13 หลัก ส่วนผู้ปกครองใช้เลขประจำตัวประชาชน 13 หลักพร้อมวันเดือนปีเกิดของนักเรียน (เช่น 31/12/2553) หากเข้าไม่ได้ติดต่อขอปรับรหัสได้ที่นายทะเบียนวัดผล'); ?></textarea>
                             </div>
@@ -1168,13 +1130,13 @@ function spm_render_admin_page() {
                                 </div>
                             </div>
                             <div>
-                                <label class="spm-label">ที่อยู่โรงเรียน (School Address):</label>
+                                <label class="spm-label">ที่ตั้งสำนักงานเขต (Office Address):</label>
                                 <input type="text" name="address" value="<?php echo esc_attr($s['address']); ?>" class="spm-input" style="font-weight: 600;">
                             </div>
                         </div>
 
                         <div class="spm-card">
-                            <h3 class="spm-card-head">🌐 ช่องทางโซเชียลมีเดียโรงเรียน (Official Social Media)</h3>
+                            <h3 class="spm-card-head">🌐 ช่องทางการสื่อสารและโซเชียลมีเดีย สพม.สกลนคร</h3>
                             <div class="sps-grid-2">
                                 <div>
                                     <label class="spm-label">Facebook Page URL:</label>
@@ -1191,11 +1153,11 @@ function spm_render_admin_page() {
                                     <input type="url" name="youtube_url" value="<?php echo esc_attr($s['youtube_url']); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">TikTok School URL:</label>
+                                    <label class="spm-label">TikTok สพม.สกลนคร URL:</label>
                                     <input type="url" name="tiktok_url" value="<?php echo esc_attr($s['tiktok_url'] ?? 'https://www.tiktok.com'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">Instagram School URL:</label>
+                                    <label class="spm-label">Instagram สพม.สกลนคร URL:</label>
                                     <input type="url" name="instagram_url" value="<?php echo esc_attr($s['instagram_url'] ?? 'https://www.instagram.com'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -1205,7 +1167,7 @@ function spm_render_admin_page() {
                             <h3 class="spm-card-head">📜 รหัสหน่วยงานและส่วนท้ายเว็บ สพม.สกลนคร (District Codes & Footer)</h3>
                             <div class="sps-grid-3">
                                 <div>
-                                    <label class="spm-label">รหัสโรงเรียน 10 หลัก:</label>
+                                    <label class="spm-label">รหัสเขตพื้นที่การศึกษา (สพม.สกลนคร):</label>
                                     <input type="text" name="school_code_10" value="<?php echo esc_attr($s['school_code_10'] ?? '1047540628'); ?>" class="spm-input" style="font-weight: 700;">
                                 </div>
                                 <div>
@@ -1218,7 +1180,7 @@ function spm_render_admin_page() {
                                 </div>
                             </div>
                             <div style="margin-bottom: 16px;">
-                                <label class="spm-label">ข้อความรหัสรวมท้ายเว็บ (School Codes Line):</label>
+                                <label class="spm-label">ข้อความรับรองหน่วยงานท้ายเว็บ:</label>
                                 <input type="text" name="school_code_line" value="<?php echo esc_attr($s['school_code_line'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร) | สพฐ. กระทรวงศึกษาธิการ'); ?>" class="spm-input">
                             </div>
                             <div class="sps-grid-2">
@@ -1227,7 +1189,7 @@ function spm_render_admin_page() {
                                     <input type="text" name="footer_copyright" value="<?php echo esc_attr($s['footer_copyright'] ?? '© 2026 สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (Sakonnakhonpatanasuksa School). All Rights Reserved.'); ?>" class="spm-input">
                                 </div>
                                 <div>
-                                    <label class="spm-label">สีประจำโรงเรียน & คติพจน์ท้ายเว็บ:</label>
+                                    <label class="spm-label">สีประจำเขตพื้นที่ & สโลแกนท้ายเว็บ:</label>
                                     <input type="text" name="footer_colors" value="<?php echo esc_attr($s['footer_colors'] ?? 'สีประจำโรงเรียน: น้ำเงิน - ชมพู | ปัญญา นรานํ รตนํ'); ?>" class="spm-input">
                                 </div>
                             </div>
@@ -1255,7 +1217,7 @@ function spm_render_admin_page() {
                         </div>
                     </div>
 
-                    <!-- TAB 13: ธีมสี & เอกลักษณ์โรงเรียน (Theme & Identity Colors) -->
+                    <!-- TAB 13: ธีมสีน้ำเงินคราม-เหลืองทอง & อัตลักษณ์ สพม. (Sakon Kram & Royal Gold) -->
                     <div id="tab-theme" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #ECC86A;">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
@@ -1398,7 +1360,7 @@ function spm_render_admin_page() {
                         </div>
                     </div>
 
-                    <!-- TAB 14: พิมพ์เขียวโรงเรียน & โคลนระบบ (Master School Blueprint Hub) -->
+                    <!-- TAB 14: พิมพ์เขียวดิจิทัล & ศูนย์จำลองข้อมูลเครือข่าย สพม. -->
                     <div id="tab-blueprint" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #3B82F6;">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
@@ -1420,15 +1382,15 @@ function spm_render_admin_page() {
                                 </div>
                                 <div class="sps-grid-3">
                                     <div>
-                                        <label class="spm-label">สังกัดสำนักงานเขตพื้นที่:</label>
+                                        <label class="spm-label">สังกัดส่วนราชการระดับกระทรวง:</label>
                                         <input type="text" name="school_jurisdiction" value="<?php echo esc_attr($s['school_jurisdiction'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร)'); ?>" class="spm-input">
                                     </div>
                                     <div>
-                                        <label class="spm-label">พิกัดละติจูด (School Latitude):</label>
+                                        <label class="spm-label">พิกัดละติจูด (Office Latitude):</label>
                                         <input type="text" name="school_lat" value="<?php echo esc_attr($s['school_lat'] ?? '17.1459455'); ?>" class="spm-input" placeholder="17.1459455">
                                     </div>
                                     <div>
-                                        <label class="spm-label">พิกัดลองจิจูด (School Longitude):</label>
+                                        <label class="spm-label">พิกัดลองจิจูด (Office Longitude):</label>
                                         <input type="text" name="school_lon" value="<?php echo esc_attr($s['school_lon'] ?? '104.1531959'); ?>" class="spm-input" placeholder="104.1531959">
                                     </div>
                                 </div>
