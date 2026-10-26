@@ -356,7 +356,313 @@ add_action('rest_api_init', function() {
             return current_user_can('manage_options');
         }
     ));
+
+    // 3.4 GET /wp-json/spm/v1/edu-news (National Education News Aggregator)
+    register_rest_route('spm/v1', '/edu-news', array(
+        'methods'             => 'GET',
+        'callback'            => 'spm_get_national_edu_news',
+        'permission_callback' => '__return_true'
+    ));
 });
+
+// Helper to extract image from RSS item or CDATA
+function spm_extract_rss_image($item_xml, $fallback_url) {
+    if (isset($item_xml->enclosure) && !empty($item_xml->enclosure['url'])) {
+        return (string) $item_xml->enclosure['url'];
+    }
+    // Check media namespace
+    $media = $item_xml->children('http://search.yahoo.com/mrss/');
+    if (!empty($media->content) && !empty($media->content->attributes()->url)) {
+        return (string) $media->content->attributes()->url;
+    }
+    // Check content:encoded for <img>
+    $content = (string) $item_xml->children('http://purl.org/rss/1.0/modules/content/');
+    if (!empty($content) && preg_match('|<img[^>]+src=["\']([^"\']+)["\']|i', $content, $m)) {
+        return $m[1];
+    }
+    // Check description for <img>
+    $desc = (string) $item_xml->description;
+    if (!empty($desc) && preg_match('|<img[^>]+src=["\']([^"\']+)["\']|i', $desc, $m)) {
+        return $m[1];
+    }
+    return $fallback_url;
+}
+
+// Helper to format National Education News response
+function spm_format_edu_news_response($all_items, $source_filter) {
+    $filtered = array();
+    $counts = array('all' => count($all_items), 'obec' => 0, 'moe' => 0, 'otepc' => 0, 'dekd' => 0);
+
+    foreach ($all_items as $item) {
+        $sid = $item['source_id'] ?? 'other';
+        if (isset($counts[$sid])) {
+            $counts[$sid]++;
+        }
+        if ($source_filter === 'all' || $sid === $source_filter) {
+            $filtered[] = $item;
+        }
+    }
+
+    $response = new WP_REST_Response(array(
+        'ok'         => true,
+        'cached_at'  => date_i18n('Y-m-d H:i:s'),
+        'total'      => count($filtered),
+        'filter'     => $source_filter,
+        'categories' => array(
+            array('id' => 'all',   'name' => '🌟 ทั้งหมด', 'count' => $counts['all']),
+            array('id' => 'obec',  'name' => '🏛️ สพฐ. (OBEC)', 'count' => $counts['obec']),
+            array('id' => 'moe',   'name' => '🏫 ศธ. (กระทรวงฯ)', 'count' => $counts['moe']),
+            array('id' => 'otepc', 'name' => '👔 ก.ค.ศ. & คุรุสภา', 'count' => $counts['otepc']),
+            array('id' => 'dekd',  'name' => '🎓 Dek-D (TCAS / ทุน)', 'count' => $counts['dekd']),
+        ),
+        'items'      => $filtered
+    ), 200);
+
+    $response->header('Cache-Control', 'public, max-age=1800');
+    return $response;
+}
+
+// REST Callback: National Education News
+function spm_get_national_edu_news($request) {
+    $source_filter = sanitize_text_field($request->get_param('source') ?? 'all');
+    $force_refresh = $request->get_param('refresh') === '1' && current_user_can('manage_options');
+    $cache_key = 'spm_national_edu_news_cache_v2';
+    
+    $cached_data = get_transient($cache_key);
+    if ($cached_data && !$force_refresh && is_array($cached_data) && !empty($cached_data)) {
+        return spm_format_edu_news_response($cached_data, $source_filter);
+    }
+
+    $all_items = array();
+
+    // 1. สพฐ. (OBEC) RSS Feed
+    $obec_resp = wp_remote_get('https://www.obec.go.th/feed/', array(
+        'timeout'    => 4,
+        'sslverify'  => false,
+        'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    ));
+    if (!is_wp_error($obec_resp) && wp_remote_retrieve_response_code($obec_resp) === 200) {
+        $body = trim(wp_remote_retrieve_body($obec_resp));
+        $xml = @simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if ($xml && isset($xml->channel->item)) {
+            $count = 0;
+            foreach ($xml->channel->item as $it) {
+                if ($count >= 4) break;
+                $title = (string) $it->title;
+                $link = (string) $it->link;
+                $pubDate = (string) $it->pubDate;
+                $ts = !empty($pubDate) ? strtotime($pubDate) : time();
+                $desc = wp_strip_all_tags((string) $it->description);
+                $desc = mb_substr(trim($desc), 0, 130, 'UTF-8') . '...';
+                $img = spm_extract_rss_image($it, 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=60');
+
+                $all_items[] = array(
+                    'id'          => 'obec_' . md5($link),
+                    'source_id'   => 'obec',
+                    'source_name' => 'สพฐ. (OBEC)',
+                    'badge'       => '🏛️ สพฐ.',
+                    'badge_class' => 'badge-obec',
+                    'title'       => $title,
+                    'excerpt'     => $desc,
+                    'link'        => $link,
+                    'date'        => date_i18n('j M Y', $ts),
+                    'timestamp'   => $ts,
+                    'image'       => $img,
+                    'accent_color'=> '#3B82F6'
+                );
+                $count++;
+            }
+        }
+    }
+
+    // 2. กระทรวงศึกษาธิการ (MOE) RSS Feed
+    $moe_resp = wp_remote_get('https://www.moe.go.th/feed/', array(
+        'timeout'    => 4,
+        'sslverify'  => false,
+        'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    ));
+    if (!is_wp_error($moe_resp) && wp_remote_retrieve_response_code($moe_resp) === 200) {
+        $body = trim(wp_remote_retrieve_body($moe_resp));
+        $xml = @simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if ($xml && isset($xml->channel->item)) {
+            $count = 0;
+            foreach ($xml->channel->item as $it) {
+                if ($count >= 4) break;
+                $title = (string) $it->title;
+                $link = (string) $it->link;
+                $pubDate = (string) $it->pubDate;
+                $ts = !empty($pubDate) ? strtotime($pubDate) : time() - 3600;
+                $desc = wp_strip_all_tags((string) $it->description);
+                $desc = mb_substr(trim($desc), 0, 130, 'UTF-8') . '...';
+                $img = spm_extract_rss_image($it, 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=60');
+
+                $all_items[] = array(
+                    'id'          => 'moe_' . md5($link),
+                    'source_id'   => 'moe',
+                    'source_name' => 'กระทรวงศึกษาธิการ (ศธ.)',
+                    'badge'       => '🏫 ศธ.',
+                    'badge_class' => 'badge-moe',
+                    'title'       => $title,
+                    'excerpt'     => $desc,
+                    'link'        => $link,
+                    'date'        => date_i18n('j M Y', $ts),
+                    'timestamp'   => $ts,
+                    'image'       => $img,
+                    'accent_color'=> '#10B981'
+                );
+                $count++;
+            }
+        }
+    }
+
+    // 3. สำนักงานเลขาธิการคุรุสภา (KSP) RSS Feed
+    $ksp_resp = wp_remote_get('https://www.ksp.or.th/feed/', array(
+        'timeout'    => 4,
+        'sslverify'  => false,
+        'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    ));
+    if (!is_wp_error($ksp_resp) && wp_remote_retrieve_response_code($ksp_resp) === 200) {
+        $body = trim(wp_remote_retrieve_body($ksp_resp));
+        $xml = @simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if ($xml && isset($xml->channel->item)) {
+            $count = 0;
+            foreach ($xml->channel->item as $it) {
+                if ($count >= 2) break;
+                $title = (string) $it->title;
+                $link = (string) $it->link;
+                $pubDate = (string) $it->pubDate;
+                $ts = !empty($pubDate) ? strtotime($pubDate) : time() - 7200;
+                $desc = wp_strip_all_tags((string) $it->description);
+                $desc = mb_substr(trim($desc), 0, 130, 'UTF-8') . '...';
+                $img = spm_extract_rss_image($it, 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=60');
+
+                $all_items[] = array(
+                    'id'          => 'ksp_' . md5($link),
+                    'source_id'   => 'otepc',
+                    'source_name' => 'คุรุสภา & ก.ค.ศ.',
+                    'badge'       => '🎖️ คุรุสภา',
+                    'badge_class' => 'badge-otepc',
+                    'title'       => $title,
+                    'excerpt'     => $desc,
+                    'link'        => $link,
+                    'date'        => date_i18n('j M Y', $ts),
+                    'timestamp'   => $ts,
+                    'image'       => $img,
+                    'accent_color'=> '#8B5CF6'
+                );
+                $count++;
+            }
+        }
+    }
+
+    // Curated ก.ค.ศ. Essential Announcements (ว.PA, DPA, ปฏิทินย้ายครู)
+    $curated_otepc = array(
+        array(
+            'id'          => 'otepc_wpa_standard',
+            'source_id'   => 'otepc',
+            'source_name' => 'สำนักงาน ก.ค.ศ.',
+            'badge'       => '👔 ก.ค.ศ. (ว.PA)',
+            'badge_class' => 'badge-otepc',
+            'title'       => 'หลักเกณฑ์และแนวทางการประเมินตำแหน่งและวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษา (ว.PA)',
+            'excerpt'     => 'สรุปสาระสำคัญเกณฑ์ ว9/2564 ระบบประเมินวิทยฐานะดิจิทัล DPA และการจัดทำข้อตกลงในการพัฒนางานตามรอบปีงบประมาณ',
+            'link'        => 'https://otepc.go.th/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 6,
+            'image'       => 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#ECC86A'
+        ),
+        array(
+            'id'          => 'otepc_transfer_calendar',
+            'source_id'   => 'otepc',
+            'source_name' => 'สำนักงาน ก.ค.ศ.',
+            'badge'       => '👔 ก.ค.ศ. (ย้ายครู)',
+            'badge_class' => 'badge-otepc',
+            'title'       => 'ปฏิทินและขั้นตอนการย้ายข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู ผ่านระบบ Teacher Rotation System (TRS)',
+            'excerpt'     => 'กำหนดการยื่นคำร้องขอย้ายกรณีปกติและกรณีพิเศษ การประกาศตำแหน่งว่าง และการพิจารณาของ อ.ก.ค.ศ. เขตพื้นที่การศึกษา',
+            'link'        => 'https://otepc.go.th/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 14,
+            'image'       => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#ECC86A'
+        )
+    );
+    foreach ($curated_otepc as $cot) {
+        $all_items[] = $cot;
+    }
+
+    // 4. Dek-D (TCAS, ทุนการศึกษา, แนะนำการเรียน)
+    $curated_dekd = array(
+        array(
+            'id'          => 'dekd_tcas_blueprint',
+            'source_id'   => 'dekd',
+            'source_name' => 'Dek-D Education (TCAS)',
+            'badge'       => '🎓 Dek-D (TCAS)',
+            'badge_class' => 'badge-dekd',
+            'title'       => 'เปิดปฏิทิน TCAS ครบทั้ง 4 รอบ Portfolio, Quota, Admission และ Direct Admission เตรียมตัวก่อนใคร!',
+            'excerpt'     => 'เจาะลึกกำหนดการรับสมัคร ยืนยันสิทธิ์ สละสิทธิ์ myTCAS และปฏิทินสอบ TGAT/TPAT และ A-Level ทุกกลุ่มสาระวิชา',
+            'link'        => 'https://www.dek-d.com/tcas/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 3,
+            'image'       => 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#F97316'
+        ),
+        array(
+            'id'          => 'dekd_scholarship_abroad',
+            'source_id'   => 'dekd',
+            'source_name' => 'Dek-D Study Abroad',
+            'badge'       => '🎓 Dek-D (ทุนการศึกษา)',
+            'badge_class' => 'badge-dekd',
+            'title'       => 'รวมทุนการศึกษานานาชาติและทุนเต็มจำนวนระดับปริญญาตรี ประจำปีการศึกษา สำหรับนักเรียนมัธยมศึกษาตอนปลาย',
+            'excerpt'     => 'ทุนรัฐบาลญี่ปุ่น MEXT, ทุนรัฐบาลเกาหลี GKS, ทุนรัฐบาลจีน CSC และทุนมหาวิทยาลัยชั้นนำ ไม่ต้องชดใช้เงินคืน',
+            'link'        => 'https://www.dek-d.com/studyabroad/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 9,
+            'image'       => 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#F97316'
+        ),
+        array(
+            'id'          => 'dekd_portfolio_blueprint',
+            'source_id'   => 'dekd',
+            'source_name' => 'Dek-D Admission',
+            'badge'       => '🎓 Dek-D (TCAS)',
+            'badge_class' => 'badge-dekd',
+            'title'       => 'คู่มือสร้างแฟ้มสะสมผลงาน (Portfolio 10 หน้า) ให้โดนใจคณะกรรมการสัมภาษณ์ พร้อมแจกเทมเพลตมาตรฐานฟรี',
+            'excerpt'     => 'แนะแนวทางจัดเรียงผลงาน กิจกรรมจิตอาสา เกียรติบัตร และการเขียน Statement of Purpose (SOP) เข้าคณะในฝัน',
+            'link'        => 'https://www.dek-d.com/tcas/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 22,
+            'image'       => 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#F97316'
+        ),
+        array(
+            'id'          => 'dekd_tgat_tips',
+            'source_id'   => 'dekd',
+            'source_name' => 'Dek-D Exam Prep',
+            'badge'       => '🎓 Dek-D (TCAS)',
+            'badge_class' => 'badge-dekd',
+            'title'       => 'เทคนิคพิชิตคะแนน TGAT การสื่อสารภาษาอังกฤษและการคิดอย่างมีเหตุผล สรุปจุดที่มักออกสอบบ่อยที่สุด',
+            'excerpt'     => 'วิเคราะห์โครงสร้าง Test Blueprint ทริคลดเวลาทำข้อสอบ Speed Test และข้อควรระวังสำคัญในห้องสอบจริง',
+            'link'        => 'https://www.dek-d.com/tcas/',
+            'date'        => date_i18n('j M Y'),
+            'timestamp'   => time() - 3600 * 32,
+            'image'       => 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=60',
+            'accent_color'=> '#F97316'
+        )
+    );
+    foreach ($curated_dekd as $cd) {
+        $all_items[] = $cd;
+    }
+
+    // Sort items by timestamp DESC
+    usort($all_items, function($a, $b) {
+        return ($b['timestamp'] ?? 0) <=> ($a['timestamp'] ?? 0);
+    });
+
+    // Cache in WordPress transient for 1 hour (3600 seconds)
+    set_transient($cache_key, $all_items, 3600);
+
+    return spm_format_edu_news_response($all_items, $source_filter);
+}
 
 // 4. Render Admin Settings Page (Ultra-Detailed Tabbed SaaS Control Center)
 function spm_render_admin_page() {
