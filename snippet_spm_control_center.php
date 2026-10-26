@@ -515,7 +515,52 @@ function spm_get_national_edu_news($request) {
         }
     }
 
-    // 3. สำนักงานเลขาธิการคุรุสภา (KSP) RSS Feed
+    // 3.1 สำนักงาน ก.ค.ศ. (OTEPC) Live Official RSS Feed
+    $otepc_resp = wp_remote_get('https://otepc.go.th/announcement/informations-news-all.feed?type=rss', array(
+        'timeout'    => 5,
+        'sslverify'  => false,
+        'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    ));
+    if (!is_wp_error($otepc_resp) && wp_remote_retrieve_response_code($otepc_resp) === 200) {
+        $body = trim(wp_remote_retrieve_body($otepc_resp));
+        $xml = @simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if ($xml && isset($xml->channel->item)) {
+            $count = 0;
+            foreach ($xml->channel->item as $it) {
+                if ($count >= 3) break;
+                $title = (string) $it->title;
+                $link = (string) $it->link;
+                $pubDate = (string) $it->pubDate;
+                $ts = !empty($pubDate) ? strtotime($pubDate) : time() - 3600;
+                $desc = wp_strip_all_tags((string) $it->description);
+                $desc = mb_substr(trim($desc), 0, 130, 'UTF-8');
+                if (empty($desc)) {
+                    $desc = 'ประกาศ ระเบียบ และหลักเกณฑ์ทางการจากสำนักงานคณะกรรมการข้าราชการครูและบุคลากรทางการศึกษา (ก.ค.ศ.)';
+                } else {
+                    $desc .= '...';
+                }
+                $img = spm_extract_rss_image($it, 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=60');
+
+                $all_items[] = array(
+                    'id'          => 'otepc_' . md5($link),
+                    'source_id'   => 'otepc',
+                    'source_name' => 'สำนักงาน ก.ค.ศ.',
+                    'badge'       => '👔 ก.ค.ศ.',
+                    'badge_class' => 'badge-otepc',
+                    'title'       => $title,
+                    'excerpt'     => $desc,
+                    'link'        => $link,
+                    'date'        => date_i18n('j M Y', $ts),
+                    'timestamp'   => $ts,
+                    'image'       => $img,
+                    'accent_color'=> '#ECC86A'
+                );
+                $count++;
+            }
+        }
+    }
+
+    // 3.2 สำนักงานเลขาธิการคุรุสภา (KSP) RSS Feed
     $ksp_resp = wp_remote_get('https://www.ksp.or.th/feed/', array(
         'timeout'    => 4,
         'sslverify'  => false,
@@ -555,31 +600,31 @@ function spm_get_national_edu_news($request) {
         }
     }
 
-    // Curated ก.ค.ศ. Essential Announcements (ว.PA, DPA, ปฏิทินย้ายครู)
+    // Curated ก.ค.ศ. Essential Direct Announcements (ว.PA, DPA, เกณฑ์วิทยฐานะ)
     $curated_otepc = array(
         array(
-            'id'          => 'otepc_wpa_standard',
+            'id'          => 'otepc_wpa_direct_587',
             'source_id'   => 'otepc',
             'source_name' => 'สำนักงาน ก.ค.ศ.',
             'badge'       => '👔 ก.ค.ศ. (ว.PA)',
             'badge_class' => 'badge-otepc',
-            'title'       => 'หลักเกณฑ์และแนวทางการประเมินตำแหน่งและวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษา (ว.PA)',
-            'excerpt'     => 'สรุปสาระสำคัญเกณฑ์ ว9/2564 ระบบประเมินวิทยฐานะดิจิทัล DPA และการจัดทำข้อตกลงในการพัฒนางานตามรอบปีงบประมาณ',
-            'link'        => 'https://otepc.go.th/',
+            'title'       => 'ว 587/2569 ซักซ้อมเกี่ยวกับการนำคุณวุฒิระดับปริญญามาลดระยะเวลาในการขอมีวิทยฐานะหรือเลื่อนวิทยฐานะ (ว.PA)',
+            'excerpt'     => 'หนังสือราชการ ก.ค.ศ. ซักซ้อมความเข้าใจการนับระยะเวลาการดำรงตำแหน่ง การลดระยะเวลาตามเงื่อนไขคุณวุฒิปริญญาโท-เอก ในระบบ DPA',
+            'link'        => 'https://otepc.go.th/th/content_page/item/6043-587-2569.html',
             'date'        => date_i18n('j M Y'),
             'timestamp'   => time() - 3600 * 6,
             'image'       => 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=60',
             'accent_color'=> '#ECC86A'
         ),
         array(
-            'id'          => 'otepc_transfer_calendar',
+            'id'          => 'otepc_board_meeting_direct',
             'source_id'   => 'otepc',
             'source_name' => 'สำนักงาน ก.ค.ศ.',
-            'badge'       => '👔 ก.ค.ศ. (ย้ายครู)',
+            'badge'       => '👔 ก.ค.ศ. (มติบอร์ด)',
             'badge_class' => 'badge-otepc',
-            'title'       => 'ปฏิทินและขั้นตอนการย้ายข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู ผ่านระบบ Teacher Rotation System (TRS)',
-            'excerpt'     => 'กำหนดการยื่นคำร้องขอย้ายกรณีปกติและกรณีพิเศษ การประกาศตำแหน่งว่าง และการพิจารณาของ อ.ก.ค.ศ. เขตพื้นที่การศึกษา',
-            'link'        => 'https://otepc.go.th/',
+            'title'       => 'สรุปผลการประชุมคณะกรรมการข้าราชการครูและบุคลากรทางการศึกษา (ก.ค.ศ.) วาระการบริหารงานบุคคลและวิทยฐานะ',
+            'excerpt'     => 'มติที่ประชุม ก.ค.ศ. พิจารณาการปรับปรุงหลักเกณฑ์การย้าย การบริหารอัตรากำลังครู และการขับเคลื่อนนโยบายกระทรวงศึกษาธิการ',
+            'link'        => 'https://otepc.go.th/th/content_page/item/6040-9-2569.html',
             'date'        => date_i18n('j M Y'),
             'timestamp'   => time() - 3600 * 14,
             'image'       => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=60',
