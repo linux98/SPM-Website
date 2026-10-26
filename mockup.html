@@ -9003,7 +9003,7 @@
 
         <span class="gov-badge"><i class="fa-solid fa-landmark"></i> สพฐ. กระทรวงศึกษาธิการ</span>
 
-        <span>สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</span>
+        <span id="spmTopGovOrg">สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</span>
 
         <span id="liveClockDisplay" style="color: var(--gold-300); font-size: 12.5px; font-weight: 500;">
 
@@ -9135,13 +9135,13 @@
 
           </div>
 
-          <h1 class="brand-title-th" style="font-size: 18.5px; font-weight: 800; margin: 2px 0 0 0; color: var(--text-main); letter-spacing: -0.2px;">
+          <h1 class="brand-title-th" id="spmBrandTitleTh" style="font-size: 18.5px; font-weight: 800; margin: 2px 0 0 0; color: var(--text-main); letter-spacing: -0.2px;">
 
             สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
 
           </h1>
 
-          <span class="brand-title-en" style="font-size: 10.5px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; display: block;">
+          <span class="brand-title-en" id="spmBrandTitleEn" style="font-size: 10.5px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; display: block;">
 
             SECONDARY EDUCATIONAL SERVICE AREA OFFICE SAKON NAKHON
 
@@ -13823,7 +13823,7 @@
 
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px;">
 
-        <div>© 2026 สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร. สงวนลิขสิทธิ์ทุกประการ.</div>
+        <div id="spmFooterCopyright">© 2026 สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร. สงวนลิขสิทธิ์ทุกประการ.</div>
 
         <div style="display:flex; gap:16px;">
 
@@ -14311,9 +14311,9 @@
 
           <div>
 
-            <h4 style="font-size:14.5px; font-weight:800; color:var(--text-main);">สพม.สกลนคร</h4>
+            <h4 id="drawerBrandTh" style="font-size:14.5px; font-weight:800; color:var(--text-main);">สพม.สกลนคร</h4>
 
-            <span style="font-size:11px; color:var(--text-muted);">SESAO Sakon Nakhon</span>
+            <span id="drawerBrandEn" style="font-size:11px; color:var(--text-muted);">SESAO Sakon Nakhon</span>
 
           </div>
 
@@ -16354,153 +16354,136 @@
 
     window.spmSettings = {};
 
-
-
-    async function hydrateSpmSettings() {
-
-      if (window.location.protocol === 'file:') return; // Prevent local file:// CORS error
-
-      try {
-
-        const res = await fetch('/site/index.php/wp-json/spm/v1/settings');
-
-        if (!res.ok) return;
-
-        const s = await res.json();
-
-        window.spmSettings = s;
-
-        console.log("🏛️ [SPM Settings Hydrated from WordPress]:", s);
-
-
-
-        // 1. Notice Bar
-
-        const noticeBar = document.getElementById('spmNoticeBar');
-
-        if (noticeBar) {
-
-          if (s.notice_enabled === '1' && s.notice_text && s.notice_text.trim() !== '') {
-
-            noticeBar.style.display = 'block';
-
-            const badge = document.getElementById('spmNoticeBadge');
-
-            if (badge && s.notice_badge) badge.innerText = s.notice_badge;
-
-            const txt = document.getElementById('spmNoticeText');
-
-            if (txt) txt.innerText = s.notice_text;
-
-            const link = document.getElementById('spmNoticeLink');
-
-            if (link && s.notice_link) link.href = s.notice_link;
-
-          } else {
-
-            noticeBar.style.display = 'none';
-
-          }
-
-        }
-
-
-
-        // 2. Hero Titles & Vision
-
-        const heroTitle = document.getElementById('spmHeroTitle');
-
-        if (heroTitle && s.hero_title_1 && s.hero_title_2) {
-
-          heroTitle.style.color = '#FFFFFF';
-          heroTitle.style.webkitTextFillColor = '#FFFFFF';
-          const t1 = s.hero_title_1 || 'ยกระดับมัธยมศึกษาสกลนคร';
-          const t2 = s.hero_title_2 || 'สู่มาตรฐานสากลด้วย ดิจิทัลคอนเน็กต์';
-          if (t2.includes('ดิจิทัลคอนเน็กต์')) {
-            const prefix = t2.replace('ดิจิทัลคอนเน็กต์', '').trim();
-            heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${prefix} </span><span class="gradient-gold-text">ดิจิทัลคอนเน็กต์</span>`;
-          } else {
-            heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span class="gradient-gold-text">${t2}</span>`;
-          }
-
-        }
-
-        const heroDesc = document.getElementById('spmHeroDesc');
-
-        if (heroDesc && s.hero_desc) heroDesc.innerText = s.hero_desc;
-
-
-
-        // 3. Executive Director & Quotes
-
-        if (s.director_name) execs[0].name = s.director_name;
-
-        if (s.director_quote) execs[0].q = s.director_quote;
-
-        if (s.deputy_1_name) execs[1].name = s.deputy_1_name;
-
-        if (s.deputy_1_quote) execs[1].q = s.deputy_1_quote;
-
-        if (s.deputy_2_name) execs[2].name = s.deputy_2_name;
-
-        if (s.deputy_2_quote) execs[2].q = s.deputy_2_quote;
-
-        if (s.deputy_3_name) execs[3].name = s.deputy_3_name;
-
-        if (s.deputy_3_quote) execs[3].q = s.deputy_3_quote;
-
-        switchExec(0);
-
-
-
-        // 4. Cockpit Counters
-
-        const kSchools = document.getElementById('kpiSchools');
-
-        if (kSchools && s.stat_schools_count) kSchools.innerText = s.stat_schools_count;
-
-        const kTeachers = document.getElementById('kpiTeachers');
-
-        if (kTeachers && s.stat_teachers_count) kTeachers.innerText = s.stat_teachers_count;
-
-        const kStudents = document.getElementById('kpiStudents');
-
-        if (kStudents && s.stat_students_count) kStudents.innerText = s.stat_students_count;
-
-
-
-        // 5. 9 Groups Extensions
-
-        if (s.ext_group_1_admin) departmentsData[0].ext = s.ext_group_1_admin;
-
-        if (s.ext_group_2_personnel) departmentsData[1].ext = s.ext_group_2_personnel;
-
-        if (s.ext_group_3_plan) departmentsData[2].ext = s.ext_group_3_plan;
-
-        if (s.ext_group_4_finance) departmentsData[3].ext = s.ext_group_4_finance;
-
-        if (s.ext_group_5_supervision) departmentsData[4].ext = s.ext_group_5_supervision;
-
-        if (s.ext_group_6_promote) departmentsData[5].ext = s.ext_group_6_promote;
-
-        if (s.ext_group_7_dlict) departmentsData[6].ext = s.ext_group_7_dlict;
-
-        if (s.ext_group_8_dev) departmentsData[7].ext = s.ext_group_8_dev;
-
-        if (s.ext_group_9_legal) departmentsData[8].ext = s.ext_group_9_legal;
-
-        if (s.ext_unit_10_audit) departmentsData[9].ext = s.ext_unit_10_audit;
-
-        renderOrgDepartments();
-
-
-
-      } catch (err) {
-
-        console.log("ℹ️ Standalone mode: Running without WordPress REST API backend.");
-
+    function applySpmSettings(s) {
+      if (!s || typeof s !== 'object') return;
+      window.spmSettings = s;
+      console.log("🏛️ [SPM Settings Live Hydration]:", s);
+
+      // 1. Brand Names & Titles (TH & EN)
+      if (s.school_name_th) {
+        document.querySelectorAll('.brand-title-th, #spmBrandTitleTh').forEach(el => {
+          el.innerText = s.school_name_th;
+        });
+        const topGov = document.getElementById('spmTopGovOrg');
+        if (topGov && !s.top_ticker_org) topGov.innerText = s.school_name_th;
+        document.title = `${s.school_name_th} (${s.school_name_short || 'สพม.สกลนคร'}) | SESAO Sakon Nakhon Data Hub & Portal`;
       }
 
+      if (s.school_name_en) {
+        document.querySelectorAll('.brand-title-en, #spmBrandTitleEn').forEach(el => {
+          el.innerText = s.school_name_en;
+        });
+      }
+
+      if (s.top_ticker_org) {
+        const topGov = document.getElementById('spmTopGovOrg');
+        if (topGov) topGov.innerText = s.top_ticker_org;
+      }
+
+      if (s.school_name_short) {
+        const drwTh = document.getElementById('drawerBrandTh');
+        if (drwTh) drwTh.innerText = s.school_name_short;
+      }
+
+      if (s.footer_copyright) {
+        const footCopy = document.getElementById('spmFooterCopyright');
+        if (footCopy) footCopy.innerText = s.footer_copyright;
+      }
+
+      // 2. Notice Bar
+      const noticeBar = document.getElementById('spmNoticeBar');
+      if (noticeBar) {
+        if (s.notice_enabled === '1' && s.notice_text && s.notice_text.trim() !== '') {
+          noticeBar.style.display = 'block';
+          const badge = document.getElementById('spmNoticeBadge');
+          if (badge && s.notice_badge) badge.innerText = s.notice_badge;
+          const txt = document.getElementById('spmNoticeText');
+          if (txt) txt.innerText = s.notice_text;
+          const link = document.getElementById('spmNoticeLink');
+          if (link && s.notice_link) link.href = s.notice_link;
+        } else {
+          noticeBar.style.display = 'none';
+        }
+      }
+
+      // 3. Hero Titles & Vision
+      const heroTitle = document.getElementById('spmHeroTitle');
+      if (heroTitle && s.hero_title_1 && s.hero_title_2) {
+        heroTitle.style.color = '#FFFFFF';
+        heroTitle.style.webkitTextFillColor = '#FFFFFF';
+        const t1 = s.hero_title_1;
+        const t2 = s.hero_title_2;
+        if (t2.includes('ดิจิทัลคอนเน็กต์')) {
+          const prefix = t2.replace('ดิจิทัลคอนเน็กต์', '').trim();
+          heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${prefix} </span><span class="gradient-gold-text">ดิจิทัลคอนเน็กต์</span>`;
+        } else {
+          heroTitle.innerHTML = `<span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;">${t1}</span><br><span class="gradient-gold-text">${t2}</span>`;
+        }
+      }
+
+      const heroDesc = document.getElementById('spmHeroDesc');
+      if (heroDesc && s.hero_desc) heroDesc.innerText = s.hero_desc;
+
+      // 4. Executive Director & Leadership
+      if (typeof execs !== 'undefined' && Array.isArray(execs) && execs.length > 0) {
+        if (s.director_name) execs[0].name = s.director_name;
+        if (s.director_message || s.director_quote) execs[0].q = s.director_message || s.director_quote;
+        if (s.deputy_academic) execs[1].name = s.deputy_academic;
+        if (s.deputy_budget) execs[2].name = s.deputy_budget;
+        if (s.deputy_personnel) execs[3].name = s.deputy_personnel;
+        if (typeof switchExec === 'function') switchExec(0);
+      }
+
+      // 5. Cockpit Stats
+      const kSchools = document.getElementById('kpiSchools');
+      if (kSchools && s.stat_classrooms) kSchools.innerText = s.stat_classrooms;
+      const kTeachers = document.getElementById('kpiTeachers');
+      if (kTeachers && s.stat_teachers) kTeachers.innerText = s.stat_teachers;
+      const kStudents = document.getElementById('kpiStudents');
+      if (kStudents && s.stat_students) kStudents.innerText = s.stat_students;
+
+      // 6. Theme CSS Variables (Dynamic Real-time Palette)
+      if (s.theme_primary) {
+        document.documentElement.style.setProperty('--navy-950', s.theme_primary);
+        document.documentElement.style.setProperty('--kram-primary', s.theme_primary);
+      }
+      if (s.theme_gold) {
+        document.documentElement.style.setProperty('--gold-500', s.theme_gold);
+        document.documentElement.style.setProperty('--gold-400', s.theme_gold);
+      }
+      if (s.theme_secondary) {
+        document.documentElement.style.setProperty('--kram-secondary', s.theme_secondary);
+      }
+    }
+
+    async function hydrateSpmSettings() {
+      // 1. Immediate bootstrap if injected by server
+      if (window.SPM_SERVER_SETTINGS) {
+        applySpmSettings(window.SPM_SERVER_SETTINGS);
+      }
+
+      if (window.location.protocol === 'file:') return;
+
+      // 2. Fetch fresh settings from REST API with cache-buster
+      const cacheBust = Date.now();
+      const endpoints = [
+        `/site/index.php/wp-json/spm/v1/settings?_t=${cacheBust}`,
+        `/site/index.php?rest_route=/spm/v1/settings&_t=${cacheBust}`,
+        `/site/?rest_route=/spm/v1/settings&_t=${cacheBust}`
+      ];
+
+      for (const ep of endpoints) {
+        try {
+          const res = await fetch(ep);
+          if (res.ok) {
+            const s = await res.json();
+            applySpmSettings(s);
+            break;
+          }
+        } catch (e) {
+          // continue to next endpoint
+        }
+      }
     }
 
 

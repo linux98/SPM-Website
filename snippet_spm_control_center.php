@@ -208,6 +208,13 @@ add_action('admin_menu', function() {
 });
 
 // Enqueue Google Sans & K2D Fonts in WP Admin Head for SPS Settings
+
+// 2.2 Inject Live SPM Settings into Front Page Head (Instant Zero-Latency Hydration)
+add_action('wp_head', function() {
+    $settings = spm_get_settings();
+    echo '<script>window.SPM_SERVER_SETTINGS = ' . wp_json_encode($settings) . ';</script>' . "\n";
+}, 1);
+
 add_action('admin_head', function() {
     if (isset($_GET['page']) && $_GET['page'] === 'spm-portal-settings') {
         echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
@@ -314,7 +321,11 @@ add_action('rest_api_init', function() {
     register_rest_route('spm/v1', '/settings', array(
         'methods' => 'GET',
         'callback' => function() {
-            return new WP_REST_Response(spm_get_settings(), 200);
+            $response = new WP_REST_Response(spm_get_settings(), 200);
+            $response->header('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+            $response->header('Pragma', 'no-cache');
+            $response->header('Expires', '0');
+            return $response;
         },
         'permission_callback' => '__return_true'
     ));
