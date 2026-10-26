@@ -567,6 +567,54 @@
 
 
 
+    
+    /* Executive Innovation Quick Pills (Luxury Sakon Kram & Royal Gold) */
+    .gov-innovation-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(236, 200, 106, 0.38);
+      color: #F8FAFC;
+      border-radius: 999px;
+      padding: 4px 13px;
+      font-size: 11.5px;
+      font-weight: 600;
+      font-family: 'Google Sans', 'K2D', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 6.5px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      outline: none;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .gov-innovation-btn:hover {
+      background: linear-gradient(135deg, rgba(236, 200, 106, 0.22) 0%, rgba(212, 175, 55, 0.32) 100%);
+      border-color: #ECC86A;
+      color: #FFFDF5;
+      box-shadow: 0 4px 15px rgba(236, 200, 106, 0.4);
+      transform: translateY(-1.5px);
+    }
+
+    .gov-innovation-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .gov-innovation-btn i {
+      color: #ECC86A;
+      font-size: 12px;
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    .gov-innovation-btn:hover i {
+      transform: scale(1.15);
+      color: #FFE699;
+    }
+
     .theme-opt-btn.active {
 
       background: var(--gold-500);
@@ -9014,23 +9062,18 @@
       </div>
 
       <div class="top-gov-tools">
-        <!-- Quick Innovations Links -->
-        <button onclick="openTeacherIdModal()" class="accessibility-btn" title="บัตรข้าราชการครูดิจิทัล (Smart Teacher ID)" style="display:flex; align-items:center; gap:5px; font-weight:700; color:var(--gold-400); border-color:var(--gold-500); padding:3px 8px;">
+        <!-- Executive Innovations Quick Hub (Sakon Kram & Royal Gold) -->
+        <button onclick="openTeacherIdModal()" class="gov-innovation-btn" title="บัตรข้าราชการครูดิจิทัล (Smart Teacher ID 3D Card)">
           <i class="fa-solid fa-id-card"></i> <span>บัตรครูดิจิทัล</span>
         </button>
-        <button onclick="openCertModal()" class="accessibility-btn" title="ศูนย์ตรวจสอบวุฒิบัตร (SHA-256)" style="display:flex; align-items:center; gap:5px; font-weight:700; color:#10B981; border-color:#10B981; padding:3px 8px;">
+        <button onclick="openCertModal()" class="gov-innovation-btn" title="ศูนย์ตรวจสอบวุฒิและเกียรติบัตร (SHA-256 Digital Verification)">
           <i class="fa-solid fa-certificate"></i> <span>ตรวจวุฒิบัตร</span>
         </button>
-        <button onclick="openDailyAgendaModal()" class="accessibility-btn" title="วาระงานราชการรายวัน" style="display:flex; align-items:center; gap:5px; font-weight:700; color:#60A5FA; border-color:#3B82F6; padding:3px 8px;">
+        <button onclick="openDailyAgendaModal()" class="gov-innovation-btn" title="วาระงานและข้อราชการรายวัน สพม.สกลนคร">
           <i class="fa-solid fa-calendar-check"></i> <span>วาระงาน</span>
         </button>
-
-        <!-- Voice AI Reader Toggle -->
-
-        <button onclick="toggleVoiceReader()" class="accessibility-btn" id="btnVoiceReader" title="ระบบอ่านออกเสียงสำหรับผู้พิการและผู้สูงอายุ (Web Speech AI)" style="display:flex; align-items:center; gap:5px; font-weight:700; color:var(--gold-400); border-color:var(--gold-500); padding:3px 10px;">
-
+        <button onclick="toggleVoiceReader()" class="gov-innovation-btn" id="btnVoiceReader" title="ระบบอ่านออกเสียงอัจฉริยะ (Web Speech AI)">
           <i class="fa-solid fa-volume-high" id="voiceIcon"></i> <span id="voiceText">ฟังเสียง</span>
-
         </button>
 
 
