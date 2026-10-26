@@ -426,7 +426,7 @@ function spm_format_edu_news_response($all_items, $source_filter) {
 function spm_get_national_edu_news($request) {
     $source_filter = sanitize_text_field($request->get_param('source') ?? 'all');
     $force_refresh = $request->get_param('refresh') === '1' && current_user_can('manage_options');
-    $cache_key = 'spm_national_edu_news_cache_v2';
+    $cache_key = 'spm_national_edu_news_cache_v3';
     
     $cached_data = get_transient($cache_key);
     if ($cached_data && !$force_refresh && is_array($cached_data) && !empty($cached_data)) {

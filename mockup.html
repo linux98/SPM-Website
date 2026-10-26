@@ -17028,7 +17028,19 @@
         }
 
         if (fetchedData && fetchedData.items && fetchedData.items.length > 0) {
-          nationalEduNewsData = fetchedData.items;
+          nationalEduNewsData = fetchedData.items.map(it => {
+            // Direct article URL resolver for OTEPC
+            if (it.link === 'https://otepc.go.th/' || it.link === 'https://otepc.go.th') {
+              if (it.id && it.id.includes('wpa') || it.title.includes('ว.PA')) {
+                it.link = 'https://otepc.go.th/th/content_page/item/6043-587-2569.html';
+              } else if (it.id && it.id.includes('transfer') || it.title.includes('ย้าย')) {
+                it.link = 'https://otepc.go.th/th/content_page/item/6065-20-2569-15-2569.html';
+              } else {
+                it.link = 'https://otepc.go.th/th/content_page/item/6040-9-2569.html';
+              }
+            }
+            return it;
+          });
           if (fetchedData.categories) {
             fetchedData.categories.forEach(cat => {
               const el = document.getElementById('count-' + cat.id);
