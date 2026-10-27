@@ -3406,6 +3406,58 @@
       }
     }
 
+    .edu-news-toggle-wrap {
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 36px;
+    }
+
+    .edu-news-expand-btn {
+      background: rgba(11, 19, 43, 0.88);
+      border: 1px solid rgba(236, 200, 106, 0.4);
+      color: #ECC86A;
+      padding: 11px 30px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .edu-news-expand-btn:hover {
+      background: #ECC86A;
+      color: #060B19;
+      border-color: #ECC86A;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(236, 200, 106, 0.35);
+    }
+
+    .edu-news-expand-btn i {
+      font-size: 12.5px;
+      transition: transform 0.25s ease;
+    }
+
+    @keyframes eduCardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .edu-news-card {
+      animation: eduCardFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
     .edu-news-card {
       background: var(--bg-card);
       border-radius: var(--radius-lg);
@@ -13862,6 +13914,13 @@
         <!-- Live & Fallback cards rendered via JS -->
       </div>
 
+      <!-- Expand / Collapse Action Button (Default 1 Row / 4 Cards) -->
+      <div class="edu-news-toggle-wrap" id="eduNewsToggleWrap">
+        <button id="eduNewsToggleBtn" class="edu-news-expand-btn" onclick="toggleEduNewsExpansion()">
+          <i class="fa-solid fa-chevron-down"></i> ดูข่าวการศึกษาเพิ่มเติม (อีก 12 ข่าว)
+        </button>
+      </div>
+
       <!-- Trust & Source Citation Footer Banner -->
       <div class="edu-news-cite-box">
         <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -17071,13 +17130,41 @@
       renderNationalEduNews(currentNationalEduFilter);
     }
 
+    let isEduNewsExpanded = false;
+
     function renderNationalEduNews(filterId) {
       const grid = document.getElementById('eduNewsGrid');
+      const toggleWrap = document.getElementById('eduNewsToggleWrap');
+      const toggleBtn = document.getElementById('eduNewsToggleBtn');
       if (!grid) return;
 
-      const items = filterId === 'all' 
+      const allFiltered = filterId === 'all' 
         ? nationalEduNewsData 
         : nationalEduNewsData.filter(it => it.source_id === filterId);
+
+      // Determine items to display: If 'all' and not expanded, display only top 4 (1 row)
+      let items = allFiltered;
+      if (filterId === 'all') {
+        if (!isEduNewsExpanded) {
+          items = allFiltered.slice(0, 4);
+        }
+        if (toggleWrap && toggleBtn) {
+          if (allFiltered.length > 4) {
+            toggleWrap.style.display = 'block';
+            if (isEduNewsExpanded) {
+              toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> ยุบย่อเก็บ (แสดง 1 แถว)';
+            } else {
+              const remaining = allFiltered.length - 4;
+              toggleBtn.innerHTML = `<i class="fa-solid fa-chevron-down"></i> ดูข่าวการศึกษาเพิ่มเติม (อีก ${remaining} ข่าว)`;
+            }
+          } else {
+            toggleWrap.style.display = 'none';
+          }
+        }
+      } else {
+        // In individual tabs (4 cards), always show all 4 (1 complete row) and hide button
+        if (toggleWrap) toggleWrap.style.display = 'none';
+      }
 
       if (items.length === 0) {
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; color: var(--gold-400); margin-bottom: 10px; display:block;"></i>กำลังอัปเดตข้อมูลข่าวล่าสุด...</div>';
@@ -17118,9 +17205,20 @@
 
     function filterNationalEduNews(sourceId, btn) {
       currentNationalEduFilter = sourceId;
+      // Reset expansion state when changing category
+      isEduNewsExpanded = false;
       document.querySelectorAll('.edu-filter-pill').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
       renderNationalEduNews(sourceId);
+    }
+
+    function toggleEduNewsExpansion() {
+      isEduNewsExpanded = !isEduNewsExpanded;
+      renderNationalEduNews(currentNationalEduFilter);
+      if (!isEduNewsExpanded) {
+        const el = document.getElementById('national-edu-news');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     // Auto-initialize National Education News
