@@ -13663,21 +13663,21 @@
 
           <button class="pill-cluster-btn active" onclick="filterSchoolDirectory('all', this)">ทั้งหมด (45)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('สกลราช', this)">1. สกลราช</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('สว่างศึกษา', this)">1. สว่างศึกษา (6)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('เบญจพัฒน์', this)">2. เบญจพัฒน์</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('พระธาตุนารายณ์เจงเวง', this)">2. พระธาตุนารายณ์เจงเวง (6)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('ปัญจวิทย์', this)">3. ปัญจวิทย์</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('เบญจรักษ์', this)">3. เบญจรักษ์ (5)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('ดำรงธรรม', this)">4. ดำรงธรรม</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('ลุ่มน้ำอูน', this)">4. ลุ่มน้ำอูน (6)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('สว่างแดนดิน', this)">5. สว่างแดนดิน</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('ดำรงธรรม', this)">5. ดำรงธรรม (6)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('วานรนิวาส', this)">6. วานรนิวาส</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('เทพทวีพัฒน์', this)">6. เทพทวีพัฒน์ (6)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('อากาศอำนวย', this)">7. อากาศอำนวย</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('สหสกลราช', this)">7. สหสกลราช (5)</button>
 
-          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('กุสุมาลย์', this)">8. กุสุมาลย์</button>
+          <button class="pill-cluster-btn" onclick="filterSchoolDirectory('สหเบญจพัฒน์', this)">8. สหเบญจพัฒน์ (5)</button>
 
         </div>
 
@@ -15053,7 +15053,7 @@
 
         id: 7,
 
-        title: "สหสกลราช",
+        title: "สหวิทยาเขตสหสกลราช",
 
         badge: "สหวิทยาเขตที่ 7",
 
@@ -15087,7 +15087,7 @@
 
         id: 8,
 
-        title: "สหวิทยาเขตเบญจพัฒน์",
+        title: "สหวิทยาเขตสหเบญจพัฒน์",
 
         badge: "สหวิทยาเขตที่ 8",
 
@@ -15121,7 +15121,7 @@
 
 
 
-    // Full 45 Schools Flat Array for Directory
+    // Full 45 Schools Flat Array for Directory (Official 8 Clusters)
 
     let allSchools = [];
 
@@ -15129,13 +15129,17 @@
 
       clustersData[k].schools.forEach(s => {
 
+        const cleanCluster = clustersData[k].title.replace("สหวิทยาเขต", "").trim();
+
         allSchools.push({
 
           name: s.name,
 
           dist: s.dist,
 
-          cluster: clustersData[k].title.replace("สหวิทยาเขต", ""),
+          cluster: cleanCluster,
+
+          clusterKey: k,
 
           std: s.std
 
@@ -15847,7 +15851,7 @@
 
       if (activeClusterFilter !== 'all') {
 
-        filtered = filtered.filter(s => s.cluster.includes(activeClusterFilter));
+        filtered = filtered.filter(s => s.cluster.includes(activeClusterFilter) || activeClusterFilter.includes(s.cluster) || s.clusterKey === activeClusterFilter);
 
       }
 
@@ -16390,7 +16394,7 @@
 
         data: {
 
-          labels: ['สกลราช', 'เบญจพัฒน์', 'ปัญจวิทย์', 'ดำรงธรรม', 'สว่างแดนดิน', 'วานรนิวาส', 'อากาศอำนวย', 'กุสุมาลย์'],
+          labels: ['สว่างศึกษา', 'พระธาตุนารายณ์ฯ', 'เบญจรักษ์', 'ลุ่มน้ำอูน', 'ดำรงธรรม', 'เทพทวีพัฒน์', 'สหสกลราช', 'สหเบญจพัฒน์'],
 
           datasets: [
 
@@ -18142,21 +18146,21 @@
 
           🏫 สพม.สกลนคร มีโรงเรียนมัธยมศึกษาในสังกัด <strong>45 โรงเรียน</strong> แบ่งเป็น <strong>8 สหวิทยาเขต</strong>:<br>
 
-          1. สกลราช (6 โรงเรียน)<br>
+          1. สว่างศึกษา (6 โรงเรียน)<br>
 
-          2. เบญจพัฒน์ (5 โรงเรียน)<br>
+          2. พระธาตุนารายณ์เจงเวง (6 โรงเรียน)<br>
 
-          3. ปัญจวิทย์ (5 โรงเรียน)<br>
+          3. เบญจรักษ์ (5 โรงเรียน)<br>
 
-          4. ดำรงธรรม (5 โรงเรียน)<br>
+          4. ลุ่มน้ำอูน (6 โรงเรียน)<br>
 
-          5. สว่างแดนดิน (6 โรงเรียน)<br>
+          5. ดำรงธรรม (6 โรงเรียน)<br>
 
-          6. วานรนิวาส (5 โรงเรียน)<br>
+          6. เทพทวีพัฒน์ (6 โรงเรียน)<br>
 
-          7. อากาศอำนวย (5 โรงเรียน)<br>
+          7. สหสกลราช (5 โรงเรียน)<br>
 
-          8. กุสุมาลย์ (8 โรงเรียน)<br><br>
+          8. สหเบญจพัฒน์ (5 โรงเรียน)<br><br>
 
           <a href="#map" onclick="togglePhuPhanChat()" style="color:var(--gold-600); font-weight:700; text-decoration:underline;">คลิกเพื่อดูแผนที่สารสนเทศ 8 สหวิทยาเขต</a>
 
@@ -19152,7 +19156,7 @@
 
         nameEn: "Sawang Daen Din School",
 
-        cluster: "สหวิทยาเขตสว่างแดนดิน (ศูนย์ประสานงาน)",
+        cluster: "สหวิทยาเขตสว่างศึกษา (ศูนย์ประสานงาน)",
 
         students: "3,420",
 
@@ -19208,7 +19212,7 @@
 
         nameEn: "Wanon Niwat School",
 
-        cluster: "สหวิทยาเขตวานรนิวาส (ศูนย์ประสานงาน)",
+        cluster: "สหวิทยาเขตเทพทวีพัฒน์ (ศูนย์ประสานงาน)",
 
         students: "2,890",
 
@@ -21312,7 +21316,7 @@
         name: 'นายวรวิทย์ ไชยนาศรี',
         position: 'รองผู้อำนวยการสถานศึกษา',
         school: 'โรงเรียนสว่างแดนดิน',
-        cluster: 'สหวิทยาเขตสว่างแดนดิน',
+        cluster: 'สหวิทยาเขตสว่างศึกษา',
         subject: 'กลุ่มบริหารวิชาการและแผน',
         pobecId: 'POBEC-4703-5521',
         dpaStatus: 'ผ่านการประเมินผู้บริหารสถานศึกษา',
