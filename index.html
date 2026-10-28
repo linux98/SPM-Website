@@ -17136,7 +17136,63 @@
       }
     }
 
+    
+    // Dynamic CRUD Hydration for 5 Portal Modules
+    async function hydratePortalCrudData() {
+      if (window.location.protocol === 'file:') return;
+      const cacheBust = Date.now();
+      const baseRoutes = [
+        '/site/index.php?rest_route=/spm/v1',
+        '/site/index.php/wp-json/spm/v1',
+        '/site/?rest_route=/spm/v1'
+      ];
+
+      for (const base of baseRoutes) {
+        try {
+          // 1. Hydrate Circulars & Gazette
+          const circRes = await fetch(`${base}/circulars?_t=${cacheBust}`);
+          if (circRes.ok) {
+            const data = await circRes.json();
+            if (Array.isArray(data) && data.length > 0) {
+              gazetteData = data;
+              if (typeof renderGazetteTable === 'function') {
+                renderGazetteTable(gazetteData);
+              }
+            }
+          }
+
+          // 2. Hydrate Calendar Events
+          const calRes = await fetch(`${base}/calendar?_t=${cacheBust}`);
+          if (calRes.ok) {
+            const calData = await calRes.json();
+            if (Array.isArray(calData) && calData.length > 0) {
+              calendarEvents = calData;
+              if (typeof renderCalendar === 'function') {
+                renderCalendar();
+              }
+            }
+          }
+
+          // 3. Hydrate Downloads
+          const dlRes = await fetch(`${base}/downloads?_t=${cacheBust}`);
+          if (dlRes.ok) {
+            const dlData = await dlRes.json();
+            if (Array.isArray(dlData) && dlData.length > 0) {
+              downloadsData = dlData;
+              if (typeof renderDownloads === 'function') {
+                renderDownloads(downloadsData);
+              }
+            }
+          }
+          break; // Stop after first successful base route
+        } catch (err) {
+          // Continue trying next endpoint
+        }
+      }
+    }
+
     async function hydrateSpmSettings() {
+      hydratePortalCrudData();
       // 1. Immediate bootstrap if injected by server
       if (window.SPM_SERVER_SETTINGS) {
         applySpmSettings(window.SPM_SERVER_SETTINGS);
@@ -17832,7 +17888,7 @@
 
     // 2. Official Circulars & Gazette Dataset
 
-    const gazetteData = [
+    let gazetteData = [
 
       { num: "ศธ 04228/ว 1845", urgency: "urgent", type: "หนังสือเวียน", date: "23 ต.ค. 2569", title: "แนวทางการประเมินผลสัมฤทธิ์ตามเกณฑ์ ว.PA และการตรวจสอบข้อมูลในระบบ DPA ภาคเรียนที่ 1/2569", dept: "กลุ่มบริหารงานบุคคล", size: "2.4 MB" },
 
@@ -17966,7 +18022,7 @@
 
     // 3. Interactive 3D Work Calendar Dataset
 
-    const calendarEvents = [
+    let calendarEvents = [
 
       { day: 23, title: "วันปิยมหาราช (วันหยุดราชการ)", type: "holiday", time: "ทั้งวัน", loc: "ทั่วประเทศ" },
 
@@ -19692,7 +19748,7 @@
 
     // 2. 9 Groups 1 Unit Service Forms Dataset
 
-    const downloadsData = [
+    let downloadsData = [
 
       // 1. กลุ่มอำนวยการ
 

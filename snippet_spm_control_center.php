@@ -3384,3 +3384,943 @@ function spm_render_luxury_single_post() {
 </html>
     <?php
 }
+
+
+
+/* ==========================================================================
+   MODULE: SPM PORTAL COMPREHENSIVE CRUD ENGINE (5 ESSENTIAL MODULES)
+   1. คลังหนังสือราชการและคำสั่งเขต (spm_circular)
+   2. ปฏิทินปฏิบัติงานและกิจกรรม (spm_calendar)
+   3. ศูนย์ดาวน์โหลดแบบฟอร์ม 9 กลุ่ม 1 หน่วย (spm_download)
+   4. หอเชิดชูเกียรติ & เกียรติบัตรดิจิทัล (spm_certificate)
+   5. ศูนย์เฝ้าระวังความปลอดภัย MOE Safety (spm_safety)
+   ========================================================================== */
+
+// 1. REGISTER CUSTOM POST TYPES
+add_action('init', 'spm_register_portal_cpts');
+function spm_register_portal_cpts() {
+    // 1.1 คลังหนังสือราชการและคำสั่งเขต
+    register_post_type('spm_circular', array(
+        'labels' => array(
+            'name' => 'คลังหนังสือราชการ',
+            'singular_name' => 'หนังสือราชการ',
+            'add_new' => 'เพิ่มหนังสือราชการใหม่',
+            'add_new_item' => 'เพิ่มหนังสือราชการ / คำสั่งเขต',
+            'edit_item' => 'แก้ไขหนังสือราชการ',
+            'all_items' => 'หนังสือราชการทั้งหมด',
+            'search_items' => 'ค้นหาหนังสือราชการ',
+            'menu_name' => 'คลังหนังสือราชการ'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-media-document',
+        'menu_position' => 21,
+        'supports' => array('title', 'editor')
+    ));
+
+    // 1.2 ปฏิทินปฏิบัติงานและกิจกรรม
+    register_post_type('spm_calendar', array(
+        'labels' => array(
+            'name' => 'ปฏิทินปฏิบัติงาน',
+            'singular_name' => 'กิจกรรมปฏิทิน',
+            'add_new' => 'เพิ่มกิจกรรมใหม่',
+            'add_new_item' => 'เพิ่มกิจกรรมลงในปฏิทินงาน',
+            'edit_item' => 'แก้ไขกิจกรรม',
+            'all_items' => 'กิจกรรมทั้งหมด',
+            'search_items' => 'ค้นหากิจกรรม',
+            'menu_name' => 'ปฏิทินปฏิบัติงาน'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-calendar-alt',
+        'menu_position' => 22,
+        'supports' => array('title', 'editor')
+    ));
+
+    // 1.3 ศูนย์ดาวน์โหลดแบบฟอร์ม 9 กลุ่ม 1 หน่วย
+    register_post_type('spm_download', array(
+        'labels' => array(
+            'name' => 'ศูนย์ดาวน์โหลดแบบฟอร์ม',
+            'singular_name' => 'แบบฟอร์มเอกสาร',
+            'add_new' => 'เพิ่มแบบฟอร์มใหม่',
+            'add_new_item' => 'เพิ่มแบบฟอร์มดาวน์โหลด',
+            'edit_item' => 'แก้ไขแบบฟอร์ม',
+            'all_items' => 'แบบฟอร์มทั้งหมด (9 กลุ่ม 1 หน่วย)',
+            'search_items' => 'ค้นหาแบบฟอร์ม',
+            'menu_name' => 'ศูนย์ดาวน์โหลด'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-download',
+        'menu_position' => 23,
+        'supports' => array('title')
+    ));
+
+    // 1.4 หอเชิดชูเกียรติ & เกียรติบัตรดิจิทัล
+    register_post_type('spm_certificate', array(
+        'labels' => array(
+            'name' => 'เกียรติบัตร & หอเกียรติยศ',
+            'singular_name' => 'เกียรติบัตร',
+            'add_new' => 'เพิ่มเกียรติบัตร / รางวัล',
+            'add_new_item' => 'เพิ่มเกียรติบัตรดิจิทัลใหม่',
+            'edit_item' => 'แก้ไขข้อมูลเกียรติบัตร',
+            'all_items' => 'เกียรติบัตรและผลงานทั้งหมด',
+            'search_items' => 'ค้นหาเกียรติบัตร / รหัส Cert ID',
+            'menu_name' => 'เกียรติบัตร & รางวัล'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-awards',
+        'menu_position' => 24,
+        'supports' => array('title')
+    ));
+
+    // 1.5 ศูนย์เฝ้าระวังความปลอดภัย MOE Safety
+    register_post_type('spm_safety', array(
+        'labels' => array(
+            'name' => 'ศูนย์ความปลอดภัย MOE',
+            'singular_name' => 'ข้อมูลความปลอดภัย',
+            'add_new' => 'เพิ่มมาตรการ / ข้อมูลความปลอดภัย',
+            'add_new_item' => 'เพิ่มข้อมูลศูนย์ความปลอดภัย',
+            'edit_item' => 'แก้ไขข้อมูลความปลอดภัย',
+            'all_items' => 'มาตรการ & เครือข่ายทั้งหมด',
+            'search_items' => 'ค้นหาข้อมูลความปลอดภัย',
+            'menu_name' => 'ศูนย์ความปลอดภัย'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-shield',
+        'menu_position' => 25,
+        'supports' => array('title', 'editor')
+    ));
+}
+
+// 2. ENQUEUE MEDIA UPLOADER ON CPT POST EDIT SCREENS
+add_action('admin_enqueue_scripts', 'spm_portal_cpts_admin_assets');
+function spm_portal_cpts_admin_assets($hook) {
+    global $post_type;
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety');
+    if (in_array($post_type, $portal_cpts)) {
+        wp_enqueue_media();
+        wp_enqueue_style('spm-cpt-admin-style', false);
+        wp_add_inline_style('spm-cpt-admin-style', '
+            .spm-meta-box-wrap { padding: 8px 0; font-family: system-ui, -apple-system, sans-serif; }
+            .spm-meta-row { margin-bottom: 16px; }
+            .spm-meta-label { display: block; font-weight: 700; margin-bottom: 6px; color: #0F172A; font-size: 13.5px; }
+            .spm-meta-desc { font-size: 12px; color: #64748B; margin-top: 4px; }
+            .spm-meta-input, .spm-meta-select { width: 100%; max-width: 600px; padding: 8px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; }
+            .spm-meta-input:focus, .spm-meta-select:focus { border-color: #0284C7; outline: none; box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
+            .spm-meta-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 600px; }
+            @media (max-width: 600px) { .spm-meta-grid-2 { grid-template-columns: 1fr; } }
+            .spm-meta-btn-upload { background: #0B132B !important; color: #ECC86A !important; border: 1px solid #D4AF37 !important; font-weight: 700 !important; padding: 6px 14px !important; border-radius: 6px !important; cursor: pointer !important; }
+            .spm-meta-btn-upload:hover { background: #1C2541 !important; }
+        ');
+    }
+}
+
+// 3. REGISTER META BOXES FOR ALL 5 CPTS
+add_action('add_meta_boxes', 'spm_register_all_portal_meta_boxes');
+function spm_register_all_portal_meta_boxes() {
+    // 3.1 Circular Meta Box
+    add_meta_box('spm_circular_details', '📄 ข้อมูลหนังสือราชการและไฟล์แนบ', 'spm_render_circular_meta_box', 'spm_circular', 'normal', 'high');
+
+    // 3.2 Calendar Meta Box
+    add_meta_box('spm_calendar_details', '📅 กำหนดการและรายละเอียดกิจกรรม', 'spm_render_calendar_meta_box', 'spm_calendar', 'normal', 'high');
+
+    // 3.3 Download Meta Box
+    add_meta_box('spm_download_details', '📥 รายละเอียดแบบฟอร์มและไฟล์ดาวน์โหลด', 'spm_render_download_meta_box', 'spm_download', 'normal', 'high');
+
+    // 3.4 Certificate Meta Box
+    add_meta_box('spm_certificate_details', '🏆 ข้อมูลเกียรติบัตรและผู้ได้รับรางวัล', 'spm_render_certificate_meta_box', 'spm_certificate', 'normal', 'high');
+
+    // 3.5 Safety Meta Box
+    add_meta_box('spm_safety_details', '🛡️ รายละเอียดมาตรการและเครือข่ายความปลอดภัย', 'spm_render_safety_meta_box', 'spm_safety', 'normal', 'high');
+}
+
+// 9 กลุ่ม 1 หน่วย Helper Options
+function spm_get_dept_list() {
+    return array(
+        'กลุ่มอำนวยการ',
+        'กลุ่มบริหารงานบุคคล',
+        'กลุ่มนโยบายและแผน',
+        'กลุ่มส่งเสริมการศึกษาทางไกลฯ (DLICT)',
+        'กลุ่มนิเทศ ติดตามฯ',
+        'กลุ่มส่งเสริมการจัดการศึกษา',
+        'กลุ่มบริหารงานการเงินและสินทรัพย์',
+        'กลุ่มพัฒนาครูและบุคลากรฯ',
+        'กลุ่มกฎหมายและคดี',
+        'หน่วยตรวจสอบภายใน'
+    );
+}
+
+// 3.1 RENDER CIRCULAR META BOX
+function spm_render_circular_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $doc_number = get_post_meta($post->ID, '_spm_doc_number', true) ?: 'ศธ 04228/ว ' . rand(1000, 9999);
+    $doc_date = get_post_meta($post->ID, '_spm_doc_date', true) ?: date('d/m/') . (date('Y') + 543);
+    $doc_type = get_post_meta($post->ID, '_spm_doc_type', true) ?: 'หนังสือเวียน';
+    $doc_urgency = get_post_meta($post->ID, '_spm_doc_urgency', true) ?: 'normal';
+    $doc_dept = get_post_meta($post->ID, '_spm_doc_dept', true) ?: 'กลุ่มอำนวยการ';
+    $doc_file = get_post_meta($post->ID, '_spm_doc_file', true) ?: '';
+    $depts = spm_get_dept_list();
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">เลขที่หนังสือ / คำสั่ง:</label>
+                <input type="text" name="spm_doc_number" value="<?php echo esc_attr($doc_number); ?>" class="spm-meta-input" placeholder="เช่น ศธ 04228/ว 1845">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">วันที่ลงนาม / วันที่ประกาศ:</label>
+                <input type="text" name="spm_doc_date" value="<?php echo esc_attr($doc_date); ?>" class="spm-meta-input" placeholder="เช่น 28 ต.ค. 2569">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ประเภทเอกสาร:</label>
+                <select name="spm_doc_type" class="spm-meta-select">
+                    <option value="หนังสือเวียน" <?php selected($doc_type, 'หนังสือเวียน'); ?>>หนังสือเวียน (ว.)</option>
+                    <option value="คำสั่งเขต" <?php selected($doc_type, 'คำสั่งเขต'); ?>>คำสั่ง สพม.สกลนคร</option>
+                    <option value="ประกาศ" <?php selected($doc_type, 'ประกาศ'); ?>>ประกาศทางการ</option>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ระดับความเร่งด่วน:</label>
+                <select name="spm_doc_urgency" class="spm-meta-select">
+                    <option value="normal" <?php selected($doc_urgency, 'normal'); ?>>ปกติ (Normal)</option>
+                    <option value="urgent" <?php selected($doc_urgency, 'urgent'); ?>>⚡ ด่วนที่สุด (Urgent)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">กลุ่มงานเจ้าของเรื่อง (9 กลุ่ม 1 หน่วย):</label>
+            <select name="spm_doc_dept" class="spm-meta-select">
+                <?php foreach ($depts as $d): ?>
+                    <option value="<?php echo esc_attr($d); ?>" <?php selected($doc_dept, $d); ?>><?php echo esc_html($d); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">ไฟล์แนบเอกสาร (PDF):</label>
+            <div style="display:flex; gap:8px; max-width:600px;">
+                <input type="text" id="spm_doc_file" name="spm_doc_file" value="<?php echo esc_attr($doc_file); ?>" class="spm-meta-input" placeholder="https://... หรืออัปโหลดไฟล์">
+                <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_doc_file">📁 เลือกไฟล์ PDF</button>
+            </div>
+            <div class="spm-meta-desc">คลิกปุ่มเพื่อเลือกหรืออัปโหลดไฟล์ PDF จาก WordPress Media Library</div>
+        </div>
+    </div>
+    <?php
+}
+
+// 3.2 RENDER CALENDAR META BOX
+function spm_render_calendar_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $event_date = get_post_meta($post->ID, '_spm_event_date', true) ?: date('Y-m-d');
+    $event_time = get_post_meta($post->ID, '_spm_event_time', true) ?: '09:00 - 16:30 น.';
+    $event_location = get_post_meta($post->ID, '_spm_event_location', true) ?: 'หอประชุมรวมใจ สพม.สกลนคร';
+    $event_dept = get_post_meta($post->ID, '_spm_event_dept', true) ?: 'กลุ่มอำนวยการ';
+    $event_type = get_post_meta($post->ID, '_spm_event_type', true) ?: 'academic';
+    $event_color = get_post_meta($post->ID, '_spm_event_color', true) ?: '#ECC86A';
+    $depts = spm_get_dept_list();
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">วันที่จัดกิจกรรม (Date):</label>
+                <input type="date" name="spm_event_date" value="<?php echo esc_attr($event_date); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">เวลาดำเนินกิจกรรม (Time):</label>
+                <input type="text" name="spm_event_time" value="<?php echo esc_attr($event_time); ?>" class="spm-meta-input" placeholder="เช่น 08:30 - 16:30 น.">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">สถานที่จัดกิจกรรม / ช่องทาง:</label>
+                <input type="text" name="spm_event_location" value="<?php echo esc_attr($event_location); ?>" class="spm-meta-input" placeholder="เช่น หอประชุม สพม. หรือ ออนไลน์ Zoom">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">หมวดหมู่กิจกรรม:</label>
+                <select name="spm_event_type" class="spm-meta-select">
+                    <option value="academic" <?php selected($event_type, 'academic'); ?>>วิชาการและการเรียนรู้</option>
+                    <option value="meeting" <?php selected($event_type, 'meeting'); ?>>ประชุมและสัมมนาผู้บริหาร</option>
+                    <option value="activity" <?php selected($event_type, 'activity'); ?>>กิจกรรมนักเรียนและครู</option>
+                    <option value="holiday" <?php selected($event_type, 'holiday'); ?>>วันสำคัญและประเพณี</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">กลุ่มงานผู้รับผิดชอบ:</label>
+                <select name="spm_event_dept" class="spm-meta-select">
+                    <?php foreach ($depts as $d): ?>
+                        <option value="<?php echo esc_attr($d); ?>" <?php selected($event_dept, $d); ?>><?php echo esc_html($d); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">สีประจำหมุดกิจกรรม (Dot Color):</label>
+                <input type="color" name="spm_event_color" value="<?php echo esc_attr($event_color); ?>" style="height:38px; width:100px; padding:2px; border:1px solid #CBD5E1; border-radius:6px; cursor:pointer;">
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// 3.3 RENDER DOWNLOAD META BOX
+function spm_render_download_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $form_code = get_post_meta($post->ID, '_spm_form_code', true) ?: 'SPM-DOC-' . rand(10, 99);
+    $form_dept = get_post_meta($post->ID, '_spm_form_dept', true) ?: 'กลุ่มบริหารงานบุคคล';
+    $form_category = get_post_meta($post->ID, '_spm_form_category', true) ?: 'คำร้องทั่วไป';
+    $form_file = get_post_meta($post->ID, '_spm_form_file', true) ?: '';
+    $form_size = get_post_meta($post->ID, '_spm_form_size', true) ?: '1.5 MB';
+    $depts = spm_get_dept_list();
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">รหัสแบบฟอร์ม (Form Code):</label>
+                <input type="text" name="spm_form_code" value="<?php echo esc_attr($form_code); ?>" class="spm-meta-input" placeholder="เช่น บก.01 หรือ กค.05">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">หมวดหมู่แบบฟอร์ม:</label>
+                <input type="text" name="spm_form_category" value="<?php echo esc_attr($form_category); ?>" class="spm-meta-input" placeholder="เช่น ขอมี/เลื่อนวิทยฐานะ, การเงิน, สารบรรณ">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">สังกัดกลุ่มงาน (9 กลุ่ม 1 หน่วย):</label>
+                <select name="spm_form_dept" class="spm-meta-select">
+                    <?php foreach ($depts as $d): ?>
+                        <option value="<?php echo esc_attr($d); ?>" <?php selected($form_dept, $d); ?>><?php echo esc_html($d); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ขนาดไฟล์ (ระบุหรือประมาณ):</label>
+                <input type="text" name="spm_form_size" value="<?php echo esc_attr($form_size); ?>" class="spm-meta-input" placeholder="เช่น 850 KB หรือ 1.2 MB">
+            </div>
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">ไฟล์แบบฟอร์ม (PDF / Word / Excel):</label>
+            <div style="display:flex; gap:8px; max-width:600px;">
+                <input type="text" id="spm_form_file" name="spm_form_file" value="<?php echo esc_attr($form_file); ?>" class="spm-meta-input" placeholder="https://... หรืออัปโหลดไฟล์">
+                <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_form_file">📥 อัปโหลดแบบฟอร์ม</button>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// 3.4 RENDER CERTIFICATE META BOX
+function spm_render_certificate_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $cert_code = get_post_meta($post->ID, '_spm_cert_code', true) ?: 'SPM-SKN-2569-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    $recipient_name = get_post_meta($post->ID, '_spm_recipient_name', true) ?: '';
+    $school_name = get_post_meta($post->ID, '_spm_school_name', true) ?: 'โรงเรียนสกลราชวิทยานุกูล';
+    $award_title = get_post_meta($post->ID, '_spm_award_title', true) ?: 'รางวัลชนะเลิศเหรียญทอง';
+    $issue_date = get_post_meta($post->ID, '_spm_issue_date', true) ?: date('d/m/') . (date('Y') + 543);
+    $cert_file = get_post_meta($post->ID, '_spm_cert_file', true) ?: '';
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">รหัสตรวจสอบเกียรติบัตร (Certificate ID):</label>
+                <input type="text" name="spm_cert_code" value="<?php echo esc_attr($cert_code); ?>" class="spm-meta-input" style="font-weight:700; color:#0284C7;" placeholder="เช่น SPM-SKN-2569-001">
+                <div class="spm-meta-desc">ใช้สำหรับค้นหาและตรวจสอบความแท้จริงผ่านระบบหน้าเว็บ</div>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ชื่อ-นามสกุล ผู้ได้รับรางวัล / นักเรียน / ครู:</label>
+                <input type="text" name="spm_recipient_name" value="<?php echo esc_attr($recipient_name); ?>" class="spm-meta-input" placeholder="เช่น นายสมชาย ใจดี">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">โรงเรียน / หน่วยงานต้นสังกัด:</label>
+                <input type="text" name="spm_school_name" value="<?php echo esc_attr($school_name); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ชื่อรางวัล / ผลงานดีเด่น:</label>
+                <input type="text" name="spm_award_title" value="<?php echo esc_attr($award_title); ?>" class="spm-meta-input">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">วันที่ออกเกียรติบัตร:</label>
+                <input type="text" name="spm_issue_date" value="<?php echo esc_attr($issue_date); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ไฟล์เกียรติบัตร (PDF หรือ รูปภาพ):</label>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="spm_cert_file" name="spm_cert_file" value="<?php echo esc_attr($cert_file); ?>" class="spm-meta-input" placeholder="https://...">
+                    <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_cert_file">🏅 อัปโหลดเกียรติบัตร</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// 3.5 RENDER SAFETY META BOX
+function spm_render_safety_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $safety_cat = get_post_meta($post->ID, '_spm_safety_cat', true) ?: 'ภัยความรุนแรง';
+    $safety_scope = get_post_meta($post->ID, '_spm_safety_scope', true) ?: 'ระดับเขตพื้นที่การศึกษา';
+    $contact_tel = get_post_meta($post->ID, '_spm_contact_tel', true) ?: '042-711-456 สายด่วน MOE Safety';
+    $safety_file = get_post_meta($post->ID, '_spm_safety_file', true) ?: '';
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">หมวดหมู่ภัยสถานศึกษา (4 ด้าน):</label>
+                <select name="spm_safety_cat" class="spm-meta-select">
+                    <option value="ภัยความรุนแรง" <?php selected($safety_cat, 'ภัยความรุนแรง'); ?>>1. ภัยที่เกิดจากการใช้ความรุนแรงของมนุษย์</option>
+                    <option value="ภัยอุบัติเหตุ" <?php selected($safety_cat, 'ภัยอุบัติเหตุ'); ?>>2. ภัยที่เกิดจากอุบัติเหตุ</option>
+                    <option value="ภัยละเมิดสิทธิ์" <?php selected($safety_cat, 'ภัยละเมิดสิทธิ์'); ?>>3. ภัยที่เกิดจากการละเมิดสิทธิ์</option>
+                    <option value="ภัยสุขภาพกายและจิต" <?php selected($safety_cat, 'ภัยสุขภาพกายและจิต'); ?>>4. ภัยที่เกิดจากผลกระทบทางสุขภาวะกายและจิตใจ</option>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ระดับการกำกับดูแล / เครือข่าย:</label>
+                <input type="text" name="spm_safety_scope" value="<?php echo esc_attr($safety_scope); ?>" class="spm-meta-input">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">เบอร์สายด่วน / ผู้ประสานงาน:</label>
+                <input type="text" name="spm_contact_tel" value="<?php echo esc_attr($contact_tel); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">คู่มือ / มาตรการดาวน์โหลด (PDF):</label>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="spm_safety_file" name="spm_safety_file" value="<?php echo esc_attr($safety_file); ?>" class="spm-meta-input" placeholder="https://...">
+                    <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_safety_file">🛡️ อัปโหลดคู่มือ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// 4. JAVASCRIPT MEDIA UPLOADER TRIGGER FOR CPT SCREENS
+add_action('admin_footer', 'spm_cpt_media_uploader_script');
+function spm_cpt_media_uploader_script() {
+    global $post_type;
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety');
+    if (!in_array($post_type, $portal_cpts)) return;
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        $('.spm-cpt-upload-btn').on('click', function(e) {
+            e.preventDefault();
+            var targetInputId = $(this).data('target');
+            var customUploader = wp.media({
+                title: 'เลือกหรืออัปโหลดไฟล์เอกสาร',
+                button: { text: 'เลือกไฟล์นี้' },
+                multiple: false
+            }).on('select', function() {
+                var attachment = customUploader.state().get('selection').first().toJSON();
+                $('#' + targetInputId).val(attachment.url);
+            }).open();
+        });
+    });
+    </script>
+    <?php
+}
+
+// 5. SAVE META BOX VALUES
+add_action('save_post', 'spm_save_portal_cpts_meta');
+function spm_save_portal_cpts_meta($post_id) {
+    if (!isset($_POST['spm_meta_nonce']) || !wp_verify_nonce($_POST['spm_meta_nonce'], 'spm_save_meta_box')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $fields = array(
+        'spm_doc_number' => '_spm_doc_number',
+        'spm_doc_date' => '_spm_doc_date',
+        'spm_doc_type' => '_spm_doc_type',
+        'spm_doc_urgency' => '_spm_doc_urgency',
+        'spm_doc_dept' => '_spm_doc_dept',
+        'spm_doc_file' => '_spm_doc_file',
+        'spm_event_date' => '_spm_event_date',
+        'spm_event_time' => '_spm_event_time',
+        'spm_event_location' => '_spm_event_location',
+        'spm_event_dept' => '_spm_event_dept',
+        'spm_event_type' => '_spm_event_type',
+        'spm_event_color' => '_spm_event_color',
+        'spm_form_code' => '_spm_form_code',
+        'spm_form_dept' => '_spm_form_dept',
+        'spm_form_category' => '_spm_form_category',
+        'spm_form_file' => '_spm_form_file',
+        'spm_form_size' => '_spm_form_size',
+        'spm_cert_code' => '_spm_cert_code',
+        'spm_recipient_name' => '_spm_recipient_name',
+        'spm_school_name' => '_spm_school_name',
+        'spm_award_title' => '_spm_award_title',
+        'spm_issue_date' => '_spm_issue_date',
+        'spm_cert_file' => '_spm_cert_file',
+        'spm_safety_cat' => '_spm_safety_cat',
+        'spm_safety_scope' => '_spm_safety_scope',
+        'spm_contact_tel' => '_spm_contact_tel',
+        'spm_safety_file' => '_spm_safety_file'
+    );
+
+    foreach ($fields as $post_key => $meta_key) {
+        if (isset($_POST[$post_key])) {
+            update_post_meta($post_id, $meta_key, sanitize_text_field($_POST[$post_key]));
+        }
+    }
+}
+
+// 6. CUSTOM ADMIN LIST TABLE COLUMNS
+// Circular Columns
+add_filter('manage_spm_circular_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['doc_urgency'] = 'ความเร่งด่วน';
+            $new['doc_number'] = 'เลขที่หนังสือ';
+            $new['doc_date'] = 'วันที่ลงนาม';
+            $new['doc_dept'] = 'กลุ่มงาน';
+            $new['doc_file'] = 'เอกสารแนบ';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_circular_posts_custom_column', function($col, $post_id) {
+    if ($col === 'doc_urgency') {
+        $urg = get_post_meta($post_id, '_spm_doc_urgency', true);
+        echo ($urg === 'urgent') ? '<span style="background:#FEE2E2; color:#DC2626; padding:2px 8px; border-radius:12px; font-weight:700; font-size:11px;">⚡ ด่วนที่สุด</span>' : '<span style="color:#64748B; font-size:11px;">ปกติ</span>';
+    } elseif ($col === 'doc_number') {
+        echo '<strong>' . esc_html(get_post_meta($post_id, '_spm_doc_number', true) ?: '-') . '</strong>';
+    } elseif ($col === 'doc_date') {
+        echo esc_html(get_post_meta($post_id, '_spm_doc_date', true) ?: '-');
+    } elseif ($col === 'doc_dept') {
+        echo '<span style="color:#0284C7;">' . esc_html(get_post_meta($post_id, '_spm_doc_dept', true) ?: '-') . '</span>';
+    } elseif ($col === 'doc_file') {
+        $f = get_post_meta($post_id, '_spm_doc_file', true);
+        echo $f ? '<a href="' . esc_url($f) . '" target="_blank" style="color:#DC2626; font-weight:700;">📄 PDF</a>' : '<span style="color:#CBD5E1;">-</span>';
+    }
+}, 10, 2);
+
+// Calendar Columns
+add_filter('manage_spm_calendar_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['event_date'] = 'วันที่จัด';
+            $new['event_time'] = 'เวลา';
+            $new['event_dept'] = 'กลุ่มงาน';
+            $new['event_location'] = 'สถานที่';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_calendar_posts_custom_column', function($col, $post_id) {
+    if ($col === 'event_date') {
+        $c = get_post_meta($post_id, '_spm_event_color', true) ?: '#ECC86A';
+        echo '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:' . esc_attr($c) . '; margin-right:6px;"></span>';
+        echo '<strong>' . esc_html(get_post_meta($post_id, '_spm_event_date', true) ?: '-') . '</strong>';
+    } elseif ($col === 'event_time') {
+        echo esc_html(get_post_meta($post_id, '_spm_event_time', true) ?: '-');
+    } elseif ($col === 'event_dept') {
+        echo esc_html(get_post_meta($post_id, '_spm_event_dept', true) ?: '-');
+    } elseif ($col === 'event_location') {
+        echo esc_html(get_post_meta($post_id, '_spm_event_location', true) ?: '-');
+    }
+}, 10, 2);
+
+// Download Columns
+add_filter('manage_spm_download_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['form_code'] = 'รหัสแบบฟอร์ม';
+            $new['form_dept'] = 'กลุ่มงาน';
+            $new['form_file'] = 'ดาวน์โหลด';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_download_posts_custom_column', function($col, $post_id) {
+    if ($col === 'form_code') {
+        echo '<code>' . esc_html(get_post_meta($post_id, '_spm_form_code', true) ?: '-') . '</code>';
+    } elseif ($col === 'form_dept') {
+        echo esc_html(get_post_meta($post_id, '_spm_form_dept', true) ?: '-');
+    } elseif ($col === 'form_file') {
+        $f = get_post_meta($post_id, '_spm_form_file', true);
+        echo $f ? '<a href="' . esc_url($f) . '" target="_blank" style="color:#0284C7; font-weight:700;">📥 Download</a>' : '<span style="color:#CBD5E1;">-</span>';
+    }
+}, 10, 2);
+
+// Certificate Columns
+add_filter('manage_spm_certificate_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['cert_code'] = 'รหัส Cert ID';
+            $new['recipient'] = 'ผู้ได้รับรางวัล';
+            $new['school'] = 'โรงเรียน';
+            $new['award'] = 'รางวัล';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_certificate_posts_custom_column', function($col, $post_id) {
+    if ($col === 'cert_code') {
+        echo '<strong style="color:#0284C7;">' . esc_html(get_post_meta($post_id, '_spm_cert_code', true) ?: '-') . '</strong>';
+    } elseif ($col === 'recipient') {
+        echo esc_html(get_post_meta($post_id, '_spm_recipient_name', true) ?: '-');
+    } elseif ($col === 'school') {
+        echo esc_html(get_post_meta($post_id, '_spm_school_name', true) ?: '-');
+    } elseif ($col === 'award') {
+        echo esc_html(get_post_meta($post_id, '_spm_award_title', true) ?: '-');
+    }
+}, 10, 2);
+
+
+// 7. REST API ENDPOINTS FOR LIVE FRONTEND HYDRATION
+add_action('rest_api_init', 'spm_register_portal_crud_rest_routes');
+function spm_register_portal_crud_rest_routes() {
+    // 7.1 Circulars API
+    register_rest_route('spm/v1', '/circulars', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_circulars',
+        'permission_callback' => '__return_true'
+    ));
+
+    // 7.2 Calendar API
+    register_rest_route('spm/v1', '/calendar', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_calendar',
+        'permission_callback' => '__return_true'
+    ));
+
+    // 7.3 Downloads API
+    register_rest_route('spm/v1', '/downloads', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_downloads',
+        'permission_callback' => '__return_true'
+    ));
+
+    // 7.4 Certificate Search API
+    register_rest_route('spm/v1', '/certificates', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_certificates',
+        'permission_callback' => '__return_true'
+    ));
+
+    // 7.5 Safety API
+    register_rest_route('spm/v1', '/safety', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_safety',
+        'permission_callback' => '__return_true'
+    ));
+
+    // 7.6 Seed Default Data API (One-click seeder)
+    register_rest_route('spm/v1', '/seed-defaults', array(
+        'methods' => 'POST',
+        'callback' => 'spm_rest_seed_default_cpt_data',
+        'permission_callback' => function() { return current_user_can('edit_posts'); }
+    ));
+}
+
+// 7.1 Handler: Circulars
+function spm_rest_get_circulars($request) {
+    $type = $request->get_param('type');
+    $dept = $request->get_param('dept');
+    $q = $request->get_param('q');
+
+    $args = array(
+        'post_type' => 'spm_circular',
+        'posts_per_page' => 100,
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC'
+    );
+    if (!empty($q)) $args['s'] = $q;
+
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $item_type = get_post_meta($pid, '_spm_doc_type', true) ?: 'หนังสือเวียน';
+            $item_dept = get_post_meta($pid, '_spm_doc_dept', true) ?: 'กลุ่มอำนวยการ';
+
+            if ($type && $type !== 'all' && $item_type !== $type) continue;
+            if ($dept && $dept !== 'all' && $item_dept !== $dept) continue;
+
+            $results[] = array(
+                'id' => $pid,
+                'number' => get_post_meta($pid, '_spm_doc_number', true) ?: ('ศธ 04228/ว ' . $pid),
+                'date' => get_post_meta($pid, '_spm_doc_date', true) ?: get_the_date('d M Y'),
+                'title' => get_the_title(),
+                'dept' => $item_dept,
+                'type' => $item_type,
+                'urgency' => get_post_meta($pid, '_spm_doc_urgency', true) ?: 'normal',
+                'file' => get_post_meta($pid, '_spm_doc_file', true) ?: '#',
+            );
+        }
+        wp_reset_postdata();
+    }
+
+    return rest_ensure_response($results);
+}
+
+// 7.2 Handler: Calendar
+function spm_rest_get_calendar($request) {
+    $args = array(
+        'post_type' => 'spm_calendar',
+        'posts_per_page' => 100,
+        'post_status' => 'publish'
+    );
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $raw_date = get_post_meta($pid, '_spm_event_date', true);
+            $day = $raw_date ? (int)date('j', strtotime($raw_date)) : 1;
+            $month = $raw_date ? (int)date('n', strtotime($raw_date)) : (int)date('n');
+            $year = $raw_date ? (int)date('Y', strtotime($raw_date)) : (int)date('Y');
+
+            $results[] = array(
+                'id' => $pid,
+                'title' => get_the_title(),
+                'day' => $day,
+                'month' => $month,
+                'year' => $year,
+                'date_str' => $raw_date,
+                'time' => get_post_meta($pid, '_spm_event_time', true) ?: '',
+                'location' => get_post_meta($pid, '_spm_event_location', true) ?: '',
+                'dept' => get_post_meta($pid, '_spm_event_dept', true) ?: '',
+                'category' => get_post_meta($pid, '_spm_event_type', true) ?: 'academic',
+                'color' => get_post_meta($pid, '_spm_event_color', true) ?: '#ECC86A',
+                'desc' => get_the_excerpt() ?: get_the_title()
+            );
+        }
+        wp_reset_postdata();
+    }
+    return rest_ensure_response($results);
+}
+
+// 7.3 Handler: Downloads
+function spm_rest_get_downloads($request) {
+    $dept = $request->get_param('dept');
+    $args = array(
+        'post_type' => 'spm_download',
+        'posts_per_page' => 100,
+        'post_status' => 'publish'
+    );
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $item_dept = get_post_meta($pid, '_spm_form_dept', true) ?: 'กลุ่มอำนวยการ';
+            if ($dept && $dept !== 'all' && $item_dept !== $dept) continue;
+
+            $file_url = get_post_meta($pid, '_spm_form_file', true) ?: '#';
+            $ext = pathinfo($file_url, PATHINFO_EXTENSION) ?: 'pdf';
+
+            $results[] = array(
+                'id' => $pid,
+                'code' => get_post_meta($pid, '_spm_form_code', true) ?: 'DOC-' . $pid,
+                'title' => get_the_title(),
+                'dept' => $item_dept,
+                'category' => get_post_meta($pid, '_spm_form_category', true) ?: 'ทั่วไป',
+                'size' => get_post_meta($pid, '_spm_form_size', true) ?: '1 MB',
+                'ext' => strtoupper($ext),
+                'url' => $file_url
+            );
+        }
+        wp_reset_postdata();
+    }
+    return rest_ensure_response($results);
+}
+
+// 7.4 Handler: Certificates
+function spm_rest_get_certificates($request) {
+    $code = strtoupper(trim($request->get_param('code') ?: ''));
+    $args = array(
+        'post_type' => 'spm_certificate',
+        'posts_per_page' => 100,
+        'post_status' => 'publish'
+    );
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $cert_code = strtoupper(trim(get_post_meta($pid, '_spm_cert_code', true)));
+            
+            $item = array(
+                'id' => $pid,
+                'code' => $cert_code,
+                'recipient' => get_post_meta($pid, '_spm_recipient_name', true) ?: get_the_title(),
+                'school' => get_post_meta($pid, '_spm_school_name', true) ?: '',
+                'award' => get_post_meta($pid, '_spm_award_title', true) ?: '',
+                'date' => get_post_meta($pid, '_spm_issue_date', true) ?: '',
+                'file' => get_post_meta($pid, '_spm_cert_file', true) ?: ''
+            );
+
+            if (!empty($code)) {
+                if ($cert_code === $code) {
+                    wp_reset_postdata();
+                    return rest_ensure_response(array('found' => true, 'cert' => $item));
+                }
+            } else {
+                $results[] = $item;
+            }
+        }
+        wp_reset_postdata();
+    }
+
+    if (!empty($code)) {
+        return rest_ensure_response(array('found' => false, 'message' => 'ไม่พบข้อมูลเกียรติบัตร'));
+    }
+    return rest_ensure_response($results);
+}
+
+// 7.5 Handler: Safety
+function spm_rest_get_safety($request) {
+    $args = array(
+        'post_type' => 'spm_safety',
+        'posts_per_page' => 50,
+        'post_status' => 'publish'
+    );
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $results[] = array(
+                'id' => $pid,
+                'title' => get_the_title(),
+                'category' => get_post_meta($pid, '_spm_safety_cat', true) ?: 'ความปลอดภัย',
+                'scope' => get_post_meta($pid, '_spm_safety_scope', true) ?: '',
+                'tel' => get_post_meta($pid, '_spm_contact_tel', true) ?: '',
+                'file' => get_post_meta($pid, '_spm_safety_file', true) ?: '',
+                'content' => get_the_content()
+            );
+        }
+        wp_reset_postdata();
+    }
+    return rest_ensure_response($results);
+}
+
+// 7.6 Auto-seed sample records if tables are empty
+add_action('admin_init', 'spm_auto_seed_initial_cpt_records');
+function spm_auto_seed_initial_cpt_records() {
+    if (get_option('spm_cpts_initial_seeded_v1')) return;
+
+    // Seed sample circulars
+    $existing = get_posts(array('post_type' => 'spm_circular', 'posts_per_page' => 1));
+    if (empty($existing)) {
+        $sample_circulars = array(
+            array('title' => 'แนวทางการประเมินผลสัมฤทธิ์ตามเกณฑ์ ว.PA และการตรวจสอบข้อมูลในระบบ DPA ภาคเรียนที่ 1/2569', 'num' => 'ศธ 04228/ว 1845', 'date' => '23 ต.ค. 2569', 'dept' => 'กลุ่มบริหารงานบุคคล', 'type' => 'หนังสือเวียน', 'urg' => 'urgent'),
+            array('title' => 'ซักซ้อมความเข้าใจการเปิดภาคเรียนที่ 2/2569 และมาตรการความปลอดภัยสถานศึกษา MOE Safety Center', 'num' => 'ศธ 04228/ว 1840', 'date' => '22 ต.ค. 2569', 'dept' => 'กลุ่มส่งเสริมการจัดการศึกษา', 'type' => 'หนังสือเวียน', 'urg' => 'urgent'),
+            array('title' => 'แต่งตั้งคณะกรรมการขับเคลื่อนยุทธศาสตร์ห้องเรียนดิจิทัลและ AI ในการศึกษา สพม.สกลนคร', 'num' => 'คำสั่ง สพม. ที่ 412/2569', 'date' => '20 ต.ค. 2569', 'dept' => 'กลุ่มส่งเสริมการศึกษาทางไกลฯ (DLICT)', 'type' => 'คำสั่งเขต', 'urg' => 'normal'),
+            array('title' => 'ประกาศผู้ชนะการเสนอราคา จ้างปรับปรุงระบบโครงข่ายอินเทอร์เน็ตความเร็วสูง 45 โรงเรียน', 'num' => 'ประกาศ สพม.สกลนคร', 'date' => '18 ต.ค. 2569', 'dept' => 'กลุ่มบริหารงานการเงินและสินทรัพย์', 'type' => 'ประกาศ', 'urg' => 'normal'),
+            array('title' => 'ประชาสัมพันธ์การประกวดนวัตกรรมการเรียนรู้เชิงรุก (Active Learning) ระดับมัธยมศึกษา ประจำปี 2569', 'num' => 'ศธ 04228/ว 1820', 'date' => '15 ต.ค. 2569', 'dept' => 'กลุ่มนิเทศ ติดตามฯ', 'type' => 'หนังสือเวียน', 'urg' => 'normal')
+        );
+        foreach ($sample_circulars as $c) {
+            $pid = wp_insert_post(array(
+                'post_title' => $c['title'],
+                'post_type' => 'spm_circular',
+                'post_status' => 'publish'
+            ));
+            if ($pid && !is_wp_error($pid)) {
+                update_post_meta($pid, '_spm_doc_number', $c['num']);
+                update_post_meta($pid, '_spm_doc_date', $c['date']);
+                update_post_meta($pid, '_spm_doc_dept', $c['dept']);
+                update_post_meta($pid, '_spm_doc_type', $c['type']);
+                update_post_meta($pid, '_spm_doc_urgency', $c['urg']);
+                update_post_meta($pid, '_spm_doc_file', 'https://sesaosakon.go.th/site/');
+            }
+        }
+    }
+
+    // Seed sample downloads
+    $existing_dl = get_posts(array('post_type' => 'spm_download', 'posts_per_page' => 1));
+    if (empty($existing_dl)) {
+        $sample_dls = array(
+            array('title' => 'แบบฟอร์มขอเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (กค.01)', 'code' => 'กค.01', 'dept' => 'กลุ่มบริหารงานการเงินและสินทรัพย์', 'cat' => 'การเงินและสวัสดิการ', 'size' => '245 KB'),
+            array('title' => 'แบบคำขอมีบัตรประจำตัวเจ้าหน้าที่ของรัฐ ข้าราชการครูและบุคลากรทางการศึกษา', 'code' => 'บก.04', 'dept' => 'กลุ่มบริหารงานบุคคล', 'cat' => 'งานบุคคล', 'size' => '180 KB'),
+            array('title' => 'แบบฟอร์มขอใช้ห้องประชุมและสิ่งอำนวยความสะดวก อาคารสารสนเทศ สพม.สกลนคร', 'code' => 'อก.08', 'dept' => 'กลุ่มอำนวยการ', 'cat' => 'งานอาคารสถานที่', 'size' => '320 KB'),
+            array('title' => 'แบบฟอร์มรายงานผลการดำเนินงานนิเทศการศึกษาและประกันคุณภาพภายใน', 'code' => 'นศ.12', 'dept' => 'กลุ่มนิเทศ ติดตามฯ', 'cat' => 'งานนิเทศ', 'size' => '540 KB')
+        );
+        foreach ($sample_dls as $d) {
+            $pid = wp_insert_post(array(
+                'post_title' => $d['title'],
+                'post_type' => 'spm_download',
+                'post_status' => 'publish'
+            ));
+            if ($pid && !is_wp_error($pid)) {
+                update_post_meta($pid, '_spm_form_code', $d['code']);
+                update_post_meta($pid, '_spm_form_dept', $d['dept']);
+                update_post_meta($pid, '_spm_form_category', $d['cat']);
+                update_post_meta($pid, '_spm_form_size', $d['size']);
+                update_post_meta($pid, '_spm_form_file', 'https://sesaosakon.go.th/site/');
+            }
+        }
+    }
+
+    // Seed sample certificates
+    $existing_cert = get_posts(array('post_type' => 'spm_certificate', 'posts_per_page' => 1));
+    if (empty($existing_cert)) {
+        $sample_certs = array(
+            array('title' => 'นายเกรียงไกร มั่นคง', 'code' => 'SPM-SKN-2569-001', 'recipient' => 'นายเกรียงไกร มั่นคง', 'school' => 'โรงเรียนสกลราชวิทยานุกูล', 'award' => 'รางวัลเหรียญทอง การแข่งขันหุ่นยนต์ปัญญาประดิษฐ์ระดับชาติ', 'date' => '15 ต.ค. 2569'),
+            array('title' => 'นางสาวพิมลพร สดใส', 'code' => 'SPM-SKN-2569-002', 'recipient' => 'นางสาวพิมลพร สดใส', 'school' => 'โรงเรียนธาตุนารายณ์วิทยา', 'award' => 'รางวัลชนะเลิศ การประกวดโครงงานสะเต็มศึกษา (STEM Project)', 'date' => '12 ต.ค. 2569'),
+            array('title' => 'นายวีระชัย มีทรัพย์', 'code' => 'SPM-SKN-2569-003', 'recipient' => 'นายวีระชัย มีทรัพย์', 'school' => 'โรงเรียนสว่างแดนดิน', 'award' => 'ครูผู้ฝึกสอนยอดเยี่ยม ด้านนวัตกรรมการจัดการเรียนรู้ดิจิทัล', 'date' => '10 ต.ค. 2569')
+        );
+        foreach ($sample_certs as $crt) {
+            $pid = wp_insert_post(array(
+                'post_title' => $crt['title'],
+                'post_type' => 'spm_certificate',
+                'post_status' => 'publish'
+            ));
+            if ($pid && !is_wp_error($pid)) {
+                update_post_meta($pid, '_spm_cert_code', $crt['code']);
+                update_post_meta($pid, '_spm_recipient_name', $crt['recipient']);
+                update_post_meta($pid, '_spm_school_name', $crt['school']);
+                update_post_meta($pid, '_spm_award_title', $crt['award']);
+                update_post_meta($pid, '_spm_issue_date', $crt['date']);
+                update_post_meta($pid, '_spm_cert_file', 'https://sesaosakon.go.th/site/');
+            }
+        }
+    }
+
+    update_option('spm_cpts_initial_seeded_v1', 1);
+}
