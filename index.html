@@ -3283,25 +3283,73 @@
 
       gap: 16px;
 
-      max-height: 480px;
-
-      overflow-y: auto;
-
-      padding-right: 8px;
+      transition: all 0.3s ease;
 
     }
 
-    .schools-display-grid::-webkit-scrollbar {
+    .schools-toggle-wrap {
 
-      width: 6px;
+      text-align: center;
+
+      margin-top: 24px;
+
+      margin-bottom: 8px;
 
     }
 
-    .schools-display-grid::-webkit-scrollbar-thumb {
+    .schools-expand-btn {
 
-      background: var(--gold-400);
+      background: rgba(11, 19, 43, 0.88);
 
-      border-radius: 4px;
+      border: 1px solid rgba(236, 200, 106, 0.45);
+
+      color: #ECC86A;
+
+      padding: 11px 32px;
+
+      border-radius: var(--radius-pill);
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+      backdrop-filter: blur(8px);
+
+      -webkit-backdrop-filter: blur(8px);
+
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+
+    }
+
+    .schools-expand-btn:hover {
+
+      background: #ECC86A;
+
+      color: #060B19;
+
+      border-color: #ECC86A;
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 8px 25px rgba(236, 200, 106, 0.35);
+
+    }
+
+    .schools-expand-btn i {
+
+      font-size: 12.5px;
+
+      transition: transform 0.25s ease;
 
     }
 
@@ -3324,6 +3372,8 @@
       align-items: center;
 
       transition: var(--transition-smooth);
+
+      animation: eduCardFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
     }
 
@@ -13703,6 +13753,18 @@
 
       </div>
 
+      <!-- Expand / Collapse Action Button (Default 2 Rows / 6 Schools) -->
+
+      <div class="schools-toggle-wrap" id="schoolsToggleWrap">
+
+        <button id="schoolsToggleBtn" class="schools-expand-btn" onclick="toggleSchoolDirectoryExpansion()">
+
+          <i class="fa-solid fa-chevron-down"></i> ดูรายชื่อโรงเรียนทั้งหมด (อีก 39 แห่ง)
+
+        </button>
+
+      </div>
+
     </div>
 
   </section>
@@ -15827,6 +15889,30 @@
 
 
 
+    let isSchoolDirectoryExpanded = false;
+
+    function toggleSchoolDirectoryExpansion() {
+
+      isSchoolDirectoryExpanded = !isSchoolDirectoryExpanded;
+
+      searchSchoolDirectory();
+
+      if (!isSchoolDirectoryExpanded) {
+
+        const sec = document.getElementById('schools');
+
+        if (sec) {
+
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        }
+
+      }
+
+    }
+
+
+
     let activeClusterFilter = 'all';
 
     function filterSchoolDirectory(clusterName, btn) {
@@ -15861,7 +15947,50 @@
 
       }
 
-      renderSchoolDirectory(filtered);
+      const toggleWrap = document.getElementById('schoolsToggleWrap');
+
+      const toggleBtn = document.getElementById('schoolsToggleBtn');
+
+      let itemsToRender = filtered;
+
+      // Handle collapse / expansion logic (Default 2 Rows / 6 Schools)
+      if (filtered.length > 6) {
+
+        if (toggleWrap && toggleBtn) {
+
+          toggleWrap.style.display = 'block';
+
+          if (isSchoolDirectoryExpanded) {
+
+            toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> ยุบย่อรายชื่อโรงเรียน (แสดง 6 แห่ง)';
+
+            itemsToRender = filtered;
+
+          } else {
+
+            const remaining = filtered.length - 6;
+
+            toggleBtn.innerHTML = `<i class="fa-solid fa-chevron-down"></i> ดูรายชื่อโรงเรียนทั้งหมด (อีก ${remaining} แห่ง)`;
+
+            itemsToRender = filtered.slice(0, 6);
+
+          }
+
+        }
+
+      } else {
+
+        if (toggleWrap) {
+
+          toggleWrap.style.display = 'none';
+
+        }
+
+        itemsToRender = filtered;
+
+      }
+
+      renderSchoolDirectory(itemsToRender);
 
     }
 
@@ -20615,9 +20744,9 @@
 
 
 
-      // 2. Render 45 Schools Directory
+      // 2. Render 45 Schools Directory (Initial Collapsed 6 Schools)
 
-      renderSchoolDirectory(allSchools);
+      searchSchoolDirectory();
 
 
 
