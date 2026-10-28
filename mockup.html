@@ -15265,18 +15265,22 @@
 
         const cleanCluster = clustersData[k].title.replace("สหวิทยาเขต", "").trim();
 
-        allSchools.push({
-
+                allSchools.push({
           name: s.name,
-
           dist: s.dist,
-
           cluster: cleanCluster,
-
           clusterKey: k,
-
-          std: s.std
-
+          std: s.std,
+          director: s.director || 'ผู้อำนวยการสถานศึกษา',
+          code: s.code || '47022007',
+          teachers: s.teachers || '65 คน',
+          rooms: s.rooms || '32 ห้อง',
+          ratio: s.ratio || '1:19.2',
+          phone: s.phone || '042-711xxx',
+          address: s.address || `อำเภอ${s.dist} จังหวัดสกลนคร`,
+          maps: `https://maps.google.com/?q=${s.lat || 17.15},${s.lng || 104.14}`,
+          programs: s.programs || ['ห้องเรียนคุณภาพมาตรฐานการศึกษาขั้นพื้นฐาน', 'การจัดการเรียนรู้เชิงรุก Active Learning'],
+          boppUrl: `https://info.bopp.go.th/school/${s.code || '47022007'}?area=30`
         });
 
       });
@@ -15977,38 +15981,40 @@
 
       }
 
-      items.forEach(s => {
-
+            items.forEach((s, idx) => {
         const card = document.createElement('div');
-
         card.className = 'school-item-card';
+        card.style.cursor = 'pointer';
+        card.style.transition = 'all 0.25s ease';
+        card.title = `คลิกเพื่อดูข้อมูลพื้นฐานของ ${s.name}`;
+        card.onclick = () => openSchoolProfileModal(s);
+
+        const dirText = s.director || 'ผู้อำนวยการสถานศึกษา';
 
         card.innerHTML = `
-
-          <div>
-
-            <h4 style="color:var(--text-main); font-size:14px; font-weight:700;">${s.name}</h4>
-
-            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">
-
-              <span><i class="fa-solid fa-location-dot"></i> ${s.dist}</span> • 
-
-              <span style="color:var(--gold-600); font-weight:600;">สหวิทยาเขต${s.cluster}</span>
-
+          <div style="flex:1; min-width:0;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h4 style="color:var(--text-main); font-size:14.5px; font-weight:700; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</h4>
             </div>
-
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;">
+              <span><i class="fa-solid fa-location-dot" style="color:var(--gold-600);"></i> ${s.dist}</span> •
+              <span style="color:var(--gold-600); font-weight:600;">สหวิทยาเขต${s.cluster}</span>
+            </div>
+            <div style="font-size:12px; color:#0284C7; font-weight:600; margin-top:6px; background:rgba(2,132,199,0.08); padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:5px;">
+              <i class="fa-solid fa-user-tie"></i>
+              <span>ผอ. ${dirText}</span>
+            </div>
           </div>
-
-          <span style="font-size:12px; font-weight:700; color:var(--text-main); background:var(--bg-canvas); padding:4px 10px; border-radius:var(--radius-pill); border:1px solid var(--border-subtle);">
-
-            ${s.std}
-
-          </span>
-
+          <div style="text-align:right; flex-shrink:0;">
+            <span style="font-size:12px; font-weight:700; color:var(--text-main); background:var(--bg-canvas); padding:4px 10px; border-radius:var(--radius-pill); border:1px solid var(--border-subtle); display:inline-block;">
+              ${s.std}
+            </span>
+            <div style="font-size:11px; color:var(--gold-600); font-weight:700; margin-top:8px; display:flex; align-items:center; justify-content:flex-end; gap:3px;">
+              <span>ดูข้อมูล</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px;"></i>
+            </div>
+          </div>
         `;
-
         container.appendChild(card);
-
       });
 
     }
@@ -17258,6 +17264,18 @@
               oerData = oerItems;
               if (typeof renderOer === 'function') {
                 renderOer(oerData);
+              }
+            }
+          }
+
+          // 5. Hydrate Schools Directory
+          const schRes = await fetch(`${base}/schools?_t=${cacheBust}`);
+          if (schRes.ok) {
+            const schItems = await schRes.json();
+            if (Array.isArray(schItems) && schItems.length > 0) {
+              allSchools = schItems;
+              if (typeof searchSchoolDirectory === 'function') {
+                searchSchoolDirectory();
               }
             }
           }
@@ -19665,60 +19683,95 @@
 
 
 
-    function openSchoolProfileModal(key) {
+        function openSchoolProfileModal(itemOrKey) {
+      let data = null;
+      if (typeof itemOrKey === 'object' && itemOrKey !== null) {
+        data = {
+          nameTh: itemOrKey.name || 'โรงเรียนในสังกัด สพม.สกลนคร',
+          nameEn: (itemOrKey.nameEn || itemOrKey.name || 'Secondary School'),
+          cluster: 'สหวิทยาเขต' + (itemOrKey.cluster || ''),
+          students: itemOrKey.std || '1,250',
+          teachers: itemOrKey.teachers || '65',
+          rooms: itemOrKey.rooms || '36',
+          ratio: itemOrKey.ratio || '1:19.2',
+          director: itemOrKey.director || 'ผู้อำนวยการสถานศึกษา (รอปรับปรุงข้อมูล)',
+          phone: itemOrKey.phone || '042-711xxx',
+          address: itemOrKey.address || `อำเภอ${itemOrKey.dist || 'เมืองสกลนคร'} จังหวัดสกลนคร`,
+          maps: itemOrKey.maps || 'https://maps.google.com',
+          programs: itemOrKey.programs || ['ห้องเรียนคุณภาพมาตรฐานการศึกษาขั้นพื้นฐาน', 'การจัดการเรียนรู้เชิงรุก Active Learning', 'หลักสูตรสถานศึกษาสู่ความเป็นเลิศ'],
+          boppUrl: itemOrKey.boppUrl || `https://info.bopp.go.th/school/${itemOrKey.code || '47022007'}?area=30`
+        };
+      } else {
+        data = (typeof schoolsDeepData !== 'undefined' && schoolsDeepData[itemOrKey]) ? schoolsDeepData[itemOrKey] : {
+          nameTh: itemOrKey || 'โรงเรียนในสังกัด',
+          nameEn: 'Secondary School',
+          cluster: 'สหวิทยาเขต สพม.สกลนคร',
+          students: '1,500',
+          teachers: '75',
+          rooms: '40',
+          ratio: '1:20.0',
+          director: 'ผู้อำนวยการสถานศึกษา',
+          phone: '042-711456',
+          address: 'จังหวัดสกลนคร',
+          maps: 'https://maps.google.com',
+          programs: ['การจัดการเรียนรู้เชิงรุก Active Learning'],
+          boppUrl: 'https://info.bopp.go.th/school/47022007?area=30'
+        };
+      }
 
-      const data = schoolsDeepData[key] || schoolsDeepData['sakonraj'];
+      const clusterBadge = document.getElementById('schClusterBadge');
+      if (clusterBadge) clusterBadge.innerText = data.cluster;
 
-      document.getElementById('schClusterBadge').innerText = data.cluster;
+      const nameTh = document.getElementById('schNameTh');
+      if (nameTh) nameTh.innerText = data.nameTh;
 
-      document.getElementById('schNameTh').innerText = data.nameTh;
+      const nameEn = document.getElementById('schNameEn');
+      if (nameEn) nameEn.innerText = data.nameEn;
 
-      document.getElementById('schNameEn').innerText = data.nameEn;
+      const students = document.getElementById('schStudents');
+      if (students) students.innerText = data.students;
 
-      document.getElementById('schStudents').innerText = data.students;
+      const teachers = document.getElementById('schTeachers');
+      if (teachers) teachers.innerText = data.teachers;
 
-      document.getElementById('schTeachers').innerText = data.teachers;
+      const rooms = document.getElementById('schRooms');
+      if (rooms) rooms.innerText = data.rooms;
 
-      document.getElementById('schRooms').innerText = data.rooms;
+      const ratio = document.getElementById('schRatio');
+      if (ratio) ratio.innerText = data.ratio;
 
-      document.getElementById('schRatio').innerText = data.ratio;
+      const director = document.getElementById('schDirector');
+      if (director) director.innerText = data.director;
 
-      document.getElementById('schDirector').innerText = data.director;
+      const dirPhone = document.getElementById('schDirectorPhone');
+      if (dirPhone) dirPhone.innerHTML = `<i class="fa-solid fa-phone"></i> ${data.phone}`;
 
-      document.getElementById('schDirectorPhone').innerHTML = `<i class="fa-solid fa-phone"></i> ${data.phone}`;
+      const addr = document.getElementById('schAddress');
+      if (addr) addr.innerText = data.address;
 
-      document.getElementById('schAddress').innerText = data.address;
+      const mapsLink = document.getElementById('schMapsLink');
+      if (mapsLink) mapsLink.href = data.maps;
 
-      document.getElementById('schMapsLink').href = data.maps;
-
-
+      const boppLink = document.getElementById('schBoppLink');
+      if (boppLink && data.boppUrl) boppLink.href = data.boppUrl;
 
       const progContainer = document.getElementById('schProgramsWrap');
-
-      progContainer.innerHTML = '';
-
-      data.programs.forEach(p => {
-
-        const tag = document.createElement('span');
-
-        tag.className = 'sec-badge-pill';
-
-        tag.style.margin = '0';
-
-        tag.style.fontSize = '12px';
-
-        tag.innerText = p;
-
-        progContainer.appendChild(tag);
-
-      });
-
-
+      if (progContainer) {
+        progContainer.innerHTML = '';
+        if (Array.isArray(data.programs)) {
+          data.programs.forEach(p => {
+            const tag = document.createElement('span');
+            tag.className = 'sec-badge-pill';
+            tag.style.margin = '0';
+            tag.style.fontSize = '12px';
+            tag.innerText = p;
+            progContainer.appendChild(tag);
+          });
+        }
+      }
 
       const modal = document.getElementById('schoolProfileModal');
-
       if (modal) modal.classList.add('active');
-
     }
 
 

@@ -3586,6 +3586,27 @@ function spm_register_portal_cpts() {
         'supports' => array('title')
     ));
 
+    
+    // 1.7 ทำเนียบสถานศึกษา / โรงเรียนในสังกัด
+    register_post_type('spm_school', array(
+        'labels' => array(
+            'name' => 'ทำเนียบโรงเรียน',
+            'singular_name' => 'ข้อมูลโรงเรียน',
+            'add_new' => 'เพิ่มโรงเรียนใหม่',
+            'add_new_item' => 'เพิ่มข้อมูลสถานศึกษาในสังกัด',
+            'edit_item' => 'แก้ไขข้อมูลโรงเรียน',
+            'all_items' => 'โรงเรียนทั้งหมด (ทำเนียบ 45 โรงเรียน)',
+            'search_items' => 'ค้นหาโรงเรียน',
+            'menu_name' => 'ทำเนียบโรงเรียน'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-welcome-learn-more',
+        'menu_position' => 27,
+        'supports' => array('title')
+    ));
+
     register_post_type('spm_safety', array(
         'labels' => array(
             'name' => 'ศูนย์ความปลอดภัย MOE',
@@ -3610,7 +3631,7 @@ function spm_register_portal_cpts() {
 add_action('admin_enqueue_scripts', 'spm_portal_cpts_admin_assets');
 function spm_portal_cpts_admin_assets($hook) {
     global $post_type;
-    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer');
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer', 'spm_school');
     if (in_array($post_type, $portal_cpts)) {
         wp_enqueue_media();
         wp_enqueue_style('spm-cpt-admin-style', false);
@@ -3928,7 +3949,7 @@ function spm_render_safety_meta_box($post) {
 add_action('admin_footer', 'spm_cpt_media_uploader_script');
 function spm_cpt_media_uploader_script() {
     global $post_type;
-    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer');
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer', 'spm_school');
     if (!in_array($post_type, $portal_cpts)) return;
     ?>
     <script>
@@ -3991,7 +4012,23 @@ function spm_save_portal_cpts_meta($post_id) {
         'spm_oer_size' => '_spm_oer_size',
         'spm_oer_rating' => '_spm_oer_rating',
         'spm_oer_downloads' => '_spm_oer_downloads',
-        'spm_oer_file' => '_spm_oer_file'
+        'spm_oer_file' => '_spm_oer_file',
+
+        'spm_school_code' => '_spm_school_code',
+        'spm_school_director' => '_spm_school_director',
+        'spm_school_cluster' => '_spm_school_cluster',
+        'spm_school_district' => '_spm_school_district',
+        'spm_school_students' => '_spm_school_students',
+        'spm_school_teachers' => '_spm_school_teachers',
+        'spm_school_rooms' => '_spm_school_rooms',
+        'spm_school_ratio' => '_spm_school_ratio',
+        'spm_school_address' => '_spm_school_address',
+        'spm_school_phone' => '_spm_school_phone',
+        'spm_school_website' => '_spm_school_website',
+        'spm_school_maps' => '_spm_school_maps',
+        'spm_school_programs' => '_spm_school_programs',
+        'spm_school_logo' => '_spm_school_logo',
+
     );
 
     foreach ($fields as $post_key => $meta_key) {
@@ -4569,6 +4606,208 @@ function spm_rest_get_oer($request) {
                 'rating' => get_post_meta($pid, '_spm_oer_rating', true) ?: '5.0',
                 'size' => get_post_meta($pid, '_spm_oer_size', true) ?: '10 MB',
                 'url' => get_post_meta($pid, '_spm_oer_file', true) ?: '#'
+            );
+        }
+        wp_reset_postdata();
+    }
+    return rest_ensure_response($results);
+}
+
+
+
+// 3.7 RENDER SCHOOL META BOX
+add_action('add_meta_boxes', function() {
+    add_meta_box('spm_school_details', '🏫 ข้อมูลสถานศึกษาและผู้อำนวยการโรงเรียน (BOPP Profile)', 'spm_render_school_meta_box', 'spm_school', 'normal', 'high');
+});
+function spm_render_school_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $code = get_post_meta($post->ID, '_spm_school_code', true) ?: '4702' . rand(1000, 9999);
+    $director = get_post_meta($post->ID, '_spm_school_director', true) ?: '';
+    $cluster = get_post_meta($post->ID, '_spm_school_cluster', true) ?: 'สกลราช';
+    $district = get_post_meta($post->ID, '_spm_school_district', true) ?: 'อ.เมืองสกลนคร';
+    $students = get_post_meta($post->ID, '_spm_school_students', true) ?: '1,500 คน';
+    $teachers = get_post_meta($post->ID, '_spm_school_teachers', true) ?: '85 คน';
+    $rooms = get_post_meta($post->ID, '_spm_school_rooms', true) ?: '40 ห้อง';
+    $ratio = get_post_meta($post->ID, '_spm_school_ratio', true) ?: '1:18.5';
+    $address = get_post_meta($post->ID, '_spm_school_address', true) ?: 'จ.สกลนคร';
+    $phone = get_post_meta($post->ID, '_spm_school_phone', true) ?: '042-711xxx';
+    $website = get_post_meta($post->ID, '_spm_school_website', true) ?: '';
+    $maps = get_post_meta($post->ID, '_spm_school_maps', true) ?: 'https://maps.google.com';
+    $programs = get_post_meta($post->ID, '_spm_school_programs', true) ?: 'ห้องเรียนพิเศษ SMTE, โครงการ Smart Classroom';
+    $logo = get_post_meta($post->ID, '_spm_school_logo', true) ?: '';
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">รหัสสถานศึกษา 10 หลัก (BOPP / สมศ.):</label>
+                <input type="text" name="spm_school_code" value="<?php echo esc_attr($code); ?>" class="spm-meta-input" style="font-weight:700; color:#0284C7;" placeholder="เช่น 47022007">
+                <div class="spm-meta-desc">ใช้สำหรับเชื่อมโยงลิงก์ระบบสารสนเทศ สพฐ. (info.bopp.go.th)</div>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">👔 ชื่อ-นามสกุล ผู้อำนวยการโรงเรียน (ผอ.โรงเรียน):</label>
+                <input type="text" name="spm_school_director" value="<?php echo esc_attr($director); ?>" class="spm-meta-input" style="font-weight:700;" placeholder="เช่น นายสมยศ พิมพ์ศิริ">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">สหวิทยาเขตที่สังกัด:</label>
+                <select name="spm_school_cluster" class="spm-meta-select">
+                    <option value="สว่างศึกษา" <?php selected($cluster, 'สว่างศึกษา'); ?>>สหวิทยาเขตสว่างศึกษา</option>
+                    <option value="พระธาตุนารายณ์เจงเวง" <?php selected($cluster, 'พระธาตุนารายณ์เจงเวง'); ?>>สหวิทยาเขตพระธาตุนารายณ์เจงเวง</option>
+                    <option value="เบญจรักษ์" <?php selected($cluster, 'เบญจรักษ์'); ?>>สหวิทยาเขตเบญจรักษ์</option>
+                    <option value="ลุ่มน้ำอูน" <?php selected($cluster, 'ลุ่มน้ำอูน'); ?>>สหวิทยาเขตลุ่มน้ำอูน</option>
+                    <option value="ดำรงธรรม" <?php selected($cluster, 'ดำรงธรรม'); ?>>สหวิทยาเขตดำรงธรรม</option>
+                    <option value="เทพทวีพัฒน์" <?php selected($cluster, 'เทพทวีพัฒน์'); ?>>สหวิทยาเขตเทพทวีพัฒน์</option>
+                    <option value="สหสกลราช" <?php selected($cluster, 'สหสกลราช'); ?>>สหวิทยาเขตสหสกลราช</option>
+                    <option value="สหเบญจพัฒน์" <?php selected($cluster, 'สหเบญจพัฒน์'); ?>>สหวิทยาเขตสหเบญจพัฒน์</option>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">อำเภอที่ตั้ง:</label>
+                <input type="text" name="spm_school_district" value="<?php echo esc_attr($district); ?>" class="spm-meta-input" placeholder="เช่น อ.เมืองสกลนคร หรือ อ.สว่างแดนดิน">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">จำนวนนักเรียนทั้งหมด (ระบุพร้อมคำว่า คน):</label>
+                <input type="text" name="spm_school_students" value="<?php echo esc_attr($students); ?>" class="spm-meta-input" placeholder="เช่น 3,850 คน">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">จำนวนข้าราชการครูและบุคลากร:</label>
+                <input type="text" name="spm_school_teachers" value="<?php echo esc_attr($teachers); ?>" class="spm-meta-input" placeholder="เช่น 198 คน">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">จำนวนห้องเรียน:</label>
+                <input type="text" name="spm_school_rooms" value="<?php echo esc_attr($rooms); ?>" class="spm-meta-input" placeholder="เช่น 96 ห้อง">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">อัตราส่วนครู : นักเรียน:</label>
+                <input type="text" name="spm_school_ratio" value="<?php echo esc_attr($ratio); ?>" class="spm-meta-input" placeholder="เช่น 1:19.4">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">เบอร์โทรศัพท์ติดต่อสถานศึกษา:</label>
+                <input type="text" name="spm_school_phone" value="<?php echo esc_attr($phone); ?>" class="spm-meta-input" placeholder="เช่น 042-711234">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">เว็บไซต์โรงเรียน / เพจ Facebook:</label>
+                <input type="text" name="spm_school_website" value="<?php echo esc_attr($website); ?>" class="spm-meta-input" placeholder="https://...">
+            </div>
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">ที่อยู่สถานศึกษา (ตำบล อำเภอ รหัสไปรษณีย์):</label>
+            <input type="text" name="spm_school_address" value="<?php echo esc_attr($address); ?>" class="spm-meta-input" placeholder="เช่น ตำบลธาตุเชิงชุม อำเภอเมืองสกลนคร จังหวัดสกลนคร 47000">
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">แผนการเรียนพิเศษ / จุดเด่นสถานศึกษา (คั่นด้วยจุลภาค):</label>
+            <input type="text" name="spm_school_programs" value="<?php echo esc_attr($programs); ?>" class="spm-meta-input" placeholder="เช่น ห้องเรียนพิเศษ SMTE, MEP, AI & Robotics">
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">ตราสัญลักษณ์ / โลโก้โรงเรียน (School Logo):</label>
+            <div style="display:flex; gap:8px; max-width:600px;">
+                <input type="text" id="spm_school_logo" name="spm_school_logo" value="<?php echo esc_attr($logo); ?>" class="spm-meta-input" placeholder="https://...">
+                <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_school_logo">📷 เลือกโลโก้</button>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// School List Columns
+add_filter('manage_spm_school_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['school_director'] = 'ผู้อำนวยการโรงเรียน';
+            $new['school_cluster'] = 'สหวิทยาเขต';
+            $new['school_district'] = 'อำเภอ';
+            $new['school_students'] = 'จำนวนนักเรียน';
+            $new['school_code'] = 'รหัส BOPP';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_school_posts_custom_column', function($col, $post_id) {
+    if ($col === 'school_director') {
+        $d = get_post_meta($post_id, '_spm_school_director', true);
+        echo $d ? '<strong>👔 ' . esc_html($d) . '</strong>' : '<span style="color:#94A3B8;">-</span>';
+    } elseif ($col === 'school_cluster') {
+        echo '<span style="color:#0284C7; font-weight:600;">' . esc_html(get_post_meta($post_id, '_spm_school_cluster', true) ?: '-') . '</span>';
+    } elseif ($col === 'school_district') {
+        echo esc_html(get_post_meta($post_id, '_spm_school_district', true) ?: '-');
+    } elseif ($col === 'school_students') {
+        echo '<strong>' . esc_html(get_post_meta($post_id, '_spm_school_students', true) ?: '-') . '</strong>';
+    } elseif ($col === 'school_code') {
+        $c = get_post_meta($post_id, '_spm_school_code', true);
+        echo $c ? '<a href="https://info.bopp.go.th/school/' . esc_attr($c) . '?area=30" target="_blank" style="color:#D97706; font-weight:700;">' . esc_html($c) . ' ↗</a>' : '-';
+    }
+}, 10, 2);
+
+// REST API endpoint /spm/v1/schools
+add_action('rest_api_init', function() {
+    register_rest_route('spm/v1', '/schools', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_schools',
+        'permission_callback' => '__return_true'
+    ));
+});
+function spm_rest_get_schools($request) {
+    $cluster = $request->get_param('cluster');
+    $q = $request->get_param('q');
+    $args = array(
+        'post_type' => 'spm_school',
+        'posts_per_page' => 100,
+        'post_status' => 'publish',
+        'orderby' => 'title',
+        'order' => 'ASC'
+    );
+    if (!empty($q)) $args['s'] = $q;
+
+    $query = new WP_Query($args);
+    $results = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $item_cluster = get_post_meta($pid, '_spm_school_cluster', true) ?: '';
+            if ($cluster && $cluster !== 'all' && strpos($item_cluster, $cluster) === false) continue;
+
+            $programs_str = get_post_meta($pid, '_spm_school_programs', true) ?: '';
+            $programs_arr = array_filter(array_map('trim', explode(',', $programs_str)));
+            if (empty($programs_arr)) $programs_arr = array('โครงการห้องเรียนคุณภาพ', 'การจัดการเรียนรู้ Active Learning');
+
+            $code = get_post_meta($pid, '_spm_school_code', true) ?: '47022007';
+
+            $results[] = array(
+                'id' => $pid,
+                'name' => get_the_title(),
+                'code' => $code,
+                'director' => get_post_meta($pid, '_spm_school_director', true) ?: 'ผู้อำนวยการสถานศึกษา',
+                'cluster' => $item_cluster,
+                'dist' => get_post_meta($pid, '_spm_school_district', true) ?: '',
+                'std' => get_post_meta($pid, '_spm_school_students', true) ?: '1,000 คน',
+                'teachers' => get_post_meta($pid, '_spm_school_teachers', true) ?: '60 คน',
+                'rooms' => get_post_meta($pid, '_spm_school_rooms', true) ?: '30 ห้อง',
+                'ratio' => get_post_meta($pid, '_spm_school_ratio', true) ?: '1:18.5',
+                'address' => get_post_meta($pid, '_spm_school_address', true) ?: 'จังหวัดสกลนคร',
+                'phone' => get_post_meta($pid, '_spm_school_phone', true) ?: '042-711xxx',
+                'website' => get_post_meta($pid, '_spm_school_website', true) ?: '',
+                'boppUrl' => 'https://info.bopp.go.th/school/' . $code . '?area=30',
+                'maps' => get_post_meta($pid, '_spm_school_maps', true) ?: 'https://maps.google.com',
+                'programs' => array_values($programs_arr),
+                'logo' => get_post_meta($pid, '_spm_school_logo', true) ?: ''
             );
         }
         wp_reset_postdata();
