@@ -9941,7 +9941,7 @@
 
           <div class="exec-avatar-circ" id="exAvatarCirc">
 
-            <img id="exAvatarImg" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" class="exec-avatar-img" onerror="this.style.display='none'; document.getElementById('exIcon').style.display='block';">
+            <img id="exAvatarImg" id="orgTreeDirImg" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" class="exec-avatar-img" onerror="this.style.display='none'; document.getElementById('exIcon').style.display='block';">
 
             <i class="fa-solid fa-user-tie" id="exIcon" style="display: none;"></i>
 
@@ -13241,7 +13241,7 @@
 
           <div class="org-node-director" onclick="switchExec(0); openDirectorModal();" style="cursor: pointer;">
 
-            <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" style="width: 68px; height: 68px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2.5px solid var(--gold-400); margin: 0 auto 10px auto; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.35);">
+            <img id="orgTreeDirImg" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" style="width: 68px; height: 68px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2.5px solid var(--gold-400); margin: 0 auto 10px auto; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.35);">
 
             <span style="font-size: 11px; color: var(--gold-400); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
 
@@ -13275,7 +13275,7 @@
 
             <div class="org-node-deputy" onclick="switchExec(1)" style="cursor: pointer;">
 
-              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg" alt="นายชลาวุธ สามาอาพัฒน์" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+              <img id="orgTreeDep1Img" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg" alt="นายชลาวุธ สามาอาพัฒน์" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
               <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 1)</div>
 
@@ -13295,7 +13295,7 @@
 
             <div class="org-node-deputy" onclick="switchExec(2)" style="cursor: pointer;">
 
-              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg" alt="ดร.บุญธรรม อ้วนกันยา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+              <img id="orgTreeDep2Img" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg" alt="ดร.บุญธรรม อ้วนกันยา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
               <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 2)</div>
 
@@ -13315,7 +13315,7 @@
 
             <div class="org-node-deputy" onclick="switchExec(3)" style="cursor: pointer;">
 
-              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg" alt="นางสาววัชราภรณ์ ปัฏนา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+              <img id="orgTreeDep3Img" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg" alt="นางสาววัชราภรณ์ ปัฏนา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
               <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 3)</div>
 
@@ -17067,25 +17067,51 @@
 
       // 4. Executive Director & Leadership
       if (typeof execs !== 'undefined' && Array.isArray(execs) && execs.length > 0) {
+        // Director
         if (s.director_name && !s.director_name.includes('อดุลย์ศักดิ์') && !s.director_name.includes('เกษมศักดิ์')) {
           execs[0].name = s.director_name;
         }
-        if (s.director_image) {
-          execs[0].image = s.director_image;
-        }
+        if (s.director_title) execs[0].role = s.director_title;
+        if (s.director_image) execs[0].image = s.director_image;
         if (s.director_message || s.director_quote) {
           execs[0].q = s.director_message || s.director_quote;
         }
-        if (s.deputy_academic && !s.deputy_academic.includes('ประสิทธิ์')) {
-          execs[1].name = s.deputy_academic;
-        }
-        if (s.deputy_budget && !s.deputy_budget.includes('วิวัฒน์')) {
-          execs[2].name = s.deputy_budget;
-        }
-        if (s.deputy_personnel && !s.deputy_personnel.includes('รุ่งทิพย์')) {
-          execs[3].name = s.deputy_personnel;
-        }
+
+        // Deputy 1
+        if (s.deputy1_name) execs[1].name = s.deputy1_name;
+        else if (s.deputy_academic && !s.deputy_academic.includes('ประสิทธิ์')) execs[1].name = s.deputy_academic;
+        if (s.deputy1_title) execs[1].role = s.deputy1_title;
+        if (s.deputy1_image) execs[1].image = s.deputy1_image;
+        if (s.deputy1_scope) execs[1].scope = s.deputy1_scope;
+        if (s.deputy1_quote) execs[1].q = s.deputy1_quote;
+
+        // Deputy 2
+        if (s.deputy2_name) execs[2].name = s.deputy2_name;
+        else if (s.deputy_budget && !s.deputy_budget.includes('วิวัฒน์')) execs[2].name = s.deputy_budget;
+        if (s.deputy2_title) execs[2].role = s.deputy2_title;
+        if (s.deputy2_image) execs[2].image = s.deputy2_image;
+        if (s.deputy2_scope) execs[2].scope = s.deputy2_scope;
+        if (s.deputy2_quote) execs[2].q = s.deputy2_quote;
+
+        // Deputy 3
+        if (s.deputy3_name) execs[3].name = s.deputy3_name;
+        else if (s.deputy_personnel && !s.deputy_personnel.includes('รุ่งทิพย์')) execs[3].name = s.deputy_personnel;
+        if (s.deputy3_title) execs[3].role = s.deputy3_title;
+        if (s.deputy3_image) execs[3].image = s.deputy3_image;
+        if (s.deputy3_scope) execs[3].scope = s.deputy3_scope;
+        if (s.deputy3_quote) execs[3].q = s.deputy3_quote;
+
         if (typeof switchExec === 'function') switchExec(0);
+
+        // Update Org Chart Real-Time Photos
+        const orgDirImg = document.getElementById('orgTreeDirImg');
+        if (orgDirImg && execs[0].image) orgDirImg.src = execs[0].image;
+        const orgDep1Img = document.getElementById('orgTreeDep1Img');
+        if (orgDep1Img && execs[1].image) orgDep1Img.src = execs[1].image;
+        const orgDep2Img = document.getElementById('orgTreeDep2Img');
+        if (orgDep2Img && execs[2].image) orgDep2Img.src = execs[2].image;
+        const orgDep3Img = document.getElementById('orgTreeDep3Img');
+        if (orgDep3Img && execs[3].image) orgDep3Img.src = execs[3].image;
       }
 
       // 5. Cockpit Stats

@@ -47,10 +47,25 @@ function spm_get_default_settings() {
         'director_title' => 'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร',
         'director_image' => 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg',
         'director_message' => 'มุ่งมั่นยกระดับคุณภาพการศึกษามัธยมศึกษาสกลนคร สู่มาตรฐานสากลด้วยดิจิทัลและนวัตกรรม และการบริหารจัดการอย่างมีประสิทธิภาพ โปร่งใส',
-        'deputy_academic' => 'นายชลาวุธ สามาอาพัฒน์ (คนที่ 1)',
-        'deputy_budget' => 'ดร.บุญธรรม อ้วนกันยา (คนที่ 2)',
-        'deputy_personnel' => 'นางสาววัชราภรณ์ ปัฏนา (คนที่ 3)',
+        'deputy_academic' => 'นายชลาวุธ สามาอาพัฒน์',
+        'deputy_budget' => 'ดร.บุญธรรม อ้วนกันยา',
+        'deputy_personnel' => 'นางสาววัชราภรณ์ ปัฏนา',
         'deputy_general' => '',
+        'deputy1_name' => 'นายชลาวุธ สามาอาพัฒน์',
+        'deputy1_title' => 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 1)',
+        'deputy1_image' => 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg',
+        'deputy1_scope' => 'กำกับ: การเงินฯ, ส่งเสริมฯ, DLICT • ดูแล: เบญจรักษ์, พระธาตุนารายณ์ฯ, ลุ่มน้ำอูน',
+        'deputy1_quote' => 'ขับเคลื่อนการบริหารการเงินโปร่งใส ยกระดับการศึกษาทางไกลดิจิทัล และส่งเสริมโอกาสทางการเรียนรู้ของนักเรียนอย่างเท่าเทียม',
+        'deputy2_name' => 'ดร.บุญธรรม อ้วนกันยา',
+        'deputy2_title' => 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 2)',
+        'deputy2_image' => 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg',
+        'deputy2_scope' => 'กำกับ: อำนวยการ, บุคคล, พัฒนาครูฯ • ดูแล: สว่างศึกษา, เทพทวีพัฒน์',
+        'deputy2_quote' => 'บริหารงานบุคคลด้วยความถูกต้องเป็นธรรม พัฒนาสมรรถนะครูสู่ความเป็นเลิศ พร้อมเสริมสร้างขวัญกำลังใจและระบบ ว.PA',
+        'deputy3_name' => 'นางสาววัชราภรณ์ ปัฏนา',
+        'deputy3_title' => 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 3)',
+        'deputy3_image' => 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg',
+        'deputy3_scope' => 'กำกับ: นิเทศ ติดตามฯ, นโยบายและแผน • ดูแล: ดำรงธรรม, สหสกลราช, สหเบญจพัฒน์',
+        'deputy3_quote' => 'ขับเคลื่อนนโยบายสู่การปฏิบัติอย่างเป็นรูปธรรม นิเทศการจัดการศึกษาเชิงรุก ยกระดับหลักสูตรและประกันคุณภาพการศึกษาสู่มาตรฐานสากล',
 
         // Tab 5: ระบบบริการดิจิทัล 8 เสาหลัก (One-Stop 8 Digital Services)
         'srv_sgs_title' => 'ระบบดูเกรดออนไลน์ (DoGrade / SGS)',
@@ -195,6 +210,13 @@ function spm_get_settings() {
     $saved = get_option('spm_portal_settings', array());
     return wp_parse_args($saved, $defaults);
 }
+
+// 2. Enable WordPress Media Uploader for SPM Control Center
+add_action('admin_enqueue_scripts', function($hook) {
+    if (isset($_GET['page']) && $_GET['page'] === 'spm-portal-settings') {
+        wp_enqueue_media();
+    }
+});
 
 // 2. Add Top-Level Menu in WP Admin
 add_action('admin_menu', function() {
@@ -1087,49 +1109,155 @@ function spm_render_admin_page() {
 
                     <!-- TAB 4: คณะผู้บริหาร สพม.สกลนคร -->
                     <div id="tab-exec" class="spm-tab-section">
-                        <div class="spm-card" style="border-left: 5px solid #0EA5E9;">
-                            <h3 class="spm-card-head">👔 ทำเนียบผู้อำนวยการและสาส์นจากผู้บริหาร</h3>
+                        <!-- ผู้อำนวยการ สพม.สกลนคร -->
+                        <div class="spm-card" style="border-left: 5px solid #D4AF37;">
+                            <h3 class="spm-card-head">👔 ข้อมูลและรูปถ่าย ผู้อำนวยการ สพม.สกลนคร (ผอ.เขต)</h3>
                             <div class="sps-grid-2">
                                 <div>
                                     <label class="spm-label">ชื่อ-นามสกุล ผู้อำนวยการ:</label>
-                                    <input type="text" name="director_name" value="<?php echo esc_attr($s['director_name'] ?? 'นายเกษมศักดิ์ ทองสุ'); ?>" class="spm-input" style="font-weight: 700;">
+                                    <input type="text" name="director_name" value="<?php echo esc_attr($s['director_name'] ?? 'นายนรงณ์ เห็นหลอด'); ?>" class="spm-input" style="font-weight: 700;">
                                 </div>
                                 <div>
                                     <label class="spm-label">ตำแหน่ง / วิทยฐานะ:</label>
                                     <input type="text" name="director_title" value="<?php echo esc_attr($s['director_title'] ?? 'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร'); ?>" class="spm-input">
                                 </div>
                             </div>
-                            <div style="margin-bottom: 16px;">
-                                <label class="spm-label">URL รูปถ่ายผู้อำนวยการ (Director Photo URL):</label>
-                                <input type="url" name="director_image" value="<?php echo esc_attr($s['director_image'] ?? ''); ?>" placeholder="https://...jpg" class="spm-input">
-                                <div class="sps-hint">ใส่ลิงก์รูปถ่ายเพื่อแสดงแทนไอคอนสูท</div>
+                            
+                            <div style="margin: 16px 0; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                                <div style="text-align: center;">
+                                    <img id="preview_director_image" src="<?php echo esc_url($s['director_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg'); ?>" style="width: 76px; height: 76px; border-radius: 50%; object-fit: cover; object-position: center top; border: 3px solid #D4AF37; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: block; margin: 0 auto 6px auto;">
+                                    <span style="font-size: 11px; color: #64748B; font-weight: 600;">รูปปัจจุบัน</span>
+                                </div>
+                                <div style="flex: 1; min-width: 260px;">
+                                    <label class="spm-label">URL รูปถ่ายผู้อำนวยการ (Director Portrait URL):</label>
+                                    <div style="display: flex; gap: 8px;">
+                                        <input type="text" id="director_image" name="director_image" value="<?php echo esc_attr($s['director_image'] ?? ''); ?>" placeholder="https://..." class="spm-input" style="flex: 1;">
+                                        <button type="button" class="button spm-upload-media-btn" data-target="director_image" data-preview="preview_director_image" style="background: #0B132B; color: #ECC86A; border: 1px solid #D4AF37; font-weight: 700; white-space: nowrap; padding: 6px 14px; border-radius: 6px; cursor: pointer;">
+                                            📷 เลือกรูปจากคลังสื่อ
+                                        </button>
+                                    </div>
+                                    <div class="sps-hint">สามารถกดปุ่มเพื่อเลือกหรืออัปโหลดรูปภาพจาก WordPress Media Library หรือพิมพ์ URL โดยตรงได้ทันที</div>
+                                </div>
                             </div>
+
                             <div>
-                                <label class="spm-label">สาส์นจากผู้อำนวยการ (Director Welcome Message / Quote):</label>
-                                <textarea name="director_message" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['director_message'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนครมุ่งมั่นพัฒนาคุณภาพผู้เรียนให้มีความเป็นเลิศทางวิชาการ ควบคู่คุณธรรมจริยธรรม ตามอัตลักษณ์ ใฝ่รู้ใฝ่เรียน มีระเบียบวินัย และมีสัมมาคารวะ พร้อมก้าวทันการเปลี่ยนแปลงในยุคดิจิทัล'); ?></textarea>
+                                <label class="spm-label">สาส์นจากผู้อำนวยการ (Welcome Message / Quote):</label>
+                                <textarea name="director_message" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['director_message'] ?? ''); ?></textarea>
                             </div>
                         </div>
 
-                        <div class="spm-card">
-                            <h3 class="spm-card-head">👥 รองผู้อำนวยการ สพม.สกลนคร (4 ด้านภารกิจ)</h3>
-                            <div class="sps-grid-2">
-                                <div>
-                                    <label class="spm-label">1. รอง ผอ.สพม.สกลนคร (ด้านส่งเสริมการจัดการศึกษาและวิชาการ):</label>
-                                    <input type="text" name="deputy_academic" value="<?php echo esc_attr($s['deputy_academic'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานวิชาการ'); ?>" class="spm-input">
+                        <!-- รองผู้อำนวยการทั้ง 3 ท่าน -->
+                        <div class="spm-card" style="border-left: 5px solid #0EA5E9;">
+                            <h3 class="spm-card-head">👥 คณะรองผู้อำนวยการ สพม.สกลนคร (3 ท่านตามสายงาน)</h3>
+                            
+                            <!-- รอง ผอ. คนที่ 1 -->
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 18px; border-radius: 12px; margin-bottom: 20px;">
+                                <div style="font-weight: 800; color: #0284C7; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <span>🥇 1. รองผู้อำนวยการ สพม.สกลนคร (คนที่ 1)</span>
+                                </div>
+                                <div class="sps-grid-2">
+                                    <div>
+                                        <label class="spm-label">ชื่อ-นามสกุล:</label>
+                                        <input type="text" name="deputy1_name" value="<?php echo esc_attr($s['deputy1_name'] ?? $s['deputy_academic'] ?? 'นายชลาวุธ สามาอาพัฒน์'); ?>" class="spm-input" style="font-weight: 700;">
+                                    </div>
+                                    <div>
+                                        <label class="spm-label">ตำแหน่งทางการ:</label>
+                                        <input type="text" name="deputy1_title" value="<?php echo esc_attr($s['deputy1_title'] ?? 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 1)'); ?>" class="spm-input">
+                                    </div>
+                                </div>
+                                <div style="margin: 12px 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                                    <img id="preview_deputy1_image" src="<?php echo esc_url($s['deputy1_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg'); ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #0EA5E9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                    <div style="flex: 1; min-width: 250px;">
+                                        <label class="spm-label">URL รูปถ่าย รอง ผอ.คนที่ 1:</label>
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="deputy1_image" name="deputy1_image" value="<?php echo esc_attr($s['deputy1_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg'); ?>" class="spm-input" style="flex: 1;">
+                                            <button type="button" class="button spm-upload-media-btn" data-target="deputy1_image" data-preview="preview_deputy1_image" style="background: #0284C7; color: #FFF; border: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+                                                📷 เลือกรูปภาพ
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="spm-label">2. รอง ผอ.สพม.สกลนคร (ด้านนโยบาย แผน และงบประมาณ):</label>
-                                    <input type="text" name="deputy_budget" value="<?php echo esc_attr($s['deputy_budget'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานงบประมาณ'); ?>" class="spm-input">
+                                    <label class="spm-label">ขอบข่ายภารกิจ / สหวิทยาเขตที่ดูแล:</label>
+                                    <input type="text" name="deputy1_scope" value="<?php echo esc_attr($s['deputy1_scope'] ?? 'กำกับ: การเงินฯ, ส่งเสริมฯ, DLICT • ดูแล: เบญจรักษ์, พระธาตุนารายณ์ฯ, ลุ่มน้ำอูน'); ?>" class="spm-input">
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <label class="spm-label">คำกล่าว / วิสัยทัศน์:</label>
+                                    <input type="text" name="deputy1_quote" value="<?php echo esc_attr($s['deputy1_quote'] ?? 'ขับเคลื่อนการบริหารการเงินโปร่งใส ยกระดับการศึกษาทางไกลดิจิทัล และส่งเสริมโอกาสทางการเรียนรู้ของนักเรียนอย่างเท่าเทียม'); ?>" class="spm-input">
                                 </div>
                             </div>
-                            <div class="sps-grid-2">
-                                <div>
-                                    <label class="spm-label">3. รอง ผอ.สพม.สกลนคร (ด้านบริหารงานบุคคล):</label>
-                                    <input type="text" name="deputy_personnel" value="<?php echo esc_attr($s['deputy_personnel'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานบุคคล'); ?>" class="spm-input">
+
+                            <!-- รอง ผอ. คนที่ 2 -->
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 18px; border-radius: 12px; margin-bottom: 20px;">
+                                <div style="font-weight: 800; color: #0284C7; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <span>🥈 2. รองผู้อำนวยการ สพม.สกลนคร (คนที่ 2)</span>
+                                </div>
+                                <div class="sps-grid-2">
+                                    <div>
+                                        <label class="spm-label">ชื่อ-นามสกุล:</label>
+                                        <input type="text" name="deputy2_name" value="<?php echo esc_attr($s['deputy2_name'] ?? $s['deputy_budget'] ?? 'ดร.บุญธรรม อ้วนกันยา'); ?>" class="spm-input" style="font-weight: 700;">
+                                    </div>
+                                    <div>
+                                        <label class="spm-label">ตำแหน่งทางการ:</label>
+                                        <input type="text" name="deputy2_title" value="<?php echo esc_attr($s['deputy2_title'] ?? 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 2)'); ?>" class="spm-input">
+                                    </div>
+                                </div>
+                                <div style="margin: 12px 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                                    <img id="preview_deputy2_image" src="<?php echo esc_url($s['deputy2_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg'); ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #0EA5E9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                    <div style="flex: 1; min-width: 250px;">
+                                        <label class="spm-label">URL รูปถ่าย รอง ผอ.คนที่ 2:</label>
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="deputy2_image" name="deputy2_image" value="<?php echo esc_attr($s['deputy2_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg'); ?>" class="spm-input" style="flex: 1;">
+                                            <button type="button" class="button spm-upload-media-btn" data-target="deputy2_image" data-preview="preview_deputy2_image" style="background: #0284C7; color: #FFF; border: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+                                                📷 เลือกรูปภาพ
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="spm-label">4. รอง ผอ.สพม.สกลนคร (ด้านบริหารทั่วไปและอำนวยการ):</label>
-                                    <input type="text" name="deputy_general" value="<?php echo esc_attr($s['deputy_general'] ?? 'รองผู้อำนวยการกลุ่มบริหารงานทั่วไป'); ?>" class="spm-input">
+                                    <label class="spm-label">ขอบข่ายภารกิจ / สหวิทยาเขตที่ดูแล:</label>
+                                    <input type="text" name="deputy2_scope" value="<?php echo esc_attr($s['deputy2_scope'] ?? 'กำกับ: อำนวยการ, บุคคล, พัฒนาครูฯ • ดูแล: สว่างศึกษา, เทพทวีพัฒน์'); ?>" class="spm-input">
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <label class="spm-label">คำกล่าว / วิสัยทัศน์:</label>
+                                    <input type="text" name="deputy2_quote" value="<?php echo esc_attr($s['deputy2_quote'] ?? 'บริหารงานบุคคลด้วยความถูกต้องเป็นธรรม พัฒนาสมรรถนะครูสู่ความเป็นเลิศ พร้อมเสริมสร้างขวัญกำลังใจและระบบ ว.PA'); ?>" class="spm-input">
+                                </div>
+                            </div>
+
+                            <!-- รอง ผอ. คนที่ 3 -->
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 18px; border-radius: 12px;">
+                                <div style="font-weight: 800; color: #0284C7; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <span>🥉 3. รองผู้อำนวยการ สพม.สกลนคร (คนที่ 3)</span>
+                                </div>
+                                <div class="sps-grid-2">
+                                    <div>
+                                        <label class="spm-label">ชื่อ-นามสกุล:</label>
+                                        <input type="text" name="deputy3_name" value="<?php echo esc_attr($s['deputy3_name'] ?? $s['deputy_personnel'] ?? 'นางสาววัชราภรณ์ ปัฏนา'); ?>" class="spm-input" style="font-weight: 700;">
+                                    </div>
+                                    <div>
+                                        <label class="spm-label">ตำแหน่งทางการ:</label>
+                                        <input type="text" name="deputy3_title" value="<?php echo esc_attr($s['deputy3_title'] ?? 'รองผู้อำนวยการ สพม.สกลนคร (คนที่ 3)'); ?>" class="spm-input">
+                                    </div>
+                                </div>
+                                <div style="margin: 12px 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                                    <img id="preview_deputy3_image" src="<?php echo esc_url($s['deputy3_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg'); ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #0EA5E9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                    <div style="flex: 1; min-width: 250px;">
+                                        <label class="spm-label">URL รูปถ่าย รอง ผอ.คนที่ 3:</label>
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="deputy3_image" name="deputy3_image" value="<?php echo esc_attr($s['deputy3_image'] ?? 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg'); ?>" class="spm-input" style="flex: 1;">
+                                            <button type="button" class="button spm-upload-media-btn" data-target="deputy3_image" data-preview="preview_deputy3_image" style="background: #0284C7; color: #FFF; border: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+                                                📷 เลือกรูปภาพ
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="spm-label">ขอบข่ายภารกิจ / สหวิทยาเขตที่ดูแล:</label>
+                                    <input type="text" name="deputy3_scope" value="<?php echo esc_attr($s['deputy3_scope'] ?? 'กำกับ: นิเทศ ติดตามฯ, นโยบายและแผน • ดูแล: ดำรงธรรม, สหสกลราช, สหเบญจพัฒน์'); ?>" class="spm-input">
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <label class="spm-label">คำกล่าว / วิสัยทัศน์:</label>
+                                    <input type="text" name="deputy3_quote" value="<?php echo esc_attr($s['deputy3_quote'] ?? 'ขับเคลื่อนนโยบายสู่การปฏิบัติอย่างเป็นรูปธรรม นิเทศการจัดการศึกษาเชิงรุก ยกระดับหลักสูตรและประกันคุณภาพการศึกษาสู่มาตรฐานสากล'); ?>" class="spm-input">
                                 </div>
                             </div>
                         </div>
@@ -2283,7 +2411,48 @@ function spm_render_admin_page() {
         }
     }
 
-    function switchAdminTab(tabId, btn) {
+    jQuery(document).ready(function($){
+            // WordPress Media Library Modal Integration for Leadership Photos
+            $('.spm-upload-media-btn').on('click', function(e){
+                e.preventDefault();
+                var btn = $(this);
+                var targetInputId = btn.data('target');
+                var previewImgId = btn.data('preview');
+
+                if (typeof wp !== 'undefined' && wp.media) {
+                    var customUploader = wp.media({
+                        title: 'เลือกรูปภาพประจำตัวผู้บริหาร สพม.สกลนคร',
+                        button: { text: 'ใช้รูปภาพนี้' },
+                        multiple: false
+                    }).on('select', function() {
+                        var attachment = customUploader.state().get('selection').first().toJSON();
+                        $('#' + targetInputId).val(attachment.url).trigger('input');
+                        if (previewImgId) {
+                            $('#' + previewImgId).attr('src', attachment.url);
+                        }
+                    }).open();
+                } else {
+                    var manualUrl = prompt('กรุณาวาง URL รูปภาพ:', $('#' + targetInputId).val());
+                    if (manualUrl) {
+                        $('#' + targetInputId).val(manualUrl).trigger('input');
+                        if (previewImgId) {
+                            $('#' + previewImgId).attr('src', manualUrl);
+                        }
+                    }
+                }
+            });
+
+            // Live preview on manual URL input
+            $('input[id$="_image"]').on('input change', function(){
+                var val = $(this).val();
+                var targetPreview = 'preview_' + $(this).attr('id');
+                if (val) {
+                    $('#' + targetPreview).attr('src', val);
+                }
+            });
+        });
+
+        function switchAdminTab(tabId, btn) {
         document.querySelectorAll('.spm-tab-btn').forEach(function(b) { b.classList.remove('active'); });
         document.querySelectorAll('.spm-tab-section').forEach(function(sec) { sec.classList.remove('active'); });
         if (btn) btn.classList.add('active');
