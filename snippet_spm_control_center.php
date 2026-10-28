@@ -1,7 +1,9 @@
 <?php
 /**
- * SPS Portal Content Manager & Luxury News Portal Engine
- * ระบบศูนย์บัญชาการจัดการเนื้อหาพอร์ทัล สพม.สกลนคร แบบละเอียดยิบ (SPS Ultimate Control Center)
+ * Plugin Name: SPM Control Center & Portal Engine
+ * Description: ระบบศูนย์บัญชาการจัดการพอร์ทัล สพม.สกลนคร และ REST API Bridge
+ * Version: 3.2.0
+ * Author: SESAO Sakon Nakhon
  */
 
 // 1. Comprehensive Default Settings (70+ Configurable Keys)
