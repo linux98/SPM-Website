@@ -1527,7 +1527,7 @@
 
       background: radial-gradient(circle, var(--indigo-700), var(--indigo-900));
 
-      border: 2px solid var(--gold-400);
+      border: 2.5px solid var(--gold-400);
 
       display: flex;
 
@@ -1542,6 +1542,44 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 
       flex-shrink: 0;
+
+      overflow: hidden;
+
+      position: relative;
+
+      transition: all 0.3s ease;
+
+    }
+
+    .exec-avatar-circ:hover {
+
+      border-color: #FFFFFF;
+
+      box-shadow: 0 8px 25px rgba(236, 200, 106, 0.45);
+
+    }
+
+    .exec-avatar-img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      object-position: center top;
+
+      border-radius: 50%;
+
+      display: block;
+
+      transition: transform 0.3s ease;
+
+    }
+
+    .exec-avatar-circ:hover .exec-avatar-img {
+
+      transform: scale(1.06);
 
     }
 
@@ -9889,11 +9927,11 @@
 
           <button class="exec-tab-btn active" onclick="switchExec(0, this)">ผอ.เขต</button>
 
-          <button class="exec-tab-btn" onclick="switchExec(1, this)">รอง ผอ.นิเทศฯ</button>
+          <button class="exec-tab-btn" onclick="switchExec(1, this)">รอง ผอ.คนที่ 1</button>
 
-          <button class="exec-tab-btn" onclick="switchExec(2, this)">รอง ผอ.บุคคล</button>
+          <button class="exec-tab-btn" onclick="switchExec(2, this)">รอง ผอ.คนที่ 2</button>
 
-          <button class="exec-tab-btn" onclick="switchExec(3, this)">รอง ผอ.แผน</button>
+          <button class="exec-tab-btn" onclick="switchExec(3, this)">รอง ผอ.คนที่ 3</button>
 
         </div>
 
@@ -9901,9 +9939,11 @@
 
         <div class="exec-profile-wrap">
 
-          <div class="exec-avatar-circ">
+          <div class="exec-avatar-circ" id="exAvatarCirc">
 
-            <i class="fa-solid fa-user-tie" id="exIcon"></i>
+            <img id="exAvatarImg" src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" class="exec-avatar-img" onerror="this.style.display='none'; document.getElementById('exIcon').style.display='block';">
+
+            <i class="fa-solid fa-user-tie" id="exIcon" style="display: none;"></i>
 
           </div>
 
@@ -9913,7 +9953,7 @@
 
             <p id="exRole" style="color: var(--gold-400); font-size: 12.5px; font-weight: 600;">ผู้อำนวยการ สพม.สกลนคร</p>
 
-            <span id="exScope" style="font-size: 11px; color: #94A3B8;">บริหารงานเขตพื้นที่การศึกษาโดยรวม</span>
+            <span id="exScope" style="font-size: 11px; color: #94A3B8;">บริหารจัดการเขตพื้นที่การศึกษาโดยรวม • กำกับ: หน่วยตรวจสอบภายใน, กลุ่มกฎหมายและคดี</span>
 
           </div>
 
@@ -9923,7 +9963,7 @@
 
         <div class="exec-quote-box" id="exQuote">
 
-          "มุ่งมั่นพัฒนาผู้เรียน ปลดภาระงานครู คืนครูสู่นักเรียนอย่างแท้จริง ผ่านเทคโนโลยีดิจิทัลและธรรมาภิบาล"
+          "มุ่งมั่นยกระดับคุณภาพการศึกษามัธยมศึกษาสกลนคร สู่มาตรฐานสากลด้วยดิจิทัลและนวัตกรรม และการบริหารจัดการอย่างมีประสิทธิภาพ โปร่งใส"
 
         </div>
 
@@ -13199,7 +13239,9 @@
 
           <!-- Level 1: Director -->
 
-          <div class="org-node-director" onclick="switchExec(0); openDirectorModal();">
+          <div class="org-node-director" onclick="switchExec(0); openDirectorModal();" style="cursor: pointer;">
+
+            <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg" alt="นายนรงณ์ เห็นหลอด" style="width: 68px; height: 68px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2.5px solid var(--gold-400); margin: 0 auto 10px auto; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.35);">
 
             <span style="font-size: 11px; color: var(--gold-400); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
 
@@ -13207,13 +13249,13 @@
 
             </span>
 
-            <h3 style="font-size: 20px; font-weight: 800; margin: 4px 0;">นายนรงณ์ เห็นหลอด</h3>
+            <h3 style="font-size: 20px; font-weight: 800; margin: 4px 0; color: #FFFFFF;">นายนรงณ์ เห็นหลอด</h3>
 
             <p style="font-size: 13px; color: #CBD5E1;">ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร</p>
 
-            <div style="margin-top: 10px; display: inline-flex; gap: 8px; font-size: 11px; background: rgba(212,175,55,0.2); padding: 3px 12px; border-radius: var(--radius-pill); color: var(--gold-300);">
+            <div style="margin-top: 10px; display: inline-flex; gap: 8px; font-size: 11px; background: rgba(212,175,55,0.2); padding: 4px 14px; border-radius: var(--radius-pill); color: var(--gold-300);">
 
-              <i class="fa-solid fa-phone"></i> 042-728118 ต่อ 101 | กำกับดูแลภาพรวม
+              <i class="fa-solid fa-phone"></i> โทร. 098-338-9678 | กำกับ: ตรวจสอบภายใน, กฎหมายและคดี
 
             </div>
 
@@ -13231,15 +13273,17 @@
 
             <!-- Deputy 1 -->
 
-            <div class="org-node-deputy" onclick="switchExec(1)">
+            <div class="org-node-deputy" onclick="switchExec(1)" style="cursor: pointer;">
 
-              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม. ด้านวิชาการ</div>
+              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg" alt="นายชลาวุธ สามาอาพัฒน์" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
-              <h4 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin: 4px 0;">นายชลาวุธ สามาอาพัฒน์</h4>
+              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 1)</div>
 
-              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 4px 0;">นายชลาวุธ สามาอาพัฒน์</h4>
 
-                กำกับดูแล: กลุ่มนิเทศฯ, กลุ่ม DLICT, กลุ่มส่งเสริมการจัดการศึกษา
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+
+                กำกับ: การเงินฯ, ส่งเสริมฯ, DLICT<br>ดูแล: เบญจรักษ์, พระธาตุนารายณ์ฯ, ลุ่มน้ำอูน
 
               </p>
 
@@ -13249,15 +13293,17 @@
 
             <!-- Deputy 2 -->
 
-            <div class="org-node-deputy" onclick="switchExec(2)">
+            <div class="org-node-deputy" onclick="switchExec(2)" style="cursor: pointer;">
 
-              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม. ด้านบุคคล & กฎหมาย</div>
+              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg" alt="ดร.บุญธรรม อ้วนกันยา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
-              <h4 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin: 4px 0;">นางสาววัชราภรณ์ ปัฏนา</h4>
+              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 2)</div>
 
-              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 4px 0;">ดร.บุญธรรม อ้วนกันยา</h4>
 
-                กำกับดูแล: กลุ่มบุคคล, กลุ่มพัฒนาครูฯ, กลุ่มกฎหมายและคดี
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+
+                กำกับ: อำนวยการ, บุคคล, พัฒนาครูฯ<br>ดูแล: สว่างศึกษา, เทพทวีพัฒน์
 
               </p>
 
@@ -13267,15 +13313,17 @@
 
             <!-- Deputy 3 -->
 
-            <div class="org-node-deputy" onclick="switchExec(3)">
+            <div class="org-node-deputy" onclick="switchExec(3)" style="cursor: pointer;">
 
-              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม. ด้านแผน & การเงิน</div>
+              <img src="https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg" alt="นางสาววัชราภรณ์ ปัฏนา" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--gold-400); margin: 0 auto 8px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
 
-              <h4 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin: 4px 0;">ดร.บุญธรรม อ้วนกันยา</h4>
+              <div style="font-size: 11px; color: var(--gold-600); font-weight: 700;">รอง ผอ.สพม.สกลนคร (คนที่ 3)</div>
 
-              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+              <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 4px 0;">นางสาววัชราภรณ์ ปัฏนา</h4>
 
-                กำกับดูแล: กลุ่มอำนวยการ, กลุ่มนโยบายและแผน, กลุ่มการเงินฯ, หน่วยตรวจฯ
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+
+                กำกับ: นิเทศ ติดตามฯ, นโยบายและแผน<br>ดูแล: ดำรงธรรม, สหสกลราช, สหเบญจพัฒน์
 
               </p>
 
@@ -14849,9 +14897,15 @@
 
         role: "ผู้อำนวยการ สพม.สกลนคร", 
 
-        scope: "บริหารจัดการเขตพื้นที่การศึกษาโดยรวม",
+        scope: "บริหารจัดการเขตพื้นที่การศึกษาโดยรวม • กำกับ: หน่วยตรวจสอบภายใน, กลุ่มกฎหมายและคดี",
 
-        q: "มุ่งมั่นพัฒนาผู้เรียน ปลดภาระงานครู คืนครูสู่นักเรียนอย่างแท้จริง ผ่านเทคโนโลยีดิจิทัลและธรรมาภิบาล" 
+        phone: "098-338-9678",
+
+        email: "naronghenloadd@gmail.com",
+
+        image: "https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/director.jpg",
+
+        q: "มุ่งมั่นยกระดับคุณภาพการศึกษามัธยมศึกษาสกลนคร สู่มาตรฐานสากลด้วยดิจิทัลและนวัตกรรม และการบริหารจัดการอย่างมีประสิทธิภาพ โปร่งใส" 
 
       },
 
@@ -14859,23 +14913,17 @@
 
         name: "นายชลาวุธ สามาอาพัฒน์", 
 
-        role: "รองผู้อำนวยการ สพม.สกลนคร", 
+        role: "รองผู้อำนวยการ สพม.สกลนคร (คนที่ 1)", 
 
-        scope: "กำกับดูแล: กลุ่มนิเทศฯ, กลุ่ม DLICT, กลุ่มส่งเสริมการจัดการศึกษา",
+        scope: "กำกับ: การเงินฯ, ส่งเสริมฯ, DLICT • ดูแล: เบญจรักษ์, พระธาตุนารายณ์ฯ, ลุ่มน้ำอูน",
 
-        q: "ยกระดับผลสัมฤทธิ์ทางการเรียน ผลักดัน Active Learning ขยายห้องเรียนอัจฉริยะ 45 โรงเรียน" 
+        phone: "091-865-5939",
 
-      },
+        email: "S.chalawut@pccm.ac.th",
 
-      { 
+        image: "https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy1.jpg",
 
-        name: "นางสาววัชราภรณ์ ปัฏนา", 
-
-        role: "รองผู้อำนวยการ สพม.สกลนคร", 
-
-        scope: "กำกับดูแล: กลุ่มบริหารงานบุคคล, กลุ่มพัฒนาครูฯ, กลุ่มกฎหมายและคดี",
-
-        q: "บริหารงานบุคคลด้วยความโปร่งใส สนับสนุน ว.PA เลื่อนวิทยฐานะ และสวัสดิการขวัญกำลังใจครู" 
+        q: "ขับเคลื่อนการบริหารการเงินโปร่งใส ยกระดับการศึกษาทางไกลดิจิทัล และส่งเสริมโอกาสทางการเรียนรู้ของนักเรียนอย่างเท่าเทียม" 
 
       },
 
@@ -14883,11 +14931,35 @@
 
         name: "ดร.บุญธรรม อ้วนกันยา", 
 
-        role: "รองผู้อำนวยการ สพม.สกลนคร", 
+        role: "รองผู้อำนวยการ สพม.สกลนคร (คนที่ 2)", 
 
-        scope: "กำกับดูแล: กลุ่มอำนวยการ, กลุ่มนโยบายและแผน, กลุ่มการเงินฯ, หน่วยตรวจสอบภายใน",
+        scope: "กำกับ: อำนวยการ, บุคคล, พัฒนาครูฯ • ดูแล: สว่างศึกษา, เทพทวีพัฒน์",
 
-        q: "จัดสรรงบประมาณคุ้มค่า พัฒนาโครงสร้างพื้นฐานสถานศึกษาปลอดภัย และตรวจสอบความโปร่งใส ITA" 
+        phone: "084-961-2244",
+
+        email: "btukanya@hotmail.com",
+
+        image: "https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy2.jpg",
+
+        q: "บริหารงานบุคคลด้วยความถูกต้องเป็นธรรม พัฒนาสมรรถนะครูสู่ความเป็นเลิศ พร้อมเสริมสร้างขวัญกำลังใจและระบบ ว.PA" 
+
+      },
+
+      { 
+
+        name: "นางสาววัชราภรณ์ ปัฏนา", 
+
+        role: "รองผู้อำนวยการ สพม.สกลนคร (คนที่ 3)", 
+
+        scope: "กำกับ: นิเทศ ติดตามฯ, นโยบายและแผน • ดูแล: ดำรงธรรม, สหสกลราช, สหเบญจพัฒน์",
+
+        phone: "095-846-4951",
+
+        email: "dada.tookta@gmail.com",
+
+        image: "https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/executives/deputy3.jpg",
+
+        q: "ขับเคลื่อนนโยบายสู่การปฏิบัติอย่างเป็นรูปธรรม นิเทศการจัดการศึกษาเชิงรุก ยกระดับหลักสูตรและประกันคุณภาพการศึกษาสู่มาตรฐานสากล" 
 
       }
 
@@ -15707,17 +15779,71 @@
 
         btn.classList.add('active');
 
+      } else {
+
+        const tabs = document.querySelectorAll('.exec-tab-btn');
+
+        if (tabs && tabs[idx]) {
+
+          tabs.forEach(b => b.classList.remove('active'));
+
+          tabs[idx].classList.add('active');
+
+        }
+
       }
 
       const data = execs[idx];
 
-      document.getElementById('exName').innerText = data.name;
+      if (!data) return;
 
-      document.getElementById('exRole').innerText = data.role;
 
-      document.getElementById('exScope').innerText = data.scope;
 
-      document.getElementById('exQuote').innerText = `"${data.q}"`;
+      const nameEl = document.getElementById('exName');
+
+      const roleEl = document.getElementById('exRole');
+
+      const scopeEl = document.getElementById('exScope');
+
+      const quoteEl = document.getElementById('exQuote');
+
+      const imgEl = document.getElementById('exAvatarImg');
+
+      const iconEl = document.getElementById('exIcon');
+
+
+
+      if (nameEl) nameEl.innerText = data.name;
+
+      if (roleEl) roleEl.innerText = data.role;
+
+      if (scopeEl) scopeEl.innerText = data.scope;
+
+      if (quoteEl) quoteEl.innerText = `"${data.q}"`;
+
+
+
+      if (imgEl) {
+
+        if (data.image) {
+
+          imgEl.src = data.image;
+
+          imgEl.alt = data.name;
+
+          imgEl.style.display = 'block';
+
+          if (iconEl) iconEl.style.display = 'none';
+
+        } else {
+
+          imgEl.style.display = 'none';
+
+          if (iconEl) iconEl.style.display = 'block';
+
+        }
+
+      }
 
     }
 
@@ -16941,11 +17067,24 @@
 
       // 4. Executive Director & Leadership
       if (typeof execs !== 'undefined' && Array.isArray(execs) && execs.length > 0) {
-        if (s.director_name) execs[0].name = s.director_name;
-        if (s.director_message || s.director_quote) execs[0].q = s.director_message || s.director_quote;
-        if (s.deputy_academic) execs[1].name = s.deputy_academic;
-        if (s.deputy_budget) execs[2].name = s.deputy_budget;
-        if (s.deputy_personnel) execs[3].name = s.deputy_personnel;
+        if (s.director_name && !s.director_name.includes('อดุลย์ศักดิ์') && !s.director_name.includes('เกษมศักดิ์')) {
+          execs[0].name = s.director_name;
+        }
+        if (s.director_image) {
+          execs[0].image = s.director_image;
+        }
+        if (s.director_message || s.director_quote) {
+          execs[0].q = s.director_message || s.director_quote;
+        }
+        if (s.deputy_academic && !s.deputy_academic.includes('ประสิทธิ์')) {
+          execs[1].name = s.deputy_academic;
+        }
+        if (s.deputy_budget && !s.deputy_budget.includes('วิวัฒน์')) {
+          execs[2].name = s.deputy_budget;
+        }
+        if (s.deputy_personnel && !s.deputy_personnel.includes('รุ่งทิพย์')) {
+          execs[3].name = s.deputy_personnel;
+        }
         if (typeof switchExec === 'function') switchExec(0);
       }
 
