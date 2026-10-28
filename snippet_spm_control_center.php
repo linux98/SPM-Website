@@ -42,6 +42,48 @@ function spm_get_default_settings() {
         'school_colors' => 'น้ำเงิน - ชมพู',
         'school_tree' => 'ต้นราชพฤกษ์ (ดอกคูน)',
 
+        // Tab 15: วารสารดิจิทัล Flipbook 3D (E-Book & Virtual Magazine)
+        'flipbook_vol' => 'VOL. 10 / 2569',
+        'flipbook_month' => 'ตุลาคม 2569',
+        'flipbook_title' => 'วารสารสกลสาร สพม.สกลนคร ฉบับที่ 10 ประจำปีงบประมาณ 2569',
+        'flipbook_desc' => 'รวบรวมผลสัมฤทธิ์ทางการศึกษา การขับเคลื่อนนโยบายกระทรวงศึกษาธิการ "เรียนดี มีความสุข" ผลงานนวัตกรรมของครูและนักเรียน 45 โรงเรียนมัธยมศึกษาใน 6 สหวิทยาเขต',
+        'flipbook_cover' => 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/kram-bg-4k.webp',
+        'flipbook_url' => 'https://online.anyflip.com/demo/flipbook/',
+        'flipbook_pdf' => 'https://sesaosakon.go.th/site/',
+
+        // Tab 16: บริการ 4 กลุ่มผู้ใช้ (Stakeholders Experience Hub)
+        'sh_teacher_title' => 'คุณครู & บุคลากร',
+        'sh_teacher_desc' => 'ระบบสารสนเทศและการบริหารงานบุคคลสำหรับครูมัธยมศึกษา',
+        'sh_parent_title' => 'ประชาชน & ผู้ปกครอง',
+        'sh_parent_desc' => 'บริการยื่นคำร้อง ติดตามสถานะ และคู่มือการรับนักเรียน',
+        'sh_student_title' => 'นักเรียน & เยาวชน',
+        'sh_student_desc' => 'พื้นที่การเรียนรู้ ทุนการศึกษา และระบบแนะแนวการศึกษาต่อ',
+        'sh_partner_title' => 'ผู้บริหาร & คู่ค้า',
+        'sh_partner_desc' => 'ข้อมูลการจัดซื้อจัดจ้าง แผนงบประมาณ และความร่วมมือทางการศึกษา',
+
+        // 9 กลุ่ม 1 หน่วย (Department Heads & Contacts)
+        'dept_head_1' => 'นางสายใจ สมบูรณ์ (ผอ.กลุ่มอำนวยการ)',
+        'dept_phone_1' => '042-711-456 ต่อ 101',
+        'dept_head_2' => 'นายสมศักดิ์ ภักดี (ผอ.กลุ่มบริหารงานบุคคล)',
+        'dept_phone_2' => '042-711-456 ต่อ 116',
+        'dept_head_3' => 'นางสาวพรพิมล วงศ์แก้ว (ผอ.กลุ่มนโยบายและแผน)',
+        'dept_phone_3' => '042-711-456 ต่อ 105',
+        'dept_head_4' => 'นายกิตติศักดิ์ เจริญสุข (ผอ.กลุ่ม DLICT)',
+        'dept_phone_4' => '042-711-456 ต่อ 120',
+        'dept_head_5' => 'ดร.สมชาย ศรีสุวรรณ (หน.กลุ่มนิเทศ ติดตามฯ)',
+        'dept_phone_5' => '042-711-456 ต่อ 118',
+        'dept_head_6' => 'นางรัตนา ทรัพย์เจริญ (ผอ.กลุ่มส่งเสริมการจัดการศึกษา)',
+        'dept_phone_6' => '042-711-456 ต่อ 115',
+        'dept_head_7' => 'นางพัชรี นวลจันทร์ (ผอ.กลุ่มการเงินและสินทรัพย์)',
+        'dept_phone_7' => '042-711-456 ต่อ 111',
+        'dept_head_8' => 'นายชาญชัย มิ่งขวัญ (ผอ.กลุ่มพัฒนาครูฯ)',
+        'dept_phone_8' => '042-711-456 ต่อ 114',
+        'dept_head_9' => 'นายนิติธรรม สันติสุข (นิติกรชำนาญการพิเศษ หน.กลุ่มกฎหมาย)',
+        'dept_phone_9' => '042-711-456 ต่อ 108',
+        'dept_head_10' => 'นางสาวสุภาวดี ชัยชนะ (หน.หน่วยตรวจสอบภายใน)',
+        'dept_phone_10' => '042-711-456 ต่อ 109',
+
+
         // Tab 4: คณะผู้บริหารสถานศึกษา (Executive Leadership)
         'director_name' => 'นายนรงณ์ เห็นหลอด',
         'director_title' => 'ผู้อำนวยการสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร',
@@ -852,7 +894,7 @@ function spm_render_admin_page() {
                     🏛️ ศูนย์บัญชาการดิจิทัล สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร
                 </h1>
                 <p style="color: #CBD5E1; margin: 0; font-size: 14px; line-height: 1.6; max-width: 720px;">
-                    ระบบบริหารจัดการและเผยแพร่ข้อมูลกลางระดับเขตพื้นที่การศึกษา ครอบคลุม 14 หมวดหมู่ 150+ รายการสำคัญ ปรับปรุงข้อมูลสดใหม่แบบเรียลไทม์เพื่อ 43 โรงเรียนและบริการประชาชน
+                    ระบบบริหารจัดการและเผยแพร่ข้อมูลกลางระดับเขตพื้นที่การศึกษา ครอบคลุม 16 หมวดหมู่ 150+ รายการสำคัญ ปรับปรุงข้อมูลสดใหม่แบบเรียลไทม์เพื่อ 43 โรงเรียนและบริการประชาชน
                 </p>
             </div>
             <div style="display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1;">
@@ -906,7 +948,7 @@ function spm_render_admin_page() {
                 <!-- Left Navigation Sidebar -->
                 <div class="spm-sidebar">
                     <div style="font-size: 11.5px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.8px; padding: 6px 12px 10px;">
-                        หมวดหมู่การตั้งค่า (14 หมวด)
+                        หมวดหมู่การตั้งค่า (16 หมวด)
                     </div>
                     <button type="button" class="spm-tab-btn active" onclick="switchAdminTab('tab-notice', this)">
                         <span class="spm-tab-icon">📢</span> 1. ประกาศด่วน & หัวเว็บ
@@ -949,6 +991,12 @@ function spm_render_admin_page() {
                     </button>
                     <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-blueprint', this)">
                         <span class="spm-tab-icon">🏛️</span> 14. พิมพ์เขียวโรงเรียน (Blueprint Hub)
+                    </button>
+                    <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-flipbook', this)">
+                        <span class="spm-tab-icon">📖</span> 15. วารสารดิจิทัล Flipbook 3D
+                    </button>
+                    <button type="button" class="spm-tab-btn" onclick="switchAdminTab('tab-stakeholders', this)">
+                        <span class="spm-tab-icon">👥</span> 16. บริการ 4 กลุ่ม & 9 กลุ่มงาน
                     </button>
                 </div>
 
@@ -3480,6 +3528,27 @@ function spm_register_portal_cpts() {
     ));
 
     // 1.5 ศูนย์เฝ้าระวังความปลอดภัย MOE Safety
+    
+    // 1.6 คลังสื่อนวัตกรรมและแผนการสอนครู (OER Hub)
+    register_post_type('spm_oer', array(
+        'labels' => array(
+            'name' => 'คลังสื่อนวัตกรรม OER',
+            'singular_name' => 'สื่อนวัตกรรม',
+            'add_new' => 'เพิ่มสื่อนวัตกรรมใหม่',
+            'add_new_item' => 'เพิ่มสื่อนวัตกรรม / แผนการสอน',
+            'edit_item' => 'แก้ไขสื่อนวัตกรรม',
+            'all_items' => 'สื่อนวัตกรรมทั้งหมด (OER Hub)',
+            'search_items' => 'ค้นหาสื่อนวัตกรรม',
+            'menu_name' => 'คลังสื่อนวัตกรรม OER'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-book-alt',
+        'menu_position' => 26,
+        'supports' => array('title')
+    ));
+
     register_post_type('spm_safety', array(
         'labels' => array(
             'name' => 'ศูนย์ความปลอดภัย MOE',
@@ -3504,7 +3573,7 @@ function spm_register_portal_cpts() {
 add_action('admin_enqueue_scripts', 'spm_portal_cpts_admin_assets');
 function spm_portal_cpts_admin_assets($hook) {
     global $post_type;
-    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety');
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer');
     if (in_array($post_type, $portal_cpts)) {
         wp_enqueue_media();
         wp_enqueue_style('spm-cpt-admin-style', false);
@@ -3822,7 +3891,7 @@ function spm_render_safety_meta_box($post) {
 add_action('admin_footer', 'spm_cpt_media_uploader_script');
 function spm_cpt_media_uploader_script() {
     global $post_type;
-    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety');
+    $portal_cpts = array('spm_circular', 'spm_calendar', 'spm_download', 'spm_certificate', 'spm_safety', 'spm_oer');
     if (!in_array($post_type, $portal_cpts)) return;
     ?>
     <script>
@@ -3878,7 +3947,14 @@ function spm_save_portal_cpts_meta($post_id) {
         'spm_safety_cat' => '_spm_safety_cat',
         'spm_safety_scope' => '_spm_safety_scope',
         'spm_contact_tel' => '_spm_contact_tel',
-        'spm_safety_file' => '_spm_safety_file'
+        'spm_safety_file' => '_spm_safety_file',
+        'spm_oer_subject' => '_spm_oer_subject',
+        'spm_oer_author' => '_spm_oer_author',
+        'spm_oer_school' => '_spm_oer_school',
+        'spm_oer_size' => '_spm_oer_size',
+        'spm_oer_rating' => '_spm_oer_rating',
+        'spm_oer_downloads' => '_spm_oer_downloads',
+        'spm_oer_file' => '_spm_oer_file'
     );
 
     foreach ($fields as $post_key => $meta_key) {
@@ -4323,4 +4399,142 @@ function spm_auto_seed_initial_cpt_records() {
     }
 
     update_option('spm_cpts_initial_seeded_v1', 1);
+}
+
+
+
+// 3.6 RENDER OER META BOX
+add_action('add_meta_boxes', function() {
+    add_meta_box('spm_oer_details', '📚 ข้อมูลสื่อนวัตกรรมและไฟล์แนบ (OER Hub)', 'spm_render_oer_meta_box', 'spm_oer', 'normal', 'high');
+});
+function spm_render_oer_meta_box($post) {
+    wp_nonce_field('spm_save_meta_box', 'spm_meta_nonce');
+    $subject = get_post_meta($post->ID, '_spm_oer_subject', true) ?: 'sci';
+    $author = get_post_meta($post->ID, '_spm_oer_author', true) ?: '';
+    $school = get_post_meta($post->ID, '_spm_oer_school', true) ?: 'รร.สกลราชวิทยานุกูล';
+    $size = get_post_meta($post->ID, '_spm_oer_size', true) ?: '12.5 MB';
+    $rating = get_post_meta($post->ID, '_spm_oer_rating', true) ?: '5.0';
+    $downloads = get_post_meta($post->ID, '_spm_oer_downloads', true) ?: rand(500, 2500);
+    $file = get_post_meta($post->ID, '_spm_oer_file', true) ?: '';
+    ?>
+    <div class="spm-meta-box-wrap">
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">กลุ่มสาระการเรียนรู้ (Subject):</label>
+                <select name="spm_oer_subject" class="spm-meta-select">
+                    <option value="sci" <?php selected($subject, 'sci'); ?>>วิทยาศาสตร์และเทคโนโลยี</option>
+                    <option value="math" <?php selected($subject, 'math'); ?>>คณิตศาสตร์</option>
+                    <option value="eng" <?php selected($subject, 'eng'); ?>>ภาษาต่างประเทศ (ภาษาอังกฤษ)</option>
+                    <option value="thai" <?php selected($subject, 'thai'); ?>>ภาษาไทย</option>
+                    <option value="soc" <?php selected($subject, 'soc'); ?>>สังคมศึกษา ศาสนา และวัฒนธรรม</option>
+                    <option value="art" <?php selected($subject, 'art'); ?>>ศิลปะ ดนตรี นาฏศิลป์</option>
+                    <option value="tech" <?php selected($subject, 'tech'); ?>>คอมพิวเตอร์ / การงานอาชีพ</option>
+                </select>
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ชื่อครูผู้สอน / ผู้พัฒนาสื่อนวัตกรรม:</label>
+                <input type="text" name="spm_oer_author" value="<?php echo esc_attr($author); ?>" class="spm-meta-input" placeholder="เช่น ครูกานดา สิทธิมงคล">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">โรงเรียน / สถานศึกษา:</label>
+                <input type="text" name="spm_oer_school" value="<?php echo esc_attr($school); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">ขนาดไฟล์ / สื่อ:</label>
+                <input type="text" name="spm_oer_size" value="<?php echo esc_attr($size); ?>" class="spm-meta-input" placeholder="เช่น 14.2 MB">
+            </div>
+        </div>
+
+        <div class="spm-meta-grid-2">
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">คะแนนรีวิว / เรตติ้ง (1.0 - 5.0):</label>
+                <input type="text" name="spm_oer_rating" value="<?php echo esc_attr($rating); ?>" class="spm-meta-input">
+            </div>
+            <div class="spm-meta-row">
+                <label class="spm-meta-label">จำนวนการดาวน์โหลด (ครั้ง):</label>
+                <input type="number" name="spm_oer_downloads" value="<?php echo esc_attr($downloads); ?>" class="spm-meta-input">
+            </div>
+        </div>
+
+        <div class="spm-meta-row">
+            <label class="spm-meta-label">ไฟล์สื่อการสอน / ลิงก์ดาวน์โหลด (PDF, Canva, Drive):</label>
+            <div style="display:flex; gap:8px; max-width:600px;">
+                <input type="text" id="spm_oer_file" name="spm_oer_file" value="<?php echo esc_attr($file); ?>" class="spm-meta-input" placeholder="https://...">
+                <button type="button" class="button spm-meta-btn-upload spm-cpt-upload-btn" data-target="spm_oer_file">📚 เลือกไฟล์สื่อ</button>
+            </div>
+            <div class="spm-meta-desc">อัปโหลดไฟล์ PDF/เอกสาร จากคลังสื่อ หรือวางลิงก์ Canva / Google Drive ได้โดยตรง</div>
+        </div>
+    </div>
+    <?php
+}
+
+// OER List Columns
+add_filter('manage_spm_oer_posts_columns', function($cols) {
+    $new = array();
+    foreach ($cols as $k => $v) {
+        $new[$k] = $v;
+        if ($k === 'title') {
+            $new['oer_subject'] = 'กลุ่มสาระฯ';
+            $new['oer_author'] = 'ครูผู้จัดทำ';
+            $new['oer_school'] = 'โรงเรียน';
+            $new['oer_downloads'] = 'ดาวน์โหลด';
+            $new['oer_file'] = 'ไฟล์สื่อ';
+        }
+    }
+    return $new;
+});
+add_action('manage_spm_oer_posts_custom_column', function($col, $post_id) {
+    if ($col === 'oer_subject') {
+        $map = array('sci'=>'วิทยาศาสตร์', 'math'=>'คณิตศาสตร์', 'eng'=>'ภาษาอังกฤษ', 'thai'=>'ภาษาไทย', 'soc'=>'สังคมฯ', 'art'=>'ศิลปะ', 'tech'=>'คอมพิวเตอร์');
+        $s = get_post_meta($post_id, '_spm_oer_subject', true);
+        echo '<span style="background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:10px; font-weight:700; font-size:11px;">' . ($map[$s] ?? $s) . '</span>';
+    } elseif ($col === 'oer_author') {
+        echo esc_html(get_post_meta($post_id, '_spm_oer_author', true) ?: '-');
+    } elseif ($col === 'oer_school') {
+        echo esc_html(get_post_meta($post_id, '_spm_oer_school', true) ?: '-');
+    } elseif ($col === 'oer_downloads') {
+        echo '<strong>' . esc_html(get_post_meta($post_id, '_spm_oer_downloads', true) ?: '0') . '</strong> ครั้ง';
+    } elseif ($col === 'oer_file') {
+        $f = get_post_meta($post_id, '_spm_oer_file', true);
+        echo $f ? '<a href="' . esc_url($f) . '" target="_blank" style="color:#0284C7; font-weight:700;">📥 เปิดดู</a>' : '<span style="color:#CBD5E1;">-</span>';
+    }
+}, 10, 2);
+
+// REST API endpoint /spm/v1/oer
+add_action('rest_api_init', function() {
+    register_rest_route('spm/v1', '/oer', array(
+        'methods' => 'GET',
+        'callback' => 'spm_rest_get_oer',
+        'permission_callback' => '__return_true'
+    ));
+});
+function spm_rest_get_oer($request) {
+    $subject = $request->get_param('subject');
+    $args = array('post_type' => 'spm_oer', 'posts_per_page' => 100, 'post_status' => 'publish');
+    $query = new WP_Query($args);
+    $results = array();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+            $s = get_post_meta($pid, '_spm_oer_subject', true) ?: 'sci';
+            if ($subject && $subject !== 'all' && $s !== $subject) continue;
+            $results[] = array(
+                'id' => $pid,
+                'title' => get_the_title(),
+                'subject' => $s,
+                'author' => get_post_meta($pid, '_spm_oer_author', true) ?: 'ครูผู้สอน สพม.สกลนคร',
+                'school' => get_post_meta($pid, '_spm_oer_school', true) ?: 'สพม.สกลนคร',
+                'downloads' => (int)(get_post_meta($pid, '_spm_oer_downloads', true) ?: 1000),
+                'rating' => get_post_meta($pid, '_spm_oer_rating', true) ?: '5.0',
+                'size' => get_post_meta($pid, '_spm_oer_size', true) ?: '10 MB',
+                'url' => get_post_meta($pid, '_spm_oer_file', true) ?: '#'
+            );
+        }
+        wp_reset_postdata();
+    }
+    return rest_ensure_response($results);
 }

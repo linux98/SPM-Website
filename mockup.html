@@ -17122,6 +17122,52 @@
       const kStudents = document.getElementById('kpiStudents');
       if (kStudents && s.stat_students) kStudents.innerText = s.stat_students;
 
+      // 5.1 Virtual Flipbook Magazine 3D Hydration
+      const fbSec = document.getElementById('flipbook');
+      if (fbSec) {
+        if (s.flipbook_title) {
+          const fbTitleEl = fbSec.querySelector('h3');
+          if (fbTitleEl) fbTitleEl.innerText = s.flipbook_title;
+        }
+        if (s.flipbook_desc) {
+          const fbDescEl = fbSec.querySelector('p');
+          if (fbDescEl) fbDescEl.innerText = s.flipbook_desc;
+        }
+        if (s.flipbook_url) {
+          window.SPM_FLIPBOOK_URL = s.flipbook_url;
+        }
+        if (s.flipbook_pdf) {
+          window.SPM_FLIPBOOK_PDF = s.flipbook_pdf;
+        }
+      }
+
+      // 5.2 Stakeholders 4 Persona Cards Hydration
+      const shSec = document.getElementById('stakeholders');
+      if (shSec) {
+        const h3s = shSec.querySelectorAll('h3, h4');
+        h3s.forEach(h => {
+          const t = h.innerText.trim();
+          if (t.includes('ครู') && s.sh_teacher_title) h.innerText = s.sh_teacher_title;
+          else if (t.includes('ผู้ปกครอง') && s.sh_parent_title) h.innerText = s.sh_parent_title;
+          else if (t.includes('นักเรียน') && s.sh_student_title) h.innerText = s.sh_student_title;
+          else if (t.includes('ผู้บริหาร') && s.sh_partner_title) h.innerText = s.sh_partner_title;
+        });
+      }
+
+      // 5.3 Org Chart 9 Groups 1 Unit Hydration
+      const orgGrid = document.getElementById('orgDeptGrid');
+      if (orgGrid) {
+        for (let i = 1; i <= 10; i++) {
+          if (s['dept_head_' + i]) {
+            const card = orgGrid.children[i - 1];
+            if (card) {
+              const headP = card.querySelector('p');
+              if (headP) headP.innerHTML = `${s['dept_head_' + i]}<br><span style="color:var(--text-muted); font-size:11px;">📞 ${s['dept_phone_' + i] || ''}</span>`;
+            }
+          }
+        }
+      }
+
       // 6. Theme CSS Variables (Dynamic Real-time Palette)
       if (s.theme_primary) {
         document.documentElement.style.setProperty('--navy-950', s.theme_primary);
@@ -17181,6 +17227,18 @@
               downloadsData = dlData;
               if (typeof renderDownloads === 'function') {
                 renderDownloads(downloadsData);
+              }
+            }
+          }
+
+          // 4. Hydrate OER Hub (คลังสื่อนวัตกรรมครู)
+          const oerRes = await fetch(`${base}/oer?_t=${cacheBust}`);
+          if (oerRes.ok) {
+            const oerItems = await oerRes.json();
+            if (Array.isArray(oerItems) && oerItems.length > 0) {
+              oerData = oerItems;
+              if (typeof renderOer === 'function') {
+                renderOer(oerData);
               }
             }
           }
@@ -19970,7 +20028,7 @@
 
     // 3. Open Educational Resources (OER Hub) Dataset
 
-    const oerData = [
+    let oerData = [
 
       { id: 1, subject: 'sci', title: 'ชุดการเรียนรู้ Active Learning วิทยาศาสตร์กายภาพ ม.5 (พลังงานทดแทน)', author: 'ครูกานดา สิทธิมงคล', school: 'รร.สกลราชวิทยานุกูล', downloads: 1420, rating: '5.0', size: '14.2 MB' },
 
