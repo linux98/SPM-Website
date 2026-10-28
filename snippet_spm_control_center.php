@@ -42,6 +42,17 @@ function spm_get_default_settings() {
         'school_colors' => 'น้ำเงิน - ชมพู',
         'school_tree' => 'ต้นราชพฤกษ์ (ดอกคูน)',
 
+        // 4 เสาหลักยุทธศาสตร์ สพม.สกลนคร (Strategic Pillars)
+        'pillar_1_title' => 'Digital Transformation & AI for Learning',
+        'pillar_1_desc' => 'ยกระดับโครงสร้างพื้นฐานดิจิทัลให้ครอบคลุม 45 โรงเรียน พัฒนาห้องเรียนอัจฉริยะ (Smart Classrooms) ส่งเสริมการประยุกต์ใช้ AI และ Big Data ในการบริหารจัดการศึกษาและออกแบบการเรียนรู้ส่วนบุคคล',
+        'pillar_2_title' => 'Educational Equity & Green Campus',
+        'pillar_2_desc' => 'ลดความเหลื่อมล้ำทางการศึกษาด้วยพลังงานสะอาด Solar Rooftop สร้างโรงเรียนสีเขียวที่เป็นมิตรต่อสิ่งแวดล้อม และสนับสนุนทุนการศึกษาแก่นักเรียนเรียนดีแต่ขาดแคลนทุนทรัพย์',
+        'pillar_3_title' => 'Professional Learning Community & ว.PA',
+        'pillar_3_desc' => 'เสริมสร้างศักยภาพครูสู่ความเป็นเลิศ พัฒนาวิทยฐานะตามเกณฑ์ ว.PA (ระบบ DPA) และส่งเสริมนวัตกรรมการจัดการเรียนรู้เชิงรุก (Active Learning) ที่ตอบสนองศตวรรษที่ 21',
+        'pillar_4_title' => 'High-Performance Organization & Good Governance',
+        'pillar_4_desc' => 'บริหารจัดการองค์กรด้วยหลักธรรมาภิบาล ความโปร่งใส ตรวจสอบได้ ยึดมั่นมาตรฐาน ITA ระดับ AA และพัฒนาระบบ e-Service เพื่ออำนวยความสะดวกแก่ประชาชนและสถานศึกษา',
+
+
         // Tab 15: วารสารดิจิทัล Flipbook 3D (E-Book & Virtual Magazine)
         'flipbook_vol' => 'VOL. 10 / 2569',
         'flipbook_month' => 'ตุลาคม 2569',
@@ -1152,7 +1163,33 @@ function spm_render_admin_page() {
                                     <input type="text" name="school_tree" value="<?php echo esc_attr($s['school_tree'] ?? 'ต้นราชพฤกษ์ (ดอกคูน)'); ?>" class="spm-input">
                                 </div>
                             </div>
+                        <!-- 4 เสาหลักยุทธศาสตร์ -->
+                        <div class="spm-card" style="border-left: 5px solid #EC4899; margin-top: 20px;">
+                            <h3 class="spm-card-head">🧭 4 เสาหลักยุทธศาสตร์ สพม.สกลนคร (Strategic Compass)</h3>
+                            <div class="sps-grid-2">
+                                <div style="background:#F8FAFC; padding:14px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color:#BE185D;">เสาหลักที่ 1 (Pillar 1):</label>
+                                    <input type="text" name="pillar_1_title" value="<?php echo esc_attr($s['pillar_1_title'] ?? 'Digital Transformation & AI for Learning'); ?>" class="spm-input" style="font-weight:700;">
+                                    <textarea name="pillar_1_desc" rows="3" class="spm-input" style="margin-top:6px; font-size:12.5px;"><?php echo esc_textarea($s['pillar_1_desc'] ?? ''); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:14px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color:#BE185D;">เสาหลักที่ 2 (Pillar 2):</label>
+                                    <input type="text" name="pillar_2_title" value="<?php echo esc_attr($s['pillar_2_title'] ?? 'Educational Equity & Green Campus'); ?>" class="spm-input" style="font-weight:700;">
+                                    <textarea name="pillar_2_desc" rows="3" class="spm-input" style="margin-top:6px; font-size:12.5px;"><?php echo esc_textarea($s['pillar_2_desc'] ?? ''); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:14px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color:#BE185D;">เสาหลักที่ 3 (Pillar 3):</label>
+                                    <input type="text" name="pillar_3_title" value="<?php echo esc_attr($s['pillar_3_title'] ?? 'Professional Learning Community & ว.PA'); ?>" class="spm-input" style="font-weight:700;">
+                                    <textarea name="pillar_3_desc" rows="3" class="spm-input" style="margin-top:6px; font-size:12.5px;"><?php echo esc_textarea($s['pillar_3_desc'] ?? ''); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:14px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color:#BE185D;">เสาหลักที่ 4 (Pillar 4):</label>
+                                    <input type="text" name="pillar_4_title" value="<?php echo esc_attr($s['pillar_4_title'] ?? 'High-Performance Organization & Good Governance'); ?>" class="spm-input" style="font-weight:700;">
+                                    <textarea name="pillar_4_desc" rows="3" class="spm-input" style="margin-top:6px; font-size:12.5px;"><?php echo esc_textarea($s['pillar_4_desc'] ?? ''); ?></textarea>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
 
                     <!-- TAB 4: คณะผู้บริหาร สพม.สกลนคร -->

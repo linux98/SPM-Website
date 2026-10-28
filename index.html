@@ -13385,7 +13385,7 @@
 
           </span>
 
-          <h3 style="font-size:24px; font-weight:700; margin-top:14px;">Digital Transformation & AI for Learning</h3>
+          <h3 id="spmPillar1Title" style="font-size:24px; font-weight:700; margin-top:14px;">Digital Transformation & AI for Learning</h3>
 
           <p style="font-size:14.5px; opacity:0.9; margin-top:10px; line-height:1.7;">
 
@@ -17166,6 +17166,25 @@
             }
           }
         }
+      }
+
+      
+      // 5.4 4 Strategic Pillars Hydration
+      if (s.pillar_1_title) {
+        const p1 = document.getElementById('spmPillar1Title');
+        if (p1) p1.innerText = s.pillar_1_title;
+      }
+      if (s.pillar_2_title) {
+        const p2 = document.getElementById('spmPillar2Title');
+        if (p2) p2.innerText = s.pillar_2_title;
+      }
+      if (s.pillar_3_title) {
+        const p3 = document.getElementById('spmPillar3Title');
+        if (p3) p3.innerText = s.pillar_3_title;
+      }
+      if (s.pillar_4_title) {
+        const p4 = document.getElementById('spmPillar4Title');
+        if (p4) p4.innerText = s.pillar_4_title;
       }
 
       // 6. Theme CSS Variables (Dynamic Real-time Palette)
