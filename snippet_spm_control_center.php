@@ -161,6 +161,33 @@ function spm_get_default_settings() {
         'solar_station_title' => 'พลังงานสะอาด Solar Rooftop อาคาร 2 & 3',
 
         // Tab 7: สถิติตัวเลข & TCAS เกียรติยศ (Counters & Analytics)
+                // War Room Strategic Cockpit KPIs (6 Cards & Live Pulse Stream)
+        'wr_kpi1_val' => '45',
+        'wr_kpi1_unit' => 'แห่ง',
+        'wr_kpi1_pill' => '100% Active',
+        'wr_kpi1_auto' => '1',
+
+        'wr_kpi2_val' => '2,185',
+        'wr_kpi2_unit' => 'คน',
+        'wr_kpi2_pill' => 'อัตรากำลังครบ',
+
+        'wr_kpi3_val' => '31,420',
+        'wr_kpi3_unit' => 'คน',
+        'wr_kpi3_pill' => '+2.4% เพิ่มขึ้น',
+
+        'wr_kpi4_val' => '99.4%',
+        'wr_kpi4_unit' => '',
+        'wr_kpi4_pill' => 'สูงสุดในเขต',
+
+        'wr_kpi5_val' => '99.98%',
+        'wr_kpi5_unit' => '',
+        'wr_kpi5_pill' => 'พร้อมบริการ 24h',
+
+        'wr_kpi6_val' => 'AQI 28',
+        'wr_kpi6_unit' => 'ดีเยี่ยม',
+        'wr_kpi6_pill' => '0 เหตุคงค้าง',
+
+        'wr_stream_text' => 'สพม.สกลนคร ครอบคลุม 8 สหวิทยาเขต 45 สถานศึกษา เชื่อมโยงระบบฐานข้อมูลกลางระดับประเทศ • อัตราการคงอยู่ของนักเรียนระดับมัธยมศึกษา 99.85% สถิติสูงสุดของกลุ่มภาคตะวันออกเฉียงเหนือ • บุคลากรครูผ่านการรับรองวิทยฐานะดิจิทัล DPA ครบ 100% ตามเกณฑ์ ก.ค.ศ. • ศูนย์เฝ้าระวังความปลอดภัยสถานศึกษา (SESAO Safety Center) สแตนด์บายประสานงาน 24 ชม. ปลอดภัย 100% • สถิติคำขอบริการอิเล็กทรอนิกส์ e-Service เฉลี่ยระยะเวลาอนุมัติเอกสารรวดเร็วภายใน 24 ชม. • ดัชนีคุณภาพอากาศและสิ่งแวดล้อมเพื่อสุขภาพการเรียนรู้ PM2.5 เฉลี่ยทั้งเขตอยู่ในเกณฑ์คุณภาพดีเยี่ยม (18 µg/m³)',
         'stat_students' => '2,450+',
         'stat_teachers' => '120+',
         'stat_tcas' => '100%',
@@ -1444,6 +1471,150 @@ function spm_render_admin_page() {
 
                     <!-- TAB 7: ข้อมูลสารสนเทศ บิ๊กดาต้า & สถิติการศึกษา -->
                     <div id="tab-analytics" class="spm-tab-section">
+
+                        <!-- War Room Strategic Cockpit KPIs Form -->
+                        <div class="spm-card" style="border-left: 5px solid #DC2626; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <h3 class="spm-card-head" style="margin: 0; color: #060B19; font-size: 16px;">
+                                    🔴 ดัชนีศูนย์บัญชาการ Live War Room 6 คอลัมน์ (Strategic Cockpit KPIs)
+                                </h3>
+                                <span style="background: rgba(220, 38, 38, 0.1); color: #DC2626; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(220, 38, 38, 0.3);">
+                                    LIVE SYNC 100%
+                                </span>
+                            </div>
+                            <p style="font-size: 12.5px; color: #64748B; margin-top: 0; margin-bottom: 16px;">
+                                ปรับแต่งตัวเลขสถิติ ป้ายเทรนด์ และข้อความวิ่งในแถบ Live War Room บนหน้าหลัก ข้อมูลจะอัปเดตแบบเรียลไทม์ทันทีเมื่อบันทึก
+                            </p>
+
+                            <!-- Grid 6 Cards Settings -->
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                <!-- Card 1 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #D97706; font-size: 13.5px; margin-bottom: 8px;">
+                                        🏫 คอลัมน์ที่ 1: โรงเรียนในสังกัด
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ตัวเลขสถิติ:</label>
+                                            <input type="text" name="wr_kpi1_val" value="<?php echo esc_attr($s['wr_kpi1_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">หน่วย:</label>
+                                            <input type="text" name="wr_kpi1_unit" value="<?php echo esc_attr($s['wr_kpi1_unit']); ?>" class="spm-input">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi1_pill" value="<?php echo esc_attr($s['wr_kpi1_pill']); ?>" class="spm-input" style="margin-bottom: 8px;">
+                                    <label style="font-size: 12px; color: #047857; display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 600;">
+                                        <input type="checkbox" name="wr_kpi1_auto" value="1" <?php checked($s['wr_kpi1_auto'], '1'); ?>>
+                                        <span>⚡ ดึงนับจำนวนอัตโนมัติจากทำเนียบโรงเรียน (spm_school)</span>
+                                    </label>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #0284C7; font-size: 13.5px; margin-bottom: 8px;">
+                                        👩‍🏫 คอลัมน์ที่ 2: ข้าราชการครู & บุคลากร
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ตัวเลขสถิติ:</label>
+                                            <input type="text" name="wr_kpi2_val" value="<?php echo esc_attr($s['wr_kpi2_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">หน่วย:</label>
+                                            <input type="text" name="wr_kpi2_unit" value="<?php echo esc_attr($s['wr_kpi2_unit']); ?>" class="spm-input">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi2_pill" value="<?php echo esc_attr($s['wr_kpi2_pill']); ?>" class="spm-input">
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #0D9488; font-size: 13.5px; margin-bottom: 8px;">
+                                        👨‍🎓 คอลัมน์ที่ 3: นักเรียนรวม (DMC)
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ตัวเลขสถิติ:</label>
+                                            <input type="text" name="wr_kpi3_val" value="<?php echo esc_attr($s['wr_kpi3_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">หน่วย:</label>
+                                            <input type="text" name="wr_kpi3_unit" value="<?php echo esc_attr($s['wr_kpi3_unit']); ?>" class="spm-input">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi3_pill" value="<?php echo esc_attr($s['wr_kpi3_pill']); ?>" class="spm-input">
+                                </div>
+
+                                <!-- Card 4 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #B45309; font-size: 13.5px; margin-bottom: 8px;">
+                                        🏆 คอลัมน์ที่ 4: สำเร็จการศึกษา ม.6
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ตัวเลขสถิติ (%):</label>
+                                            <input type="text" name="wr_kpi4_val" value="<?php echo esc_attr($s['wr_kpi4_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">หน่วย:</label>
+                                            <input type="text" name="wr_kpi4_unit" value="<?php echo esc_attr($s['wr_kpi4_unit']); ?>" class="spm-input" placeholder="(ถ้ามี)">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi4_pill" value="<?php echo esc_attr($s['wr_kpi4_pill']); ?>" class="spm-input">
+                                </div>
+
+                                <!-- Card 5 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #16A34A; font-size: 13.5px; margin-bottom: 8px;">
+                                        ⚡ คอลัมน์ที่ 5: บริการดิจิทัล e-Service
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ตัวเลขสถิติ (%):</label>
+                                            <input type="text" name="wr_kpi5_val" value="<?php echo esc_attr($s['wr_kpi5_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">หน่วย:</label>
+                                            <input type="text" name="wr_kpi5_unit" value="<?php echo esc_attr($s['wr_kpi5_unit']); ?>" class="spm-input" placeholder="(ถ้ามี)">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi5_pill" value="<?php echo esc_attr($s['wr_kpi5_pill']); ?>" class="spm-input">
+                                </div>
+
+                                <!-- Card 6 -->
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                                    <div style="font-weight: 800; color: #0F766E; font-size: 13.5px; margin-bottom: 8px;">
+                                        🍃 คอลัมน์ที่ 6: Safety & คุณภาพอากาศ
+                                    </div>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <div style="flex: 2;">
+                                            <label class="spm-label">ดัชนี / สถิติ:</label>
+                                            <input type="text" name="wr_kpi6_val" value="<?php echo esc_attr($s['wr_kpi6_val']); ?>" class="spm-input" style="font-weight: 700;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label class="spm-label">สถานะ:</label>
+                                            <input type="text" name="wr_kpi6_unit" value="<?php echo esc_attr($s['wr_kpi6_unit']); ?>" class="spm-input">
+                                        </div>
+                                    </div>
+                                    <label class="spm-label">ป้ายสถานะ / เทรนด์:</label>
+                                    <input type="text" name="wr_kpi6_pill" value="<?php echo esc_attr($s['wr_kpi6_pill']); ?>" class="spm-input">
+                                </div>
+                            </div>
+
+                            <!-- Live Stream Text -->
+                            <div style="margin-top: 16px;">
+                                <label class="spm-label">🛰️ ข้อความวิ่งแถบล่างสุด (Live Pulse Stream Ticker):</label>
+                                <textarea name="wr_stream_text" rows="3" class="spm-input" style="width: 100%; font-size: 12.5px; line-height: 1.5;"><?php echo esc_textarea($s['wr_stream_text']); ?></textarea>
+                                <p style="font-size: 11.5px; color: #94A3B8; margin-top: 4px;">ใช้เครื่องหมาย &bull; หรือ • คั่นระหว่างข้อความ</p>
+                            </div>
+                        </div>
+
                         <div class="spm-card" style="border-left: 5px solid #F59E0B;">
                             <h3 class="spm-card-head">📊 สถิติตัวเลขหน้าเว็บหลัก (Key Numerical Counters)</h3>
                             <div class="sps-grid-3">
