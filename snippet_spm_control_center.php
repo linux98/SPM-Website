@@ -4814,3 +4814,22 @@ function spm_rest_get_schools($request) {
     }
     return rest_ensure_response($results);
 }
+
+// =========================================================================
+// FAVICON & SITE IDENTITY FILTER (PREVENT BROWSER 404)
+// =========================================================================
+add_filter('get_site_icon_url', function($url) {
+    return 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+});
+
+add_action('wp_head', function() {
+    $icon = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+    echo '<link rel="shortcut icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
+    echo '<link rel="icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . esc_url($icon) . '" />' . "\n";
+}, 0);
+
+add_action('do_faviconico', function() {
+    wp_redirect('https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png', 301);
+    exit;
+});
