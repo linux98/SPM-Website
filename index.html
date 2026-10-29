@@ -22402,6 +22402,11 @@
               <h4 style="margin:2px 0 0 0; font-size:18px; font-weight:800; color:#0F172A;">${c.name}</h4>
               <div style="font-size:12.5px; color:#64748B;">รหัสวุฒิบัตร: <strong>${c.code}</strong></div>
             </div>
+            <div class="hologram-seal-wrap" title="ตราประทับดิจิทัลโฮโลแกรมทองคำแท้ 3D (Holographic Gold Verification Seal)">
+              <i class="fa-solid fa-certificate" style="font-size:26px; color:#060B19; margin-bottom:4px;"></i>
+              <strong style="font-size:10px; letter-spacing:0.8px; text-transform:uppercase;">SPM SAKON</strong>
+              <span style="font-size:8px; font-weight:800; opacity:0.85;">VERIFIED 100%</span>
+            </div>
             <div class="cert-seal-stamp">
               <i class="fa-solid fa-award"></i>
             </div>
@@ -22756,12 +22761,11 @@
     function testScanQrCode(code) {
       playSpsHapticSound('success');
       closeQrCameraScannerModal();
-      const input = document.getElementById('certIdInput');
-      if (input) {
-        input.value = code;
-        verifyCertificate();
-        const certSec = document.getElementById('hall-of-fame');
-        if (certSec) certSec.scrollIntoView({ behavior: 'smooth' });
+      if (typeof openCertVerifyModal === 'function') {
+        openCertVerifyModal();
+      }
+      if (typeof verifySpMCertificate === 'function') {
+        verifySpMCertificate(code || 'SPM-2569-TRAIN01');
       }
     }
 
