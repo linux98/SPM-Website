@@ -1190,6 +1190,8 @@ function spm_render_admin_page() {
                                     <input type="text" name="school_tree" value="<?php echo esc_attr($s['school_tree'] ?? 'ต้นราชพฤกษ์ (ดอกคูน)'); ?>" class="spm-input">
                                 </div>
                             </div>
+                        </div>
+
                         <!-- 4 เสาหลักยุทธศาสตร์ -->
                         <div class="spm-card" style="border-left: 5px solid #EC4899; margin-top: 20px;">
                             <h3 class="spm-card-head">🧭 4 เสาหลักยุทธศาสตร์ สพม.สกลนคร (Strategic Compass)</h3>
@@ -2213,6 +2215,196 @@ function spm_render_admin_page() {
                                             โหลดพิมพ์เขียว สพป.
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 15: วารสารดิจิทัล Flipbook 3D (E-Book & Virtual Magazine) -->
+                    <div id="tab-flipbook" class="spm-tab-section">
+                        <div class="spm-card" style="border-left: 5px solid #F59E0B;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                                <div>
+                                    <h3 class="spm-card-head" style="margin-bottom: 4px;">📖 วารสารดิจิทัล สพม.สกลนคร 3D (Interactive Virtual Flipbook)</h3>
+                                    <p style="font-size: 13.5px; color: #64748B; margin: 0;">
+                                        จัดการข้อมูลวารสารข่าวสาร สกลสาร ฉบับดิจิทัล 3D พลิกหน้าเสมือนจริง พร้อมระบบดาวน์โหลด PDF และพรีวิวแบบเรียลไทม์
+                                    </p>
+                                </div>
+                                <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #B45309; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px;">
+                                    3D FLIPBOOK ENGINE
+                                </span>
+                            </div>
+
+                            <div class="sps-grid-2" style="margin-top: 24px;">
+                                <div>
+                                    <label class="spm-label">ฉบับที่ (Volume / Edition):</label>
+                                    <input type="text" name="flipbook_vol" value="<?php echo esc_attr($s['flipbook_vol'] ?? 'VOL. 10 / 2569'); ?>" class="spm-input" placeholder="VOL. 10 / 2569">
+                                    <div class="sps-hint">เช่น VOL. 10 / 2569 หรือ ฉบับปฐมฤกษ์</div>
+                                </div>
+                                <div>
+                                    <label class="spm-label">ประจำเดือน / ภาคเรียน (Publication Month/Term):</label>
+                                    <input type="text" name="flipbook_month" value="<?php echo esc_attr($s['flipbook_month'] ?? 'ตุลาคม 2569'); ?>" class="spm-input" placeholder="ตุลาคม 2569">
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 16px;">
+                                <label class="spm-label">ชื่อเรื่อง / หัวข้อวารสารฉบับนี้ (Magazine Title):</label>
+                                <input type="text" name="flipbook_title" value="<?php echo esc_attr($s['flipbook_title'] ?? 'วารสารสกลสาร สพม.สกลนคร ฉบับที่ 10 ประจำปีงบประมาณ 2569'); ?>" class="spm-input" style="font-weight: 700;">
+                            </div>
+
+                            <div style="margin-bottom: 16px;">
+                                <label class="spm-label">บทคัดย่อ / สรุปสาระสำคัญประจำฉบับ (Executive Summary / Abstract):</label>
+                                <textarea name="flipbook_desc" rows="3" class="spm-input" style="line-height: 1.6;"><?php echo esc_textarea($s['flipbook_desc'] ?? ''); ?></textarea>
+                            </div>
+
+                            <div class="sps-grid-3">
+                                <div>
+                                    <label class="spm-label">รูปภาพหน้าปกวารสาร (Cover Image URL):</label>
+                                    <input type="text" name="flipbook_cover" value="<?php echo esc_attr($s['flipbook_cover'] ?? ''); ?>" class="spm-input" placeholder="https://...">
+                                    <div class="sps-hint">URL หน้าปกความละเอียดสูง (แนะนำ 600x850 px)</div>
+                                </div>
+                                <div>
+                                    <label class="spm-label">ลิงก์เปิดอ่าน Flipbook 3D (Interactive Reader URL):</label>
+                                    <input type="text" name="flipbook_url" value="<?php echo esc_attr($s['flipbook_url'] ?? ''); ?>" class="spm-input" placeholder="https://online.anyflip.com/...">
+                                    <div class="sps-hint">ลิงก์ AnyFlip, Heyzine หรือระบบ e-Book 3D</div>
+                                </div>
+                                <div>
+                                    <label class="spm-label">ลิงก์ดาวน์โหลดเอกสารฉบับเต็ม PDF (Direct Download):</label>
+                                    <input type="text" name="flipbook_pdf" value="<?php echo esc_attr($s['flipbook_pdf'] ?? ''); ?>" class="spm-input" placeholder="https://.../magazine.pdf">
+                                    <div class="sps-hint">ไฟล์ PDF ความละเอียดสูงสำหรับพิมพ์หรืออ่านออฟไลน์</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 16: บริการ 4 กลุ่ม & 9 กลุ่มงาน (Stakeholders Experience Hub & Org Chart) -->
+                    <div id="tab-stakeholders" class="spm-tab-section">
+                        <!-- ส่วนที่ 1: 4 Persona Cards -->
+                        <div class="spm-card" style="border-left: 5px solid #6366F1;">
+                            <h3 class="spm-card-head">👥 บริการตามกลุ่มผู้รับบริการ 4 มิติ (4 Stakeholder Portals)</h3>
+                            <p style="font-size: 13.5px; color: #64748B; margin-top: -10px; margin-bottom: 18px;">
+                                กำหนดหัวข้อและคำอธิบายสำหรับ 4 กลุ่มผู้ใช้งาน เพื่อนำทางสู่ระบบงานที่ตรงความต้องการได้อย่างแม่นยำ
+                            </p>
+                            <div class="sps-grid-2">
+                                <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color: #4F46E5; font-weight:700;">👩‍🏫 1. บุคลากร & คุณครู (Teacher Portal):</label>
+                                    <input type="text" name="sh_teacher_title" value="<?php echo esc_attr($s['sh_teacher_title'] ?? 'คุณครู & บุคลากร'); ?>" class="spm-input" style="font-weight:700; margin-bottom:8px;">
+                                    <textarea name="sh_teacher_desc" rows="2" class="spm-input" style="font-size:12.5px;"><?php echo esc_textarea($s['sh_teacher_desc'] ?? 'ระบบสารสนเทศและการบริหารงานบุคคลสำหรับครูมัธยมศึกษา'); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color: #059669; font-weight:700;">👨‍👩‍👧 2. ผู้ปกครอง & ประชาชน (Parent Portal):</label>
+                                    <input type="text" name="sh_parent_title" value="<?php echo esc_attr($s['sh_parent_title'] ?? 'ประชาชน & ผู้ปกครอง'); ?>" class="spm-input" style="font-weight:700; margin-bottom:8px;">
+                                    <textarea name="sh_parent_desc" rows="2" class="spm-input" style="font-size:12.5px;"><?php echo esc_textarea($s['sh_parent_desc'] ?? 'บริการยื่นคำร้อง ติดตามสถานะ และคู่มือการรับนักเรียน'); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color: #2563EB; font-weight:700;">👨‍🎓 3. นักเรียน & เยาวชน (Student Portal):</label>
+                                    <input type="text" name="sh_student_title" value="<?php echo esc_attr($s['sh_student_title'] ?? 'นักเรียน & เยาวชน'); ?>" class="spm-input" style="font-weight:700; margin-bottom:8px;">
+                                    <textarea name="sh_student_desc" rows="2" class="spm-input" style="font-size:12.5px;"><?php echo esc_textarea($s['sh_student_desc'] ?? 'พื้นที่การเรียนรู้ ทุนการศึกษา และระบบแนะแนวการศึกษาต่อ'); ?></textarea>
+                                </div>
+                                <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid #E2E8F0;">
+                                    <label class="spm-label" style="color: #D97706; font-weight:700;">🤝 4. ภาคีเครือข่าย ผู้บริหาร & คู่ค้า (Partner Portal):</label>
+                                    <input type="text" name="sh_partner_title" value="<?php echo esc_attr($s['sh_partner_title'] ?? 'ผู้บริหาร & คู่ค้า'); ?>" class="spm-input" style="font-weight:700; margin-bottom:8px;">
+                                    <textarea name="sh_partner_desc" rows="2" class="spm-input" style="font-size:12.5px;"><?php echo esc_textarea($s['sh_partner_desc'] ?? 'ข้อมูลการจัดซื้อจัดจ้าง แผนงบประมาณ และความร่วมมือทางการศึกษา'); ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ส่วนที่ 2: ผู้อำนวยการ 9 กลุ่มงาน 1 หน่วยตรวจสอบภายใน -->
+                        <div class="spm-card" style="border-left: 5px solid #0EA5E9; margin-top: 20px;">
+                            <h3 class="spm-card-head">🏢 โครงสร้างการบริหาร 9 กลุ่ม 1 หน่วย (Department Heads & Hotlines)</h3>
+                            <p style="font-size: 13.5px; color: #64748B; margin-top: -10px; margin-bottom: 18px;">
+                                ปรับปรุงรายชื่อผู้อำนวยการกลุ่มงาน และเบอร์ต่อสายตรง สำหรับผังองค์กรและการติดต่อราชการ
+                            </p>
+                            
+                            <div class="sps-grid-2">
+                                <!-- 1. กลุ่มอำนวยการ -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">1. กลุ่มอำนวยการ</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_1" value="<?php echo esc_attr($s['dept_head_1'] ?? 'นางสายใจ สมบูรณ์ (ผอ.กลุ่มอำนวยการ)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_1" value="<?php echo esc_attr($s['dept_phone_1'] ?? '042-711-456 ต่อ 101'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 2. กลุ่มบริหารงานบุคคล -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">2. กลุ่มบริหารงานบุคคล</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_2" value="<?php echo esc_attr($s['dept_head_2'] ?? 'นายสมศักดิ์ ภักดี (ผอ.กลุ่มบริหารงานบุคคล)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_2" value="<?php echo esc_attr($s['dept_phone_2'] ?? '042-711-456 ต่อ 116'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 3. กลุ่มนโยบายและแผน -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">3. กลุ่มนโยบายและแผน</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_3" value="<?php echo esc_attr($s['dept_head_3'] ?? 'นางสาวพรพิมล วงศ์แก้ว (ผอ.กลุ่มนโยบายและแผน)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_3" value="<?php echo esc_attr($s['dept_phone_3'] ?? '042-711-456 ต่อ 105'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 4. กลุ่ม DLICT -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">4. กลุ่มส่งเสริมการศึกษาทางไกลฯ (DLICT)</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_4" value="<?php echo esc_attr($s['dept_head_4'] ?? 'นายกิตติศักดิ์ เจริญสุข (ผอ.กลุ่ม DLICT)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_4" value="<?php echo esc_attr($s['dept_phone_4'] ?? '042-711-456 ต่อ 120'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 5. กลุ่มนิเทศ ติดตามฯ -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">5. กลุ่มนิเทศ ติดตามและประเมินผลฯ</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม / ศน.:</label>
+                                    <input type="text" name="dept_head_5" value="<?php echo esc_attr($s['dept_head_5'] ?? 'ดร.สมชาย ศรีสุวรรณ (หน.กลุ่มนิเทศ ติดตามฯ)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_5" value="<?php echo esc_attr($s['dept_phone_5'] ?? '042-711-456 ต่อ 118'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 6. กลุ่มส่งเสริมการจัดการศึกษา -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">6. กลุ่มส่งเสริมการจัดการศึกษา</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_6" value="<?php echo esc_attr($s['dept_head_6'] ?? 'นางรัตนา ทรัพย์เจริญ (ผอ.กลุ่มส่งเสริมการจัดการศึกษา)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_6" value="<?php echo esc_attr($s['dept_phone_6'] ?? '042-711-456 ต่อ 115'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 7. กลุ่มบริหารงานการเงินและสินทรัพย์ -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">7. กลุ่มบริหารงานการเงินและสินทรัพย์</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_7" value="<?php echo esc_attr($s['dept_head_7'] ?? 'นางพัชรี นวลจันทร์ (ผอ.กลุ่มการเงินและสินทรัพย์)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_7" value="<?php echo esc_attr($s['dept_phone_7'] ?? '042-711-456 ต่อ 111'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 8. กลุ่มพัฒนาครูและบุคลากรฯ -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">8. กลุ่มพัฒนาครูและบุคลากรทางการศึกษา</div>
+                                    <label class="spm-label">ชื่อ-สกุล ผอ.กลุ่ม:</label>
+                                    <input type="text" name="dept_head_8" value="<?php echo esc_attr($s['dept_head_8'] ?? 'นายชาญชัย มิ่งขวัญ (ผอ.กลุ่มพัฒนาครูฯ)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_8" value="<?php echo esc_attr($s['dept_phone_8'] ?? '042-711-456 ต่อ 114'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 9. กลุ่มกฎหมายและคดี -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">9. กลุ่มกฎหมายและคดี</div>
+                                    <label class="spm-label">ชื่อ-สกุล หน.กลุ่ม / นิติกร:</label>
+                                    <input type="text" name="dept_head_9" value="<?php echo esc_attr($s['dept_head_9'] ?? 'นายนิติธรรม สันติสุข (นิติกรชำนาญการพิเศษ หน.กลุ่มกฎหมาย)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_9" value="<?php echo esc_attr($s['dept_phone_9'] ?? '042-711-456 ต่อ 108'); ?>" class="spm-input">
+                                </div>
+
+                                <!-- 10. หน่วยตรวจสอบภายใน -->
+                                <div style="background:#F8FAFC; padding:12px 16px; border-radius:10px; border:1px solid #E2E8F0;">
+                                    <div style="font-weight:700; color:#0F172A; margin-bottom:6px;">10. หน่วยตรวจสอบภายใน</div>
+                                    <label class="spm-label">ชื่อ-สกุล หน.หน่วย:</label>
+                                    <input type="text" name="dept_head_10" value="<?php echo esc_attr($s['dept_head_10'] ?? 'นางสาวสุภาวดี ชัยชนะ (หน.หน่วยตรวจสอบภายใน)'); ?>" class="spm-input" style="margin-bottom:6px;">
+                                    <label class="spm-label">เบอร์โทรศัพท์ / เบอร์ภายใน:</label>
+                                    <input type="text" name="dept_phone_10" value="<?php echo esc_attr($s['dept_phone_10'] ?? '042-711-456 ต่อ 109'); ?>" class="spm-input">
                                 </div>
                             </div>
                         </div>
@@ -4987,20 +5179,54 @@ function spm_rest_get_schools($request) {
 }
 
 // =========================================================================
-// FAVICON & SITE IDENTITY FILTER (PREVENT BROWSER 404)
+// FAVICON & SITE IDENTITY FILTER (PREVENT BROWSER 404 & ADMIN ICON)
 // =========================================================================
-add_filter('get_site_icon_url', function($url) {
+function spm_get_official_logo_url() {
+    // 1. Check local file in theme / mu-plugins or uploads
+    $local_logo = WP_CONTENT_DIR . '/uploads/logo-spm.png';
+    if (file_exists($local_logo)) {
+        return content_url('/uploads/logo-spm.png');
+    }
+    // 2. High availability CDN URL from GitHub repo
     return 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
-});
+}
+
+add_filter('get_site_icon_url', function($url, $size = 512, $blog_id = 0) {
+    return spm_get_official_logo_url();
+}, 10, 3);
 
 add_action('wp_head', function() {
-    $icon = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+    $icon = spm_get_official_logo_url();
     echo '<link rel="shortcut icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
     echo '<link rel="icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
     echo '<link rel="apple-touch-icon" href="' . esc_url($icon) . '" />' . "\n";
 }, 0);
 
+add_action('admin_head', function() {
+    $icon = spm_get_official_logo_url();
+    echo '<link rel="shortcut icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
+    echo '<link rel="icon" href="' . esc_url($icon) . '" type="image/png" />' . "\n";
+    echo '<style>
+        #wpadminbar #wp-admin-bar-site-name > .ab-item::before {
+            content: "" !important;
+            background-image: url("' . esc_url($icon) . '") !important;
+            background-size: 20px 20px !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            width: 20px !important;
+            height: 20px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin-right: 6px !important;
+        }
+        #wpadminbar .blavatar {
+            background-image: url("' . esc_url($icon) . '") !important;
+            background-size: 16px 16px !important;
+        }
+    </style>' . "\n";
+}, 0);
+
 add_action('do_faviconico', function() {
-    wp_redirect('https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png', 301);
+    wp_redirect(spm_get_official_logo_url(), 301);
     exit;
 });

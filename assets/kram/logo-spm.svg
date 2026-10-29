@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="kramGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1B365D" />
+      <stop offset="50%" stop-color="#0E244B" />
+      <stop offset="100%" stop-color="#060B19" />
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEE588" />
+      <stop offset="50%" stop-color="#ECC86A" />
+      <stop offset="100%" stop-color="#B48228" />
+    </linearGradient>
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="236" fill="url(#kramGrad)" stroke="url(#goldGrad)" stroke-width="8" filter="drop-shadow(0 4px 16px rgba(6,11,25,0.7))"/>
+  <circle cx="256" cy="256" r="218" fill="none" stroke="#ECC86A" stroke-width="2" stroke-dasharray="6,4" opacity="0.65"/>
+  <circle cx="256" cy="256" r="204" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.4"/>
+  
+  <!-- Central Dharmachakra Royal Wheel of Law -->
+  <g transform="translate(256, 230)" filter="url(#goldGlow)">
+    <circle cx="0" cy="0" r="75" fill="none" stroke="url(#goldGrad)" stroke-width="6"/>
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#ECC86A" stroke-width="2"/>
+    <circle cx="0" cy="0" r="22" fill="#D4AF37" stroke="#FEE588" stroke-width="2"/>
+    <circle cx="0" cy="0" r="10" fill="#EC4899" stroke="#FEE588" stroke-width="1.5"/>
+    <!-- 12 Spokes -->
+    <line x1="0" y1="-62" x2="0" y2="-22" stroke="#FEE588" stroke-width="3"/>
+    <line x1="0" y1="22" x2="0" y2="62" stroke="#FEE588" stroke-width="3"/>
+    <line x1="-62" y1="0" x2="-22" y2="0" stroke="#FEE588" stroke-width="3"/>
+    <line x1="22" y1="0" x2="62" y2="0" stroke="#FEE588" stroke-width="3"/>
+    <line x1="-43.8" y1="-43.8" x2="-15.5" y2="-15.5" stroke="#FEE588" stroke-width="2.5"/>
+    <line x1="15.5" y1="15.5" x2="43.8" y2="43.8" stroke="#FEE588" stroke-width="2.5"/>
+    <line x1="43.8" y1="-43.8" x2="15.5" y2="-15.5" stroke="#FEE588" stroke-width="2.5"/>
+    <line x1="-15.5" y1="15.5" x2="-43.8" y2="43.8" stroke="#FEE588" stroke-width="2.5"/>
+    <line x1="-53.7" y1="-31" x2="-19" y2="-11" stroke="#FEE588" stroke-width="2"/>
+    <line x1="19" y1="11" x2="53.7" y2="31" stroke="#FEE588" stroke-width="2"/>
+    <line x1="31" y1="-53.7" x2="11" y2="-19" stroke="#FEE588" stroke-width="2"/>
+    <line x1="-11" y1="19" x2="-31" y2="53.7" stroke="#FEE588" stroke-width="2"/>
+    <line x1="53.7" y1="-31" x2="19" y2="-11" stroke="#FEE588" stroke-width="2"/>
+    <line x1="-19" y1="11" x2="-53.7" y2="31" stroke="#FEE588" stroke-width="2"/>
+    <line x1="-31" y1="-53.7" x2="-11" y2="-19" stroke="#FEE588" stroke-width="2"/>
+    <line x1="11" y1="19" x2="31" y2="53.7" stroke="#FEE588" stroke-width="2"/>
+    <!-- Finial Crown -->
+    <path d="M 0 -75 L 12 -96 L 6 -106 L 0 -115 L -6 -106 L -12 -96 Z" fill="url(#goldGrad)" stroke="#B48228" stroke-width="1"/>
+  </g>
+  
+  <!-- Lotus Pedestal Base -->
+  <path d="M 176 315 C 210 338, 302 338, 336 315 C 316 305, 290 315, 256 308 C 222 315, 196 305, 176 315 Z" fill="url(#goldGrad)" stroke="#B48228" stroke-width="1.5"/>
+
+  <!-- Texts -->
+  <text x="256" y="70" text-anchor="middle" fill="#ECC86A" font-family="'Sarabun', 'Leelawadee', sans-serif" font-size="20" font-weight="700" letter-spacing="1">สำนักงานเขตพื้นที่การศึกษามัธยมศึกษา</text>
+  <text x="256" y="385" text-anchor="middle" fill="#FEE588" font-family="'K2D', 'Sarabun', sans-serif" font-size="44" font-weight="800" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))">สพม.สกลนคร</text>
+  <text x="256" y="425" text-anchor="middle" fill="#ECC86A" font-family="'Google Sans', 'Arial', sans-serif" font-size="19" font-weight="700" letter-spacing="2">SESAO SAKON NAKHON</text>
+</svg>
