@@ -10453,6 +10453,10 @@
 
         <li><a href="#safety" class="nav-bar-link" style="color:#EF4444;"><i class="fa-solid fa-shield-heart"></i> MOE Safety (1579)</a></li>
 
+        <!-- 10. คำถามที่พบบ่อย (FAQ) -->
+
+        <li><a href="#faq" class="nav-bar-link"><i class="fa-solid fa-circle-question" style="color:var(--gold-400);"></i> คำถามที่พบบ่อย</a></li>
+
       </ul>
 
 
@@ -14951,6 +14955,130 @@
 
   <!-- ========================================================================
 
+       12.7 FAQ KNOWLEDGE BASE ACCORDION (ศูนย์บริการตอบคำถามที่พบบ่อย)
+
+       ======================================================================== -->
+
+  <section id="faq" class="section-wrap" style="background: var(--bg-card-subtle);">
+
+    <div class="container">
+
+      <div style="text-align: center; max-width: 760px; margin: 0 auto 36px auto;">
+
+        <span class="sec-badge-pill"><i class="fa-solid fa-circle-question"></i> FAQS & KNOWLEDGE BASE</span>
+
+        <h2 class="sec-main-title">คำถามที่พบบ่อย (FAQs)</h2>
+
+        <p class="sec-sub-desc">ไขข้อข้องใจ ค้นหาคำตอบเกี่ยวกับบริการทางการศึกษา สิทธิประโยชน์ข้าราชการครู และการติดต่อราชการ สพม.สกลนคร</p>
+
+      </div>
+
+
+
+      <!-- FAQ Category & Search Filter Bar -->
+
+      <div class="faq-filter-bar" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap;">
+
+        <div class="faq-category-pills" id="faqCategoryPills" style="display: flex; gap: 8px; flex-wrap: wrap;">
+
+          <button type="button" class="btn-faq-cat active" data-cat="all" onclick="filterFrontendFaqCategory('all', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--gold-500); background: linear-gradient(135deg, #060B19 0%, #0B132B 100%); color: var(--gold-400); font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-list-check"></i> ทั้งหมด
+
+          </button>
+
+          <button type="button" class="btn-faq-cat" data-cat="บริการ e-Service" onclick="filterFrontendFaqCategory('บริการ e-Service', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-bolt" style="color:#3B82F6;"></i> บริการ e-Service
+
+          </button>
+
+          <button type="button" class="btn-faq-cat" data-cat="นักเรียน & ผู้ปกครอง" onclick="filterFrontendFaqCategory('นักเรียน & ผู้ปกครอง', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-user-graduate" style="color:#EC4899;"></i> นักเรียน & ผู้ปกครอง
+
+          </button>
+
+          <button type="button" class="btn-faq-cat" data-cat="ครู & บุคลากร" onclick="filterFrontendFaqCategory('ครู & บุคลากร', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-chalkboard-user" style="color:#10B981;"></i> ครู & บุคลากร
+
+          </button>
+
+          <button type="button" class="btn-faq-cat" data-cat="ความโปร่งใส ITA" onclick="filterFrontendFaqCategory('ความโปร่งใส ITA', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-scale-balanced" style="color:#F59E0B;"></i> ความโปร่งใส ITA
+
+          </button>
+
+          <button type="button" class="btn-faq-cat" data-cat="ทั่วไป" onclick="filterFrontendFaqCategory('ทั่วไป', this)" style="padding: 7px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+
+            <i class="fa-solid fa-circle-info" style="color:#64748B;"></i> ทั่วไป
+
+          </button>
+
+        </div>
+
+
+
+        <div class="faq-search-box" style="position: relative; width: 100%; max-width: 320px;">
+
+          <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gold-500); font-size: 14px;"></i>
+
+          <input type="text" id="frontendFaqSearchInput" oninput="filterFrontendFaqSearch(this.value)" placeholder="ค้นหาคำถาม เช่น ปพ.1, ว.PA..." style="width: 100%; padding: 10px 14px 10px 38px; border-radius: var(--radius-pill); border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-main); font-size: 13.5px; outline: none; transition: all 0.2s;">
+
+        </div>
+
+      </div>
+
+
+
+      <!-- FAQ Accordion List -->
+
+      <div id="frontendFaqAccordionContainer" class="faq-accordion-list" style="display: flex; flex-direction: column; gap: 14px;">
+
+        <!-- Dynamic FAQs rendered by JS -->
+
+      </div>
+
+
+
+      <!-- Nong Phu Phan AI Chatbot Hook -->
+
+      <div style="margin-top: 36px; background: linear-gradient(135deg, rgba(6,11,25,0.95) 0%, rgba(15,23,42,0.95) 100%); border: 1px solid rgba(236,200,106,0.3); border-radius: 16px; padding: 22px 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: 0 10px 30px rgba(6,11,25,0.3);">
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%); display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(236,200,106,0.4);">
+
+            🤖
+
+          </div>
+
+          <div>
+
+            <h4 style="color: #FFFFFF; font-size: 16px; font-weight: 800; margin: 0 0 4px 0;">ยังไม่พบคำตอบที่คุณกำลังค้นหาใช่หรือไม่?</h4>
+
+            <p style="color: #94A3B8; font-size: 13px; margin: 0;">น้องภูพาน AI ผู้ช่วยอัจฉริยะ สพม.สกลนคร พร้อมตอบทุกข้อสงสัยและให้ข้อมูลตลอด 24 ชั่วโมง</p>
+
+          </div>
+
+        </div>
+
+        <button type="button" onclick="togglePhuPhanChat()" class="btn-sso-portal" style="background: linear-gradient(135deg, var(--gold-500) 0%, #B45309 100%); color: #060B19; font-weight: 800; padding: 12px 24px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(236,200,106,0.3);">
+
+          <i class="fa-solid fa-comments"></i> สอบถามน้องภูพาน AI ทันที
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+    <!-- ========================================================================
+
        13. FOOTER
 
        ======================================================================== -->
@@ -15643,6 +15771,8 @@
         <li><a href="#dpa-calculator" onclick="toggleMobileDrawer()"><i class="fa-solid fa-calculator"></i> โปรแกรมคำนวณ ว.PA</a></li>
 
         <li><a href="#safety" onclick="toggleMobileDrawer()"><i class="fa-solid fa-shield-heart"></i> MOE Safety Center (1579)</a></li>
+
+        <li><a href="#faq" onclick="toggleMobileDrawer()"><i class="fa-solid fa-circle-question" style="color:var(--gold-400);"></i> คำถามที่พบบ่อย (FAQs)</a></li>
 
       </ul>
 
@@ -17799,7 +17929,22 @@
       window.spmSettings = s;
       console.log("🏛️ [SPM Settings Live Hydration]:", s);
 
-      // 1. Brand Names & Titles (TH & EN)
+        // 0. FAQ Knowledge Base Hydration
+      if (s.faq_items_json) {
+        try {
+          const parsedFaq = typeof s.faq_items_json === 'string' ? JSON.parse(s.faq_items_json) : s.faq_items_json;
+          if (Array.isArray(parsedFaq) && parsedFaq.length > 0) {
+            window.frontendFaqData = parsedFaq;
+            if (typeof renderFrontendFaqs === 'function') {
+              renderFrontendFaqs();
+            }
+          }
+        } catch (e) {
+          console.error("FAQ JSON parse error:", e);
+        }
+      }
+
+    // 1. Brand Names & Titles (TH & EN)
       if (s.school_name_th) {
         document.querySelectorAll('.brand-title-th, #spmBrandTitleTh').forEach(el => {
           el.innerText = s.school_name_th;
@@ -18001,6 +18146,154 @@
     }
 
     
+    // =========================================================================
+    // FRONTEND DYNAMIC FAQ KNOWLEDGE BASE ENGINE
+    // =========================================================================
+    window.frontendFaqData = [
+      {
+        id: 1,
+        category: 'บริการ e-Service',
+        q: 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?',
+        a: 'ข้าราชการครูและบุคลากรทางการศึกษาสามารถเข้าสู่ระบบผ่านเมนู DocumentStudio e-Services บนหน้าเว็บไซต์ เลือกหัวข้อ "ขอหนังสือรับรองเงินเดือน" พร้อมแนบสำเนาบัตรประจำตัวประชาชน ระบบจะออกเลขอ้างอิงอิเล็กทรอนิกส์และส่งตรงไปยังกลุ่มบริหารงานการเงินและสินทรัพย์ สพม.สกลนคร ดำเนินการออกหนังสือรับรองพร้อมลายมือชื่อดิจิทัลภายใน 1 วันทำการ',
+        status: 'active'
+      },
+      {
+        id: 2,
+        category: 'นักเรียน & ผู้ปกครอง',
+        q: 'การติดต่อขอเอกสาร ปพ.1, ปพ.7 และหลักฐานทางการศึกษาผ่านระบบออนไลน์ ต้องเตรียมอะไรบ้าง?',
+        a: 'เตรียมไฟล์สำเนาบัตรประชาชน/สูติบัตร และรูปถ่ายหน้าตรงชุดนักเรียน (ถ่ายไม่เกิน 6 เดือน) ยื่นคำร้องผ่านระบบออนไลน์ของกลุ่มส่งเสริมการจัดการศึกษา หรือติดต่อด้วยตนเองที่ห้องสารบรรณ สพม.สกลนคร ในวันและเวลาราชการ โดยเอกสารฉบับดิจิทัลสามารถดาวน์โหลดผ่านระบบตรวจสอบคุณวุฒิการศึกษาได้ทันที',
+        status: 'active'
+      },
+      {
+        id: 3,
+        category: 'ครู & บุคลากร',
+        q: 'การประเมินวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษาตามเกณฑ์ ว.PA ผ่านระบบ DPA มีขั้นตอนอย่างไร?',
+        a: 'คุณครูสามารถจัดทำข้อตกลงในการพัฒนางาน (PA) ร่วมกับผู้อำนวยการสถานศึกษาต้นสังกัด และบันทึกผลการปฏิบัติงานลงในระบบ DPA เมื่อครบรอบการประเมิน 1 รอบปีงบประมาณ โดยกลุ่มพัฒนาครูและบุคลากรทางการศึกษา สพม.สกลนคร จะจัดคณะกรรมการผู้ทรงคุณวุฒิประเมินผ่านระบบดิจิทัล 100% ตามหลักเกณฑ์ ก.ค.ศ.',
+        status: 'active'
+      },
+      {
+        id: 4,
+        category: 'ความโปร่งใส ITA',
+        q: 'การแจ้งเรื่องร้องเรียนหรือเบาะแสการทุจริตผ่านศูนย์รับเรื่องร้องเรียน ITA มีมาตรการคุ้มครองข้อมูลอย่างไร?',
+        a: 'ระบบรับเรื่องร้องเรียนของ สพม.สกลนคร ทำงานร่วมกับ Telegram Secure Gateway เข้ารหัสข้อมูลแบบ End-to-End ตามมาตรฐาน พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) ผู้ร้องเรียนสามารถเลือก "ไม่ประสงค์ออกนาม" ได้ โดยข้อมูลทั้งหมดจะส่งตรงไปยังนิติกรชำนาญการพิเศษ กลุ่มกฎหมายและคดี โดยไม่เปิดเผยต่อสาธารณะ',
+        status: 'active'
+      },
+      {
+        id: 5,
+        category: 'ทั่วไป',
+        q: 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ตั้งอยู่ที่ใด และติดต่อสอบถามได้ช่องทางใดบ้าง?',
+        a: 'ตั้งอยู่ที่ 271 ถนน ไอ ที ยู ตำบล งิ้วด่อน อำเภอเมืองสกลนคร จังหวัดสกลนคร 47000 (พิกัด GPS: 17.1459, 104.1532) เปิดทำการวันจันทร์ - ศุกร์ เวลา 08.30 - 16.30 น. โทรศัพท์สายตรง: 042-711-456 หรือสายด่วนศูนย์ความปลอดภัย 042-728-195 หรือทางอีเมล saraban0243@moe.go.th',
+        status: 'active'
+      }
+    ];
+
+    window.currentFrontendFaqCategory = 'all';
+    window.currentFrontendFaqSearch = '';
+    window.openFaqId = null;
+
+    function renderFrontendFaqs() {
+      const container = document.getElementById('frontendFaqAccordionContainer');
+      if (!container) return;
+
+      const items = (window.frontendFaqData || []).filter(item => {
+        if (item.status === 'inactive') return false;
+        const matchCat = (window.currentFrontendFaqCategory === 'all' || item.category === window.currentFrontendFaqCategory);
+        let matchSearch = true;
+        if (window.currentFrontendFaqSearch && window.currentFrontendFaqSearch.trim() !== '') {
+          const q = window.currentFrontendFaqSearch.toLowerCase().trim();
+          matchSearch = (item.q && item.q.toLowerCase().includes(q)) ||
+                        (item.a && item.a.toLowerCase().includes(q)) ||
+                        (item.category && item.category.toLowerCase().includes(q));
+        }
+        return matchCat && matchSearch;
+      });
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div style="background:var(--bg-card); border:1px dashed var(--border-subtle); border-radius:14px; padding:36px; text-align:center; color:var(--text-muted);">
+            <div style="font-size:32px; margin-bottom:8px;">🔍</div>
+            <div style="font-weight:700; font-size:16px; color:var(--text-main);">ไม่พบคำถามที่ตรงกับเงื่อนไขการค้นหา</div>
+            <div style="font-size:13px; margin-top:4px;">ลองเปลี่ยนคำค้นหา หรือสอบถามน้องภูพาน AI ด้านล่างได้ตลอด 24 ชั่วโมง</div>
+          </div>
+        `;
+        return;
+      }
+
+      const catBadges = {
+        'บริการ e-Service': { bg: 'rgba(59,130,246,0.15)', text: '#60A5FA', border: 'rgba(59,130,246,0.3)' },
+        'นักเรียน & ผู้ปกครอง': { bg: 'rgba(236,72,153,0.15)', text: '#F472B6', border: 'rgba(236,72,153,0.3)' },
+        'ครู & บุคลากร': { bg: 'rgba(16,185,129,0.15)', text: '#34D399', border: 'rgba(16,185,129,0.3)' },
+        'ความโปร่งใส ITA': { bg: 'rgba(245,158,11,0.15)', text: '#FBBF24', border: 'rgba(245,158,11,0.3)' },
+        'ทั่วไป': { bg: 'rgba(148,163,184,0.15)', text: '#94A3B8', border: 'rgba(148,163,184,0.3)' }
+      };
+
+      container.innerHTML = items.map((item, index) => {
+        const isOpen = (window.openFaqId === item.id);
+        const bStyle = catBadges[item.category] || catBadges['ทั่วไป'];
+        return `
+          <div class="faq-accordion-item" style="background:var(--bg-card); border:1px solid ${isOpen ? 'var(--gold-500)' : 'var(--border-subtle)'}; border-radius:14px; overflow:hidden; transition:all 0.25s ease; box-shadow:${isOpen ? '0 8px 24px rgba(236,200,106,0.12)' : '0 2px 8px rgba(0,0,0,0.04)'};">
+            <div class="faq-accordion-header" onclick="toggleFrontendFaqItem(${item.id})" style="padding:18px 22px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:14px; background:${isOpen ? 'rgba(236,200,106,0.04)' : 'transparent'};">
+              <div style="display:flex; align-items:center; gap:12px; flex-grow:1; min-width:0;">
+                <span style="font-size:12px; font-weight:800; background:linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%); color:#060B19; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  Q${index + 1}
+                </span>
+                <span style="font-size:11.5px; font-weight:700; background:${bStyle.bg}; color:${bStyle.text}; border:1px solid ${bStyle.border}; padding:3px 10px; border-radius:20px; flex-shrink:0;">
+                  ${item.category || 'ทั่วไป'}
+                </span>
+                <h3 style="font-size:15px; font-weight:700; color:${isOpen ? 'var(--gold-400)' : 'var(--text-main)'}; margin:0; line-height:1.5;">
+                  ${item.q}
+                </h3>
+              </div>
+              <div style="width:32px; height:32px; border-radius:50%; background:${isOpen ? 'var(--gold-500)' : 'rgba(255,255,255,0.05)'}; color:${isOpen ? '#060B19' : 'var(--text-muted)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform 0.25s ease; transform:${isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};">
+                <i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
+              </div>
+            </div>
+            ${isOpen ? `
+              <div class="faq-accordion-body" style="padding:0 22px 20px 62px; font-size:14.5px; color:var(--text-muted); line-height:1.8; border-top:1px solid rgba(255,255,255,0.04); padding-top:16px;">
+                <div style="background:rgba(255,255,255,0.02); border-left:3px solid var(--gold-500); padding:12px 18px; border-radius:0 10px 10px 0;">
+                  ${(item.a || '').replace(/\n/g, '<br>')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFrontendFaqItem(id) {
+      window.openFaqId = (window.openFaqId === id) ? null : id;
+      renderFrontendFaqs();
+    }
+
+    function filterFrontendFaqCategory(cat, btn) {
+      window.currentFrontendFaqCategory = cat;
+      document.querySelectorAll('.btn-faq-cat').forEach(b => {
+        b.style.border = '1px solid var(--border-subtle)';
+        b.style.background = 'var(--bg-card)';
+        b.style.color = 'var(--text-muted)';
+        b.style.fontWeight = '600';
+      });
+      if (btn) {
+        btn.style.border = '1px solid var(--gold-500)';
+        btn.style.background = 'linear-gradient(135deg, #060B19 0%, #0B132B 100%)';
+        btn.style.color = 'var(--gold-400)';
+        btn.style.fontWeight = '700';
+      }
+      renderFrontendFaqs();
+    }
+
+    function filterFrontendFaqSearch(val) {
+      window.currentFrontendFaqSearch = val;
+      renderFrontendFaqs();
+    }
+
+    // Auto-init FAQ on portal ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderFrontendFaqs);
+    } else {
+      setTimeout(renderFrontendFaqs, 200);
+    }
+
     // Dynamic CRUD Hydration for 5 Portal Modules
     async function hydratePortalCrudData() {
       if (window.location.protocol === 'file:') return;

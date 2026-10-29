@@ -224,15 +224,53 @@ function spm_get_default_settings() {
         'ev3_title' => 'กิจกรรมประชุมผู้ปกครองเครือข่ายและชั้นเรียน',
         'ev3_desc' => 'ร่วมสร้างความร่วมมือระหว่างบ้านและโรงเรียนในการดูแลช่วยเหลือนักเรียน',
 
-        // Tab 9: คำถามที่พบบ่อย (FAQ 3 ข้อ)
+        // Tab 9: ศูนย์จัดการคำถามที่พบบ่อย (Dynamic FAQ Knowledge Base CRUD)
         'faq1_q' => 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?',
-        'faq1_a' => 'สำหรับนักเรียนให้กรอกเลขประจำตัวนักเรียน 5 หลัก หรือเลขประจำตัวประชาชน 13 หลัก ส่วนผู้ปกครองใช้เลขประจำตัวประชาชน 13 หลักพร้อมวันเดือนปีเกิดของนักเรียน (เช่น 31/12/2553) หากเข้าไม่ได้ติดต่อขอปรับรหัสได้ที่นายทะเบียนวัดผล',
+        'faq1_a' => 'ข้าราชการครูและบุคลากรทางการศึกษาสามารถเข้าสู่ระบบผ่านเมนู DocumentStudio e-Services บนหน้าเว็บไซต์ เลือกหัวข้อ "ขอหนังสือรับรองเงินเดือน" พร้อมแนบสำเนาบัตรประจำตัวประชาชน ระบบจะออกเลขอ้างอิงอิเล็กทรอนิกส์และส่งตรงไปยังกลุ่มบริหารงานการเงินและสินทรัพย์ สพม.สกลนคร ดำเนินการออกหนังสือรับรองพร้อมลายมือชื่อดิจิทัลภายใน 1 วันทำการ',
         
-        'faq2_q' => 'การติดต่อขอเอกสาร ปพ.1 และ ปพ.7 ต้องเตรียมอะไรบ้าง?',
-        'faq2_a' => 'เตรียมรูปถ่ายชุดนักเรียนขนาด 1.5 นิ้ว (ถ่ายไม่เกิน 6 เดือน) และบัตรประจำตัวนักเรียนหรือบัตรประชาชน ติดต่อยื่นคำร้องได้ที่ห้องทะเบียน-วัดผล กลุ่มบริหารงานวิชาการ ในวันและเวลาราชการ',
+        'faq2_q' => 'การติดต่อขอเอกสาร ปพ.1, ปพ.7 และหลักฐานทางการศึกษาผ่านระบบออนไลน์ ต้องเตรียมอะไรบ้าง?',
+        'faq2_a' => 'เตรียมไฟล์สำเนาบัตรประชาชน/สูติบัตร และรูปถ่ายหน้าตรงชุดนักเรียน (ถ่ายไม่เกิน 6 เดือน) ยื่นคำร้องผ่านระบบออนไลน์ของกลุ่มส่งเสริมการจัดการศึกษา หรือติดต่อด้วยตนเองที่ห้องสารบรรณ สพม.สกลนคร ในวันและเวลาราชการ โดยเอกสารฉบับดิจิทัลสามารถดาวน์โหลดผ่านระบบตรวจสอบคุณวุฒิการศึกษาได้ทันที',
 
-        'faq3_q' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ตั้งอยู่ที่ใดและติดต่อช่องทางไหนได้บ้าง?',
-        'faq3_a' => 'ตั้งอยู่ที่ 271 ถนน ไอ ที ยู ตำบล งิ้วด่อน อำเภอเมืองสกลนคร สกลนคร 47000 โทรศัพท์ 042-711-456 หรือติดต่อทางแฟนเพจ Facebook',
+        'faq3_q' => 'การประเมินวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษาตามเกณฑ์ ว.PA ผ่านระบบ DPA มีขั้นตอนอย่างไร?',
+        'faq3_a' => 'คุณครูสามารถจัดทำข้อตกลงในการพัฒนางาน (PA) ร่วมกับผู้อำนวยการสถานศึกษาต้นสังกัด และบันทึกผลการปฏิบัติงานลงในระบบ DPA เมื่อครบรอบการประเมิน 1 รอบปีงบประมาณ โดยกลุ่มพัฒนาครูและบุคลากรทางการศึกษา สพม.สกลนคร จะจัดคณะกรรมการผู้ทรงคุณวุฒิประเมินผ่านระบบดิจิทัล 100% ตามหลักเกณฑ์ ก.ค.ศ.',
+
+        'faq_items_json' => json_encode(array(
+            array(
+                'id' => 1,
+                'category' => 'บริการ e-Service',
+                'q' => 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?',
+                'a' => 'ข้าราชการครูและบุคลากรทางการศึกษาสามารถเข้าสู่ระบบผ่านเมนู DocumentStudio e-Services บนหน้าเว็บไซต์ เลือกหัวข้อ "ขอหนังสือรับรองเงินเดือน" พร้อมแนบสำเนาบัตรประจำตัวประชาชน ระบบจะออกเลขอ้างอิงอิเล็กทรอนิกส์และส่งตรงไปยังกลุ่มบริหารงานการเงินและสินทรัพย์ สพม.สกลนคร ดำเนินการออกหนังสือรับรองพร้อมลายมือชื่อดิจิทัลภายใน 1 วันทำการ',
+                'status' => 'active'
+            ),
+            array(
+                'id' => 2,
+                'category' => 'นักเรียน & ผู้ปกครอง',
+                'q' => 'การติดต่อขอเอกสาร ปพ.1, ปพ.7 และหลักฐานทางการศึกษาผ่านระบบออนไลน์ ต้องเตรียมอะไรบ้าง?',
+                'a' => 'เตรียมไฟล์สำเนาบัตรประชาชน/สูติบัตร และรูปถ่ายหน้าตรงชุดนักเรียน (ถ่ายไม่เกิน 6 เดือน) ยื่นคำร้องผ่านระบบออนไลน์ของกลุ่มส่งเสริมการจัดการศึกษา หรือติดต่อด้วยตนเองที่ห้องสารบรรณ สพม.สกลนคร ในวันและเวลาราชการ โดยเอกสารฉบับดิจิทัลสามารถดาวน์โหลดผ่านระบบตรวจสอบคุณวุฒิการศึกษาได้ทันที',
+                'status' => 'active'
+            ),
+            array(
+                'id' => 3,
+                'category' => 'ครู & บุคลากร',
+                'q' => 'การประเมินวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษาตามเกณฑ์ ว.PA ผ่านระบบ DPA มีขั้นตอนอย่างไร?',
+                'a' => 'คุณครูสามารถจัดทำข้อตกลงในการพัฒนางาน (PA) ร่วมกับผู้อำนวยการสถานศึกษาต้นสังกัด และบันทึกผลการปฏิบัติงานลงในระบบ DPA เมื่อครบรอบการประเมิน 1 รอบปีงบประมาณ โดยกลุ่มพัฒนาครูและบุคลากรทางการศึกษา สพม.สกลนคร จะจัดคณะกรรมการผู้ทรงคุณวุฒิประเมินผ่านระบบดิจิทัล 100% ตามหลักเกณฑ์ ก.ค.ศ.',
+                'status' => 'active'
+            ),
+            array(
+                'id' => 4,
+                'category' => 'ความโปร่งใส ITA',
+                'q' => 'การแจ้งเรื่องร้องเรียนหรือเบาะแสการทุจริตผ่านศูนย์รับเรื่องร้องเรียน ITA มีมาตรการคุ้มครองข้อมูลอย่างไร?',
+                'a' => 'ระบบรับเรื่องร้องเรียนของ สพม.สกลนคร ทำงานร่วมกับ Telegram Secure Gateway เข้ารหัสข้อมูลแบบ End-to-End ตามมาตรฐาน พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) ผู้ร้องเรียนสามารถเลือก "ไม่ประสงค์ออกนาม" ได้ โดยข้อมูลทั้งหมดจะส่งตรงไปยังนิติกรชำนาญการพิเศษ กลุ่มกฎหมายและคดี โดยไม่เปิดเผยต่อสาธารณะ',
+                'status' => 'active'
+            ),
+            array(
+                'id' => 5,
+                'category' => 'ทั่วไป',
+                'q' => 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ตั้งอยู่ที่ใด และติดต่อสอบถามได้ช่องทางใดบ้าง?',
+                'a' => 'ตั้งอยู่ที่ 271 ถนน ไอ ที ยู ตำบล งิ้วด่อน อำเภอเมืองสกลนคร จังหวัดสกลนคร 47000 (พิกัด GPS: 17.1459, 104.1532) เปิดทำการวันจันทร์ - ศุกร์ เวลา 08.30 - 16.30 น. โทรศัพท์สายตรง: 042-711-456 หรือสายด่วนศูนย์ความปลอดภัย 042-728-195 หรือทางอีเมล saraban0243@moe.go.th',
+                'status' => 'active'
+            )
+        ), JSON_UNESCAPED_UNICODE),
 
         // Tab 10: ความโปร่งใส & ITA (Transparency & OIT)
         'ita_score' => '98.50 คะแนน (ระดับ AA)',
@@ -462,6 +500,58 @@ add_action('rest_api_init', function() {
     ));
 
     // 3.4 GET /wp-json/spm/v1/edu-news (National Education News Aggregator)
+    // REST API: GET /wp-json/spm/v1/faq (Dynamic FAQ Knowledge Base)
+    register_rest_route('spm/v1', '/faq', array(
+        'methods' => 'GET',
+        'callback' => function() {
+            $s = spm_get_settings();
+            $faq_json = $s['faq_items_json'] ?? '';
+            $items = json_decode($faq_json, true);
+            if (!is_array($items) || empty($items)) {
+                $items = json_decode(spm_get_default_settings()['faq_items_json'], true);
+            }
+            $response = new WP_REST_Response($items, 200);
+            $response->header('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+            return $response;
+        },
+        'permission_callback' => '__return_true'
+    ));
+
+    // REST API: POST /wp-json/spm/v1/faq (Admin CRUD via REST)
+    register_rest_route('spm/v1', '/faq', array(
+        'methods' => 'POST',
+        'callback' => function($request) {
+            $params = $request->get_json_params();
+            if (empty($params)) $params = $request->get_params();
+            $action = $params['action'] ?? 'save_all';
+            $s = spm_get_settings();
+            $current_items = json_decode($s['faq_items_json'] ?? '[]', true);
+            if (!is_array($current_items)) $current_items = array();
+
+            if ($action === 'save_all' && isset($params['items']) && is_array($params['items'])) {
+                $current_items = $params['items'];
+            } else if ($action === 'add') {
+                $new_item = array(
+                    'id' => time(),
+                    'category' => sanitize_text_field($params['category'] ?? 'ทั่วไป'),
+                    'q' => sanitize_text_field($params['q'] ?? ''),
+                    'a' => sanitize_textarea_field($params['a'] ?? ''),
+                    'status' => 'active'
+                );
+                $current_items[] = $new_item;
+            } else if ($action === 'delete') {
+                $del_id = $params['id'] ?? null;
+                $current_items = array_values(array_filter($current_items, function($it) use ($del_id) {
+                    return strval($it['id']) !== strval($del_id);
+                }));
+            }
+            $s['faq_items_json'] = wp_json_encode($current_items);
+            update_option('spm_portal_settings', $s);
+            return new WP_REST_Response(array('status' => 'success', 'items' => $current_items), 200);
+        },
+        'permission_callback' => function() { return current_user_can('manage_options'); }
+    ));
+
     register_rest_route('spm/v1', '/edu-news', array(
         'methods'             => 'GET',
         'callback'            => 'spm_get_national_edu_news',
@@ -822,7 +912,34 @@ function spm_render_admin_page() {
         $allowed = array_keys(spm_get_default_settings());
         $new_settings = array();
         foreach ($allowed as $k) {
-            if (in_array($k, array('school_vision', 'director_message', 'ai_welcome_text', 'hero_desc', 'faq1_a', 'faq2_a', 'faq3_a'))) {
+            if ($k === 'faq_items_json') {
+                $raw = isset($_POST['faq_items_json']) ? wp_unslash($_POST['faq_items_json']) : '';
+                $decoded = json_decode($raw, true);
+                if (is_array($decoded)) {
+                    $sanitized = array();
+                    foreach ($decoded as $item) {
+                        if (empty($item['q']) && empty($item['a'])) continue;
+                        $sanitized[] = array(
+                            'id' => isset($item['id']) ? intval($item['id']) : time(),
+                            'category' => isset($item['category']) ? sanitize_text_field($item['category']) : 'ทั่วไป',
+                            'q' => isset($item['q']) ? sanitize_text_field($item['q']) : '',
+                            'a' => isset($item['a']) ? sanitize_textarea_field($item['a']) : '',
+                            'status' => (isset($item['status']) && $item['status'] === 'inactive') ? 'inactive' : 'active'
+                        );
+                    }
+                    $new_settings[$k] = wp_json_encode($sanitized);
+                    // Sync first 3 legacy items
+                    for ($fi = 0; $fi < 3; $fi++) {
+                        $idx = $fi + 1;
+                        if (isset($sanitized[$fi])) {
+                            $new_settings['faq' . $idx . '_q'] = $sanitized[$fi]['q'];
+                            $new_settings['faq' . $idx . '_a'] = $sanitized[$fi]['a'];
+                        }
+                    }
+                } else {
+                    $new_settings[$k] = spm_get_default_settings()['faq_items_json'];
+                }
+            } else if (in_array($k, array('school_vision', 'director_message', 'ai_welcome_text', 'hero_desc', 'faq1_a', 'faq2_a', 'faq3_a', 'flipbook_desc'))) {
                 $new_settings[$k] = isset($_POST[$k]) ? sanitize_textarea_field(wp_unslash($_POST[$k])) : '';
             } else {
                 $new_settings[$k] = isset($_POST[$k]) ? sanitize_text_field(wp_unslash($_POST[$k])) : '';
@@ -1793,33 +1910,63 @@ function spm_render_admin_page() {
                         </div>
                     </div>
 
-                    <!-- TAB 9: คำถามที่พบบ่อย (FAQ) -->
+                    <!-- TAB 9: คำถามที่พบบ่อย (FAQ Knowledge Base CRUD Engine) -->
                     <div id="tab-faq" class="spm-tab-section">
                         <div class="spm-card" style="border-left: 5px solid #ECC86A;">
-                            <h3 class="spm-card-head">❓ คำถามที่พบบ่อยหน้าแรก (FAQ Accordion 3 ข้อ)</h3>
-                            
-                            <!-- FAQ 1 -->
-                            <div style="background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
-                                <label class="spm-label">คำถามข้อที่ 1:</label>
-                                <input type="text" name="faq1_q" value="<?php echo esc_attr($s['faq1_q'] ?? 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?'); ?>" class="spm-input" style="font-weight: 600; margin-bottom: 8px;">
-                                <label class="spm-label">คำตอบข้อที่ 1:</label>
-                                <textarea name="faq1_a" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['faq1_a'] ?? 'สำหรับนักเรียนให้กรอกเลขประจำตัวนักเรียน 5 หลัก หรือเลขประจำตัวประชาชน 13 หลัก ส่วนผู้ปกครองใช้เลขประจำตัวประชาชน 13 หลักพร้อมวันเดือนปีเกิดของนักเรียน (เช่น 31/12/2553) หากเข้าไม่ได้ติดต่อขอปรับรหัสได้ที่นายทะเบียนวัดผล'); ?></textarea>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                                <div>
+                                    <h3 class="spm-card-head" style="margin-bottom: 4px; border-bottom: none; padding-bottom: 0;">
+                                        ❓ ศูนย์บริหารจัดการคำถามที่พบบ่อย (Dynamic FAQ Knowledge Base Engine)
+                                    </h3>
+                                    <p style="font-size: 13.5px; color: #64748B; margin: 0;">
+                                        เพิ่ม ลบ แก้ไข จัดลำดับ และจัดหมวดหมู่คำถาม-คำตอบได้ไม่จำกัดจำนวน พร้อมระบบค้นหาและพรีวิวแบบเรียลไทม์
+                                    </p>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                    <span style="background: rgba(236,200,106,0.15); border: 1px solid rgba(236,200,106,0.4); color: #B45309; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px;">
+                                        📚 ทั้งหมด <span id="adminFaqCount">0</span> ข้อ
+                                    </span>
+                                    <button type="button" onclick="addAdminFaq()" style="background: linear-gradient(135deg, #ECC86A 0%, #D4AF37 100%); color: #060B19; border: none; padding: 10px 20px; border-radius: 10px; font-size: 13.5px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(236,200,106,0.35);">
+                                        <span>➕ เพิ่มคำถามใหม่</span>
+                                    </button>
+                                </div>
                             </div>
 
-                            <!-- FAQ 2 -->
-                            <div style="background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
-                                <label class="spm-label">คำถามข้อที่ 2:</label>
-                                <input type="text" name="faq2_q" value="<?php echo esc_attr($s['faq2_q'] ?? 'การติดต่อขอเอกสาร ปพ.1 และ ปพ.7 ต้องเตรียมอะไรบ้าง?'); ?>" class="spm-input" style="font-weight: 600; margin-bottom: 8px;">
-                                <label class="spm-label">คำตอบข้อที่ 2:</label>
-                                <textarea name="faq2_a" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['faq2_a'] ?? 'เตรียมรูปถ่ายชุดนักเรียนขนาด 1.5 นิ้ว (ถ่ายไม่เกิน 6 เดือน) และบัตรประจำตัวนักเรียนหรือบัตรประชาชน ติดต่อยื่นคำร้องได้ที่ห้องทะเบียน-วัดผล กลุ่มบริหารงานวิชาการ ในวันและเวลาราชการ'); ?></textarea>
+                            <!-- Search & Filter Controls -->
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                    <span style="font-size: 12px; font-weight: 700; color: #475569;">หมวดหมู่:</span>
+                                    <button type="button" class="faq-filter-pill active" onclick="filterAdminFaqCategory('all', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #060B19; color: #FFF; font-size: 12px; font-weight: 600; cursor: pointer;">ทั้งหมด</button>
+                                    <button type="button" class="faq-filter-pill" onclick="filterAdminFaqCategory('บริการ e-Service', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #FFF; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">บริการ e-Service</button>
+                                    <button type="button" class="faq-filter-pill" onclick="filterAdminFaqCategory('นักเรียน & ผู้ปกครอง', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #FFF; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">นักเรียน & ผู้ปกครอง</button>
+                                    <button type="button" class="faq-filter-pill" onclick="filterAdminFaqCategory('ครู & บุคลากร', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #FFF; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">ครู & บุคลากร</button>
+                                    <button type="button" class="faq-filter-pill" onclick="filterAdminFaqCategory('ความโปร่งใส ITA', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #FFF; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">ความโปร่งใส ITA</button>
+                                    <button type="button" class="faq-filter-pill" onclick="filterAdminFaqCategory('ทั่วไป', this)" style="padding: 5px 12px; border-radius: 20px; border: 1px solid #CBD5E1; background: #FFF; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">ทั่วไป</button>
+                                </div>
+                                <div style="flex-grow: 1; max-width: 320px;">
+                                    <input type="text" id="adminFaqSearchInput" oninput="filterAdminFaqSearch(this.value)" placeholder="🔍 ค้นหาคำถาม..." class="spm-input" style="padding: 8px 12px; font-size: 13px;">
+                                </div>
                             </div>
 
-                            <!-- FAQ 3 -->
-                            <div style="background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #E2E8F0;">
-                                <label class="spm-label">คำถามข้อที่ 3:</label>
-                                <input type="text" name="faq3_q" value="<?php echo esc_attr($s['faq3_q'] ?? 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ตั้งอยู่ที่ใดและติดต่อช่องทางไหนได้บ้าง?'); ?>" class="spm-input" style="font-weight: 600; margin-bottom: 8px;">
-                                <label class="spm-label">คำตอบข้อที่ 3:</label>
-                                <textarea name="faq3_a" rows="3" class="spm-input" style="line-height: 1.5;"><?php echo esc_textarea($s['faq3_a'] ?? 'ตั้งอยู่ที่ 271 ถนน ไอ ที ยู ตำบล งิ้วด่อน อำเภอเมืองสกลนคร สกลนคร 47000 โทรศัพท์ 042-711-456 หรือติดต่อทางแฟนเพจ Facebook'); ?></textarea>
+                            <!-- Hidden input holding JSON data for POST save -->
+                            <input type="hidden" name="faq_items_json" id="faqItemsJsonInput" value="<?php echo esc_attr($s['faq_items_json'] ?? ''); ?>">
+
+                            <!-- Container for Dynamic FAQ Items List -->
+                            <div id="adminFaqItemsContainer" style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+                                <!-- Rendered dynamically by JavaScript -->
+                            </div>
+
+                            <!-- Live Accordion Preview Box -->
+                            <div style="background: #060B19; border-radius: 14px; padding: 22px; border: 1px solid rgba(236,200,106,0.3); box-shadow: 0 8px 24px rgba(6,11,25,0.4);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                                    <div style="display: flex; align-items: center; gap: 8px; color: #ECC86A; font-weight: 700; font-size: 14px;">
+                                        <span>👁️ พรีวิวตัวอย่างหน้าเว็บจริง (Live Website Accordion Preview)</span>
+                                    </div>
+                                    <span style="color: #94A3B8; font-size: 11.5px;">คลิกเพื่อทดสอบการเปิด-ปิด Accordion</span>
+                                </div>
+                                <div id="adminFaqLivePreview" style="display: flex; flex-direction: column; gap: 10px;">
+                                    <!-- Rendered dynamically -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3035,6 +3182,296 @@ function spm_render_admin_page() {
             }
         };
         reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // DYNAMIC FAQ KNOWLEDGE BASE CRUD SUITE
+    // =========================================================================
+    var adminFaqData = [];
+    try {
+        var rawFaq = document.getElementById('faqItemsJsonInput') ? document.getElementById('faqItemsJsonInput').value : '';
+        adminFaqData = rawFaq ? JSON.parse(rawFaq) : [];
+        if (!Array.isArray(adminFaqData) || adminFaqData.length === 0) {
+            adminFaqData = [
+                {
+                    id: 1,
+                    category: 'บริการ e-Service',
+                    q: 'การยื่นขอหนังสือรับรองเงินเดือนและสิทธิประโยชน์ข้าราชการครู ผ่านระบบ e-Services ทำอย่างไร?',
+                    a: 'ข้าราชการครูและบุคลากรทางการศึกษาสามารถเข้าสู่ระบบผ่านเมนู DocumentStudio e-Services บนหน้าเว็บไซต์ เลือกหัวข้อ "ขอหนังสือรับรองเงินเดือน" พร้อมแนบสำเนาบัตรประจำตัวประชาชน ระบบจะออกเลขอ้างอิงอิเล็กทรอนิกส์และส่งตรงไปยังกลุ่มบริหารงานการเงินและสินทรัพย์ สพม.สกลนคร ดำเนินการออกหนังสือรับรองพร้อมลายมือชื่อดิจิทัลภายใน 1 วันทำการ',
+                    status: 'active'
+                },
+                {
+                    id: 2,
+                    category: 'นักเรียน & ผู้ปกครอง',
+                    q: 'การติดต่อขอเอกสาร ปพ.1, ปพ.7 และหลักฐานทางการศึกษาผ่านระบบออนไลน์ ต้องเตรียมอะไรบ้าง?',
+                    a: 'เตรียมไฟล์สำเนาบัตรประชาชน/สูติบัตร และรูปถ่ายหน้าตรงชุดนักเรียน (ถ่ายไม่เกิน 6 เดือน) ยื่นคำร้องผ่านระบบออนไลน์ของกลุ่มส่งเสริมการจัดการศึกษา หรือติดต่อด้วยตนเองที่ห้องสารบรรณ สพม.สกลนคร ในวันและเวลาราชการ โดยเอกสารฉบับดิจิทัลสามารถดาวน์โหลดผ่านระบบตรวจสอบคุณวุฒิการศึกษาได้ทันที',
+                    status: 'active'
+                },
+                {
+                    id: 3,
+                    category: 'ครู & บุคลากร',
+                    q: 'การประเมินวิทยฐานะข้าราชการครูและบุคลากรทางการศึกษาตามเกณฑ์ ว.PA ผ่านระบบ DPA มีขั้นตอนอย่างไร?',
+                    a: 'คุณครูสามารถจัดทำข้อตกลงในการพัฒนางาน (PA) ร่วมกับผู้อำนวยการสถานศึกษาต้นสังกัด และบันทึกผลการปฏิบัติงานลงในระบบ DPA เมื่อครบรอบการประเมิน 1 รอบปีงบประมาณ โดยกลุ่มพัฒนาครูและบุคลากรทางการศึกษา สพม.สกลนคร จะจัดคณะกรรมการผู้ทรงคุณวุฒิประเมินผ่านระบบดิจิทัล 100% ตามหลักเกณฑ์ ก.ค.ศ.',
+                    status: 'active'
+                },
+                {
+                    id: 4,
+                    category: 'ความโปร่งใส ITA',
+                    q: 'การแจ้งเรื่องร้องเรียนหรือเบาะแสการทุจริตผ่านศูนย์รับเรื่องร้องเรียน ITA มีมาตรการคุ้มครองข้อมูลอย่างไร?',
+                    a: 'ระบบรับเรื่องร้องเรียนของ สพม.สกลนคร ทำงานร่วมกับ Telegram Secure Gateway เข้ารหัสข้อมูลแบบ End-to-End ตามมาตรฐาน พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) ผู้ร้องเรียนสามารถเลือก "ไม่ประสงค์ออกนาม" ได้ โดยข้อมูลทั้งหมดจะส่งตรงไปยังนิติกรชำนาญการพิเศษ กลุ่มกฎหมายและคดี โดยไม่เปิดเผยต่อสาธารณะ',
+                    status: 'active'
+                },
+                {
+                    id: 5,
+                    category: 'ทั่วไป',
+                    q: 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร ตั้งอยู่ที่ใด และติดต่อสอบถามได้ช่องทางใดบ้าง?',
+                    a: 'ตั้งอยู่ที่ 271 ถนน ไอ ที ยู ตำบล งิ้วด่อน อำเภอเมืองสกลนคร จังหวัดสกลนคร 47000 (พิกัด GPS: 17.1459, 104.1532) เปิดทำการวันจันทร์ - ศุกร์ เวลา 08.30 - 16.30 น. โทรศัพท์สายตรง: 042-711-456 หรือสายด่วนศูนย์ความปลอดภัย 042-728-195 หรือทางอีเมล saraban0243@moe.go.th',
+                    status: 'active'
+                }
+            ];
+        }
+    } catch (e) {
+        console.error('Error parsing FAQ JSON:', e);
+        adminFaqData = [];
+    }
+
+    var currentFaqCategoryFilter = 'all';
+    var currentFaqSearchTerm = '';
+    var expandedFaqId = null;
+
+    function syncFaqHiddenInput() {
+        var hiddenInput = document.getElementById('faqItemsJsonInput');
+        if (hiddenInput) {
+            hiddenInput.value = JSON.stringify(adminFaqData);
+        }
+        var countBadge = document.getElementById('adminFaqCount');
+        if (countBadge) {
+            countBadge.innerText = adminFaqData.length;
+        }
+    }
+
+    function renderAdminFaqList() {
+        var container = document.getElementById('adminFaqItemsContainer');
+        if (!container) return;
+        syncFaqHiddenInput();
+
+        var filtered = adminFaqData.filter(function(item) {
+            var matchCat = (currentFaqCategoryFilter === 'all' || item.category === currentFaqCategoryFilter);
+            var matchSearch = true;
+            if (currentFaqSearchTerm.trim() !== '') {
+                var term = currentFaqSearchTerm.toLowerCase();
+                matchSearch = (item.q && item.q.toLowerCase().indexOf(term) !== -1) ||
+                              (item.a && item.a.toLowerCase().indexOf(term) !== -1) ||
+                              (item.category && item.category.toLowerCase().indexOf(term) !== -1);
+            }
+            return matchCat && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div style="background:#F8FAFC; border:2px dashed #CBD5E1; border-radius:12px; padding:32px; text-align:center; color:#64748B;">' +
+                '<div style="font-size:32px; margin-bottom:8px;">🔍</div>' +
+                '<div style="font-weight:700; font-size:15px; color:#1E293B;">ไม่พบรายการคำถามในหมวดหมู่นี้</div>' +
+                '<div style="font-size:13px; margin-top:4px;">คลิกปุ่ม "➕ เพิ่มคำถามใหม่" ด้านบนเพื่อเพิ่มคำถาม-คำตอบ</div>' +
+                '</div>';
+            renderAdminFaqPreview();
+            return;
+        }
+
+        var html = '';
+        filtered.forEach(function(item, idx) {
+            var isExpanded = (expandedFaqId === item.id);
+            var isInactive = (item.status === 'inactive');
+            var catColors = {
+                'บริการ e-Service': { bg: '#EFF6FF', text: '#1D4ED8', border: '#BFDBFE' },
+                'นักเรียน & ผู้ปกครอง': { bg: '#FDF4FF', text: '#A21CAF', border: '#F5D0FE' },
+                'ครู & บุคลากร': { bg: '#F0FDF4', text: '#15803D', border: '#BBF7D0' },
+                'ความโปร่งใส ITA': { bg: '#FEF3C7', text: '#B45309', border: '#FDE68A' },
+                'ทั่วไป': { bg: '#F1F5F9', text: '#475569', border: '#CBD5E1' }
+            };
+            var cStyle = catColors[item.category] || catColors['ทั่วไป'];
+
+            html += '<div style="background:#FFFFFF; border:1px solid ' + (isExpanded ? '#ECC86A' : '#E2E8F0') + '; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.03); transition:all 0.2s;' + (isInactive ? 'opacity:0.65;' : '') + '">';
+            
+            // Header bar
+            html += '<div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; background:' + (isExpanded ? '#FFFBEB' : '#FFFFFF') + '; cursor:pointer;" onclick="toggleAdminFaqExpand(' + item.id + ')">';
+            
+            html += '<div style="display:flex; align-items:center; gap:10px; flex-grow:1; min-width:0;">';
+            html += '<span style="font-size:12px; font-weight:800; background:#060B19; color:#ECC86A; padding:3px 8px; border-radius:6px; flex-shrink:0;">#' + (idx + 1) + '</span>';
+            html += '<span style="font-size:11.5px; font-weight:700; background:' + cStyle.bg + '; color:' + cStyle.text + '; border:1px solid ' + cStyle.border + '; padding:3px 10px; border-radius:20px; flex-shrink:0;">' + (item.category || 'ทั่วไป') + '</span>';
+            html += '<div style="font-size:14px; font-weight:700; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + (item.q || '(ยังไม่มีหัวข้อคำถาม)') + '</div>';
+            if (isInactive) {
+                html += '<span style="font-size:11px; background:#FEE2E2; color:#B91C1C; padding:2px 8px; border-radius:12px; font-weight:700; flex-shrink:0;">⚪ ซ่อน</span>';
+            }
+            html += '</div>';
+
+            // Controls
+            html += '<div style="display:flex; align-items:center; gap:6px; flex-shrink:0;" onclick="event.stopPropagation()">';
+            html += '<button type="button" onclick="moveAdminFaq(' + item.id + ', -1)" title="เลื่อนขึ้น" style="border:1px solid #CBD5E1; background:#FFF; border-radius:6px; padding:4px 8px; font-size:12px; cursor:pointer;">▲</button>';
+            html += '<button type="button" onclick="moveAdminFaq(' + item.id + ', 1)" title="เลื่อนลง" style="border:1px solid #CBD5E1; background:#FFF; border-radius:6px; padding:4px 8px; font-size:12px; cursor:pointer;">▼</button>';
+            html += '<button type="button" onclick="toggleAdminFaqExpand(' + item.id + ')" style="border:1px solid ' + (isExpanded ? '#ECC86A' : '#CBD5E1') + '; background:' + (isExpanded ? '#ECC86A' : '#FFF') + '; color:' + (isExpanded ? '#060B19' : '#0F172A') + '; border-radius:6px; padding:4px 10px; font-size:12px; font-weight:700; cursor:pointer;">' + (isExpanded ? 'ย่อ' : '✏️ แก้ไข') + '</button>';
+            html += '<button type="button" onclick="deleteAdminFaq(' + item.id + ')" title="ลบคำถามนี้" style="border:1px solid #FCA5A5; background:#FFF; color:#DC2626; border-radius:6px; padding:4px 8px; font-size:12px; cursor:pointer;">🗑️</button>';
+            html += '</div>';
+
+            html += '</div>';
+
+            // Expandable Edit Area
+            if (isExpanded) {
+                html += '<div style="padding:18px 20px; background:#F8FAFC; border-top:1px solid #E2E8F0;">';
+                
+                html += '<div class="sps-grid-2" style="margin-bottom:12px;">';
+                html += '<div>';
+                html += '<label class="spm-label">หมวดหมู่คำถาม:</label>';
+                html += '<select onchange="updateFaqField(' + item.id + ', \'category\', this.value)" class="spm-input" style="background:#FFF;">';
+                ['บริการ e-Service', 'นักเรียน & ผู้ปกครอง', 'ครู & บุคลากร', 'ความโปร่งใส ITA', 'ทั่วไป'].forEach(function(cat) {
+                    html += '<option value="' + cat + '" ' + (item.category === cat ? 'selected' : '') + '>' + cat + '</option>';
+                });
+                html += '</select>';
+                html += '</div>';
+
+                html += '<div>';
+                html += '<label class="spm-label">สถานะการแสดงผล:</label>';
+                html += '<select onchange="updateFaqField(' + item.id + ', \'status\', this.value)" class="spm-input" style="background:#FFF;">';
+                html += '<option value="active" ' + (item.status !== 'inactive' ? 'selected' : '') + '>🟢 แสดงผลบนหน้าเว็บไซต์</option>';
+                html += '<option value="inactive" ' + (item.status === 'inactive' ? 'selected' : '') + '>⚪ ซ่อนชั่วคราว (ไม่แสดงผล)</option>';
+                html += '</select>';
+                html += '</div>';
+                html += '</div>';
+
+                html += '<div style="margin-bottom:12px;">';
+                html += '<label class="spm-label">หัวข้อคำถาม (Question):</label>';
+                html += '<input type="text" value="' + (item.q ? item.q.replace(/"/g, '&quot;') : '') + '" oninput="updateFaqField(' + item.id + ', \'q\', this.value)" class="spm-input" style="font-weight:700; background:#FFF;">';
+                html += '</div>';
+
+                html += '<div style="margin-bottom:12px;">';
+                html += '<label class="spm-label">คำตอบฉบับสมบูรณ์ (Answer):</label>';
+                html += '<textarea rows="3" oninput="updateFaqField(' + item.id + ', \'a\', this.value)" class="spm-input" style="line-height:1.6; background:#FFF;">' + (item.a ? item.a : '') + '</textarea>';
+                html += '</div>';
+
+                html += '<div style="display:flex; justify-content:flex-end; gap:8px;">';
+                html += '<button type="button" onclick="toggleAdminFaqExpand(' + item.id + ')" style="background:#060B19; color:#ECC86A; border:1px solid #ECC86A; padding:6px 16px; border-radius:6px; font-size:12.5px; font-weight:700; cursor:pointer;">✓ ปิดการแก้ไข</button>';
+                html += '</div>';
+
+                html += '</div>';
+            }
+
+            html += '</div>';
+        });
+
+        container.innerHTML = html;
+        renderAdminFaqPreview();
+    }
+
+    function toggleAdminFaqExpand(id) {
+        expandedFaqId = (expandedFaqId === id) ? null : id;
+        renderAdminFaqList();
+    }
+
+    function updateFaqField(id, field, value) {
+        var item = adminFaqData.find(function(it) { return it.id === id; });
+        if (item) {
+            item[field] = value;
+            syncFaqHiddenInput();
+            renderAdminFaqPreview();
+        }
+    }
+
+    function addAdminFaq() {
+        var newId = Date.now();
+        var newItem = {
+            id: newId,
+            category: (currentFaqCategoryFilter !== 'all' ? currentFaqCategoryFilter : 'ทั่วไป'),
+            q: 'คำถามข้อใหม่ (กรุณาแก้ไข)',
+            a: 'รายละเอียดคำตอบ...',
+            status: 'active'
+        };
+        adminFaqData.unshift(newItem);
+        expandedFaqId = newId;
+        renderAdminFaqList();
+        var container = document.getElementById('adminFaqItemsContainer');
+        if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function deleteAdminFaq(id) {
+        if (!confirm('ยืนยันที่จะลบคำถามข้อนี้ใช่หรือไม่?')) return;
+        adminFaqData = adminFaqData.filter(function(it) { return it.id !== id; });
+        if (expandedFaqId === id) expandedFaqId = null;
+        renderAdminFaqList();
+    }
+
+    function moveAdminFaq(id, direction) {
+        var idx = adminFaqData.findIndex(function(it) { return it.id === id; });
+        if (idx === -1) return;
+        var newIdx = idx + direction;
+        if (newIdx < 0 || newIdx >= adminFaqData.length) return;
+        var temp = adminFaqData[idx];
+        adminFaqData[idx] = adminFaqData[newIdx];
+        adminFaqData[newIdx] = temp;
+        renderAdminFaqList();
+    }
+
+    function filterAdminFaqCategory(cat, btn) {
+        currentFaqCategoryFilter = cat;
+        document.querySelectorAll('.faq-filter-pill').forEach(function(b) {
+            b.classList.remove('active');
+            b.style.background = '#FFF';
+            b.style.color = '#475569';
+        });
+        if (btn) {
+            btn.classList.add('active');
+            btn.style.background = '#060B19';
+            btn.style.color = '#FFF';
+        }
+        renderAdminFaqList();
+    }
+
+    function filterAdminFaqSearch(term) {
+        currentFaqSearchTerm = term;
+        renderAdminFaqList();
+    }
+
+    var previewOpenFaqId = null;
+    function renderAdminFaqPreview() {
+        var box = document.getElementById('adminFaqLivePreview');
+        if (!box) return;
+        var activeItems = adminFaqData.filter(function(it) { return it.status !== 'inactive'; });
+        if (activeItems.length === 0) {
+            box.innerHTML = '<div style="color:#94A3B8; font-size:13px; text-align:center; padding:12px;">ไม่มีคำถามที่เปิดแสดงผล</div>';
+            return;
+        }
+
+        var html = '';
+        activeItems.forEach(function(item) {
+            var isOpen = (previewOpenFaqId === item.id);
+            html += '<div style="background:rgba(255,255,255,0.06); border:1px solid ' + (isOpen ? 'rgba(236,200,106,0.6)' : 'rgba(255,255,255,0.1)') + '; border-radius:10px; overflow:hidden;">';
+            
+            html += '<div onclick="toggleAdminFaqPreview(' + item.id + ')" style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; color:#FFFFFF;">';
+            html += '<div style="display:flex; align-items:center; gap:10px;">';
+            html += '<span style="font-size:11px; background:rgba(236,200,106,0.2); color:#ECC86A; padding:2px 8px; border-radius:12px; font-weight:700;">' + (item.category || 'ทั่วไป') + '</span>';
+            html += '<span style="font-size:13.5px; font-weight:700; color:' + (isOpen ? '#ECC86A' : '#FFF') + ';">' + item.q + '</span>';
+            html += '</div>';
+            html += '<span style="font-size:12px; color:#ECC86A; transform:rotate(' + (isOpen ? '180deg' : '0deg') + '); transition:transform 0.2s;">▼</span>';
+            html += '</div>';
+
+            if (isOpen) {
+                html += '<div style="padding:12px 16px; background:rgba(0,0,0,0.3); border-top:1px solid rgba(255,255,255,0.08); font-size:13px; color:#E2E8F0; line-height:1.6;">';
+                html += item.a.replace(/\n/g, '<br>');
+                html += '</div>';
+            }
+
+            html += '</div>';
+        });
+        box.innerHTML = html;
+    }
+
+    function toggleAdminFaqPreview(id) {
+        previewOpenFaqId = (previewOpenFaqId === id) ? null : id;
+        renderAdminFaqPreview();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderAdminFaqList);
+    } else {
+        renderAdminFaqList();
     }
 
     function loadSampleBlueprint(type) {
