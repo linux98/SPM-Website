@@ -17674,9 +17674,7 @@
       if (window.location.protocol === 'file:') return;
       const cacheBust = Date.now();
       const baseRoutes = [
-        '/site/index.php?rest_route=/spm/v1',
-        '/site/index.php/wp-json/spm/v1',
-        '/site/?rest_route=/spm/v1'
+        '/site/index.php?rest_route=/spm/v1'
       ];
 
       for (const base of baseRoutes) {
@@ -17759,9 +17757,7 @@
       // 2. Fetch fresh settings from REST API with cache-buster
       const cacheBust = Date.now();
       const endpoints = [
-        `/site/index.php/wp-json/spm/v1/settings?_t=${cacheBust}`,
-        `/site/index.php?rest_route=/spm/v1/settings&_t=${cacheBust}`,
-        `/site/?rest_route=/spm/v1/settings&_t=${cacheBust}`
+        `/site/index.php?rest_route=/spm/v1/settings&_t=${cacheBust}`
       ];
 
       for (const ep of endpoints) {
@@ -17818,7 +17814,7 @@
 
       try {
 
-        const res = await fetch(`/site/index.php/wp-json/wp/v2/posts?_embed&per_page=6${catParam}`);
+        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts?_embed&per_page=6${catParam}`);
 
         if (!res.ok) throw new Error("API not available");
 
@@ -18210,7 +18206,7 @@
 
       try {
 
-        const res = await fetch(`/site/index.php/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}&_embed&per_page=5`);
+        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts?search=${encodeURIComponent(query)}&_embed&per_page=5`);
 
         if (!res.ok) throw new Error("Search failed");
 
@@ -19768,7 +19764,7 @@
       let ticketData = null;
       if (window.location.protocol !== 'file:') {
         try {
-          const res = await fetch('/site/index.php/wp-json/spm/v1/track', {
+          const res = await fetch('/site/index.php?rest_route=/spm/v1/track', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ tracking_code: code, last4_id_card: '' })
@@ -21102,6 +21098,7 @@
         // Render All School Markers
 
         renderSchoolPins('all');
+        enhanceMapDigitalTwin();
 
 
 
@@ -22769,7 +22766,24 @@
       }
     }
 
-    // --- FEATURE 1: 3D DIGITAL TWIN & PULSE LINES ENHANCEMENT IN LEAFLET ---
+        // --- FEATURE 1: 3D DIGITAL TWIN & PULSE LINES ENHANCEMENT IN LEAFLET ---
+    window.focusOnSesaoHq = function() {
+      if (typeof playSpsHapticSound === 'function') {
+        playSpsHapticSound('click');
+      }
+      if (typeof sakonMap !== 'undefined' && sakonMap) {
+        const sesaoHq = [17.1565, 104.1350];
+        sakonMap.flyTo(sesaoHq, 15, { duration: 1.5 });
+        if (window.sesaoHqMarker) {
+          setTimeout(() => {
+            try { window.sesaoHqMarker.openPopup(); } catch(e){}
+          }, 1600);
+        }
+      } else {
+        console.warn("Map not ready yet");
+      }
+    };
+
     function enhanceMapDigitalTwin() {
       if (typeof L === 'undefined' || !sakonMap) return;
 
@@ -22785,6 +22799,7 @@
       });
 
       const hqMarker = L.marker(sesaoHq, { icon: hqIcon, zIndexOffset: 1000 }).addTo(sakonMap);
+      window.sesaoHqMarker = hqMarker;
       hqMarker.bindPopup(`
         <div style="font-family:'K2D',sans-serif; text-align:center; padding:4px;">
           <span style="font-size:11px; font-weight:800; color:#ECC86A; background:#060B19; padding:2px 8px; border-radius:6px;">CENTRAL COMMAND HQ</span>
