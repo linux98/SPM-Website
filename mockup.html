@@ -9670,56 +9670,279 @@
   color: #060B19;
 }
 
-/* --- 4. Live Bloomberg Education Ticker --- */
-.war-room-ticker-bar {
-  background: linear-gradient(90deg, #060B19 0%, #0F172A 50%, #060B19 100%);
-  border: 1px solid rgba(236, 200, 106, 0.35);
-  border-radius: 14px;
-  padding: 10px 18px;
-  margin-bottom: 24px;
+/* =========================================================================
+   FEATURE 4: EXECUTIVE LIVE WAR ROOM (PREMIUM LUXURY GRID & REAL-TIME STREAM)
+   ========================================================================= */
+.war-room-executive-hub {
+  background: linear-gradient(145deg, #060B19 0%, #0B162C 60%, #070E1F 100%);
+  border: 1.5px solid rgba(236, 200, 106, 0.45);
+  border-radius: 20px;
+  padding: 22px 26px;
+  margin-bottom: 26px;
+  box-shadow: 0 16px 40px rgba(6, 11, 25, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.war-room-executive-hub::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; width: 320px; height: 100%;
+  background: radial-gradient(circle at top right, rgba(236, 200, 106, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.wr-header-row {
   display: flex;
   align-items: center;
-  gap: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(6, 11, 25, 0.4);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 18px;
 }
-.ticker-badge-live {
-  background: #10B981;
+
+.wr-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wr-live-badge {
+  background: #DC2626;
   color: #FFFFFF;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
   letter-spacing: 0.8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.6);
+  animation: liveBadgeGlow 2s infinite alternate;
+}
+
+.wr-live-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  animation: hqRadarPing 1.4s infinite;
+}
+
+@keyframes liveBadgeGlow {
+  0% { box-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
+  100% { box-shadow: 0 0 18px rgba(239, 68, 68, 0.85); }
+}
+
+.wr-title-wrap h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wr-title-wrap p {
+  font-size: 11.5px;
+  color: #94A3B8;
+  margin: 3px 0 0 0;
+}
+
+.wr-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+}
+
+.wr-chip-status {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34D399;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wr-chip-time {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #E2E8F0;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 6-Column Precision Metric Grid */
+.wr-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1200px) {
+  .wr-metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .wr-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.wr-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wr-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(236, 200, 106, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.wr-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.wr-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
   flex-shrink: 0;
+}
+
+.wr-icon-gold { background: rgba(236, 200, 106, 0.16); color: #ECC86A; border: 1px solid rgba(236, 200, 106, 0.35); }
+.wr-icon-blue { background: rgba(56, 189, 248, 0.16); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.35); }
+.wr-icon-cyan { background: rgba(45, 212, 191, 0.16); color: #2DD4BF; border: 1px solid rgba(45, 212, 191, 0.35); }
+.wr-icon-green { background: rgba(52, 211, 153, 0.16); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.35); }
+.wr-icon-teal { background: rgba(20, 184, 166, 0.16); color: #2DD4BF; border: 1px solid rgba(20, 184, 166, 0.35); }
+.wr-icon-amber { background: rgba(251, 191, 36, 0.16); color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.35); }
+
+.wr-card-label {
+  font-size: 11.5px;
+  color: #94A3B8;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wr-card-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  font-family: 'K2D', sans-serif;
+  margin-bottom: 8px;
+}
+
+.wr-card-value small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94A3B8;
+  margin-left: 2px;
+}
+
+.wr-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+}
+
+.wr-pill.success { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.25); }
+.wr-pill.info { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.25); }
+.wr-pill.gold { background: rgba(236, 200, 106, 0.2); color: #ECC86A; border: 1px solid rgba(236, 200, 106, 0.35); }
+
+/* Sub-stream Tape below grid */
+.wr-stream-tape {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  font-size: 12px;
+  color: #CBD5E1;
+}
+
+.wr-stream-tag {
+  background: rgba(236, 200, 106, 0.18);
+  color: #ECC86A;
+  border: 1px solid rgba(236, 200, 106, 0.4);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  letter-spacing: 0.6px;
   display: inline-flex;
   align-items: center;
   gap: 5px;
 }
-.ticker-scroll-content {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+
+.wr-stream-marquee {
+  overflow: hidden;
   white-space: nowrap;
-  animation: tickerSlideAnim 35s linear infinite;
-  font-size: 13px;
-  color: #E2E8F0;
+  flex: 1;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
 }
-.ticker-scroll-content:hover {
-  animation-play-state: paused;
-}
-@keyframes tickerSlideAnim {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ticker-item {
+
+.wr-stream-track {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 32px;
+  animation: wrStreamSlide 40s linear infinite;
 }
-.ticker-item strong {
-  color: #ECC86A;
-  font-weight: 800;
+
+.wr-stream-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes wrStreamSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* --- 5. QR Camera Viewfinder & Holographic Gold Seal --- */
@@ -11491,20 +11714,114 @@
         <!-- Toolbar -->
 
         
-      <!-- Feature 4: Executive War Room Live Bloomberg Ticker -->
-      <div class="war-room-ticker-bar">
-        <div class="ticker-badge-live">
-          <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#FFF; animation:hqRadarPing 1.5s infinite;"></span>
-          LIVE WAR ROOM
+      <!-- Feature 4: Executive War Room (Precision Aligned Grid & Live Stream) -->
+      <div class="war-room-executive-hub">
+        <!-- Header Row -->
+        <div class="wr-header-row">
+          <div class="wr-header-left">
+            <div class="wr-live-badge">
+              <span class="wr-live-pulse-dot"></span>
+              LIVE WAR ROOM
+            </div>
+            <div class="wr-title-wrap">
+              <h3><i class="fa-solid fa-satellite-dish" style="color:#ECC86A;"></i> ศูนย์บัญชาการข้อมูลสารสนเทศการศึกษาเชิงยุทธศาสตร์</h3>
+              <p>Strategic Executive War Room &amp; Real-time Educational Pulse &bull; สพม.สกลนคร</p>
+            </div>
+          </div>
+          <div class="wr-header-right">
+            <span class="wr-chip-status"><i class="fa-solid fa-circle-check"></i> DMC &bull; EMIS &bull; 45 รร. ออนไลน์</span>
+            <span class="wr-chip-time"><i class="fa-regular fa-clock"></i> <span id="wrLiveTime">10:48:00</span> น.</span>
+          </div>
         </div>
-        <div class="ticker-track">
-          <div class="ticker-item"><span>🏫 โรงเรียนในสังกัด:</span> <strong>45 แห่ง</strong> <span class="trend-up">▲ 100% Active</span></div>
-          <div class="ticker-item"><span>👨‍🎓 นักเรียนทั้งหมด:</span> <strong>31,420 คน</strong> <span class="trend-up">▲ +2.4%</span></div>
-          <div class="ticker-item"><span>👩‍🏫 ข้าราชการครู:</span> <strong>2,185 คน</strong> <span class="trend-up">▲ ครบ 100%</span></div>
-          <div class="ticker-item"><span>🏆 อัตราจบการศึกษา ม.6:</span> <strong>99.4%</strong> <span class="trend-up">▲ สูงสุดในเขต</span></div>
-          <div class="ticker-item"><span>⚡ ระบบ e-Service ให้บริการ:</span> <strong>99.98% Uptime</strong> <span class="trend-up">● ปกติ</span></div>
-          <div class="ticker-item"><span>🍃 ดัชนีคุณภาพอากาศเขต:</span> <strong>AQI 28 (อากาศดีเยี่ยม)</strong> <span class="trend-up">● ปลอดภัย</span></div>
-          <div class="ticker-item"><span>🛡️ Safety Center 24h:</span> <strong>0 เหตุรุนแรงคงค้าง</strong> <span class="trend-up">● ปลอดภัย 100%</span></div>
+
+        <!-- 6-Column Precision Metric Cards -->
+        <div class="wr-metrics-grid">
+          <!-- Col 1: โรงเรียนในสังกัด -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">โรงเรียนในสังกัด</span>
+              <div class="wr-icon-box wr-icon-gold"><i class="fa-solid fa-school"></i></div>
+            </div>
+            <div class="wr-card-value">45 <small>แห่ง</small></div>
+            <div class="wr-pill success"><i class="fa-solid fa-circle-check"></i> 100% Active</div>
+          </div>
+
+          <!-- Col 2: ข้าราชการครู -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">ข้าราชการครู</span>
+              <div class="wr-icon-box wr-icon-blue"><i class="fa-solid fa-chalkboard-user"></i></div>
+            </div>
+            <div class="wr-card-value">2,185 <small>คน</small></div>
+            <div class="wr-pill info"><i class="fa-solid fa-user-check"></i> อัตรากำลังครบ</div>
+          </div>
+
+          <!-- Col 3: นักเรียนรวม (DMC) -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">นักเรียนรวม (DMC)</span>
+              <div class="wr-icon-box wr-icon-cyan"><i class="fa-solid fa-user-graduate"></i></div>
+            </div>
+            <div class="wr-card-value">31,420 <small>คน</small></div>
+            <div class="wr-pill success"><i class="fa-solid fa-arrow-trend-up"></i> +2.4% เพิ่มขึ้น</div>
+          </div>
+
+          <!-- Col 4: อัตราสำเร็จการศึกษา ม.6 -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">จบการศึกษา ม.6</span>
+              <div class="wr-icon-box wr-icon-amber"><i class="fa-solid fa-award"></i></div>
+            </div>
+            <div class="wr-card-value">99.4%</div>
+            <div class="wr-pill gold"><i class="fa-solid fa-trophy"></i> สูงสุดในเขต</div>
+          </div>
+
+          <!-- Col 5: e-Service Uptime -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">บริการ e-Service</span>
+              <div class="wr-icon-box wr-icon-green"><i class="fa-solid fa-bolt"></i></div>
+            </div>
+            <div class="wr-card-value">99.98%</div>
+            <div class="wr-pill success"><i class="fa-solid fa-shield-halved"></i> พร้อมบริการ 24h</div>
+          </div>
+
+          <!-- Col 6: Safety & Eco-Sensor -->
+          <div class="wr-card">
+            <div class="wr-card-top">
+              <span class="wr-card-label">Safety &amp; คุณภาพอากาศ</span>
+              <div class="wr-icon-box wr-icon-teal"><i class="fa-solid fa-leaf"></i></div>
+            </div>
+            <div class="wr-card-value">AQI 28 <small>ดีเยี่ยม</small></div>
+            <div class="wr-pill success"><i class="fa-solid fa-circle-check"></i> 0 เหตุคงค้าง</div>
+          </div>
+        </div>
+
+        <!-- Real-Time Stream Tape -->
+        <div class="wr-stream-tape">
+          <div class="wr-stream-tag"><i class="fa-solid fa-satellite"></i> LIVE PULSE</div>
+          <div class="wr-stream-marquee">
+            <div class="wr-stream-track">
+              <span>🏫 สพม.สกลนคร ครอบคลุม 8 สหวิทยาเขต 45 สถานศึกษา เชื่อมโยงระบบฐานข้อมูลกลางระดับประเทศ</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>👨‍🎓 อัตราการคงอยู่ของนักเรียนระดับมัธยมศึกษา 99.85% สถิติสูงสุดของกลุ่มภาคตะวันออกเฉียงเหนือ</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>👩‍🏫 บุคลากรครูผ่านการรับรองวิทยฐานะดิจิทัล DPA ครบ 100% ตามเกณฑ์ ก.ค.ศ.</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>🛡️ ศูนย์เฝ้าระวังความปลอดภัยสถานศึกษา (SESAO Safety Center) สแตนด์บายประสานงาน 24 ชม. ปลอดภัย 100%</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>⚡ สถิติคำขอบริการอิเล็กทรอนิกส์ e-Service เฉลี่ยระยะเวลาอนุมัติเอกสารรวดเร็วภายใน 24 ชม.</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>🍃 ดัชนีคุณภาพอากาศและสิ่งแวดล้อมเพื่อสุขภาพการเรียนรู้ PM2.5 เฉลี่ยทั้งเขตอยู่ในเกณฑ์คุณภาพดีเยี่ยม (18 µg/m³)</span>
+              <!-- Repeat for seamless looping -->
+              <span style="opacity:0.4;">&bull;</span>
+              <span>🏫 สพม.สกลนคร ครอบคลุม 8 สหวิทยาเขต 45 สถานศึกษา เชื่อมโยงระบบฐานข้อมูลกลางระดับประเทศ</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>👨‍🎓 อัตราการคงอยู่ของนักเรียนระดับมัธยมศึกษา 99.85% สถิติสูงสุดของกลุ่มภาคตะวันออกเฉียงเหนือ</span>
+              <span style="opacity:0.4;">&bull;</span>
+              <span>👩‍🏫 บุคลากรครูผ่านการรับรองวิทยฐานะดิจิทัล DPA ครบ 100% ตามเกณฑ์ ก.ค.ศ.</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -21114,6 +21431,18 @@
 
         renderSchoolPins('all');
         enhanceMapDigitalTwin();
+        
+    // Feature 4: War Room Real-Time Clock
+    function updateWarRoomClock() {
+      const el = document.getElementById('wrLiveTime');
+      if (el) {
+        const now = new Date();
+        el.innerText = now.toLocaleTimeString('th-TH', { hour12: false });
+      }
+    }
+    setInterval(updateWarRoomClock, 1000);
+    updateWarRoomClock();
+
 
 
 
