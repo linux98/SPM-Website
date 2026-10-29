@@ -42,6 +42,21 @@
   <script src="assets/vendor/leaflet/leaflet.js"></script>
 
   <script>
+    // Immediate Favicon injection to document.head to prevent browser 404
+    (function() {
+      const iconUrl = 'https://cdn.jsdelivr.net/gh/linux98/SPM-Website@main/assets/kram/logo-spm.png';
+      ['shortcut icon', 'icon', 'apple-touch-icon'].forEach(rel => {
+        let el = document.querySelector(`link[rel="${rel}"]`);
+        if (!el) {
+          el = document.createElement('link');
+          el.rel = rel;
+          el.type = 'image/png';
+          if (document.head) document.head.appendChild(el);
+        }
+        el.href = iconUrl;
+      });
+    })();
+
 
     if (typeof L === 'undefined') {
 
