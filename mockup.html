@@ -17680,7 +17680,7 @@
       for (const base of baseRoutes) {
         try {
           // 1. Hydrate Circulars & Gazette
-          const circRes = await fetch(`${base}/circulars?_t=${cacheBust}`);
+          const circRes = await fetch(`${base}/circulars&_t=${cacheBust}`);
           if (circRes.ok) {
             const data = await circRes.json();
             if (Array.isArray(data) && data.length > 0) {
@@ -17692,7 +17692,7 @@
           }
 
           // 2. Hydrate Calendar Events
-          const calRes = await fetch(`${base}/calendar?_t=${cacheBust}`);
+          const calRes = await fetch(`${base}/calendar&_t=${cacheBust}`);
           if (calRes.ok) {
             const calData = await calRes.json();
             if (Array.isArray(calData) && calData.length > 0) {
@@ -17704,7 +17704,7 @@
           }
 
           // 3. Hydrate Downloads
-          const dlRes = await fetch(`${base}/downloads?_t=${cacheBust}`);
+          const dlRes = await fetch(`${base}/downloads&_t=${cacheBust}`);
           if (dlRes.ok) {
             const dlData = await dlRes.json();
             if (Array.isArray(dlData) && dlData.length > 0) {
@@ -17716,7 +17716,7 @@
           }
 
           // 4. Hydrate OER Hub (คลังสื่อนวัตกรรมครู)
-          const oerRes = await fetch(`${base}/oer?_t=${cacheBust}`);
+          const oerRes = await fetch(`${base}/oer&_t=${cacheBust}`);
           if (oerRes.ok) {
             const oerItems = await oerRes.json();
             if (Array.isArray(oerItems) && oerItems.length > 0) {
@@ -17728,7 +17728,7 @@
           }
 
           // 5. Hydrate Schools Directory
-          const schRes = await fetch(`${base}/schools?_t=${cacheBust}`);
+          const schRes = await fetch(`${base}/schools&_t=${cacheBust}`);
           if (schRes.ok) {
             const schItems = await schRes.json();
             if (Array.isArray(schItems) && schItems.length > 0) {
@@ -17814,7 +17814,7 @@
 
       try {
 
-        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts?_embed&per_page=6${catParam}`);
+        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts&_embed&per_page=6${catParam}`);
 
         if (!res.ok) throw new Error("API not available");
 
@@ -18206,7 +18206,7 @@
 
       try {
 
-        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts?search=${encodeURIComponent(query)}&_embed&per_page=5`);
+        const res = await fetch(`/site/index.php?rest_route=/wp/v2/posts&search=${encodeURIComponent(query)}&_embed&per_page=5`);
 
         if (!res.ok) throw new Error("Search failed");
 
