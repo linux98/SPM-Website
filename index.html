@@ -10295,6 +10295,148 @@
       box-shadow: 0 3px 12px rgba(236, 200, 106, 0.35);
     }
     
+    
+    /* --- Phase 4: Interactive War Room Drill-Down & Inspector Styles --- */
+    .wr-card {
+      cursor: pointer !important;
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      position: relative !important;
+    }
+    .wr-card:hover {
+      transform: translateY(-4px) scale(1.02) !important;
+      box-shadow: 0 12px 28px rgba(6, 11, 25, 0.5) !important;
+      border-color: rgba(236, 200, 106, 0.7) !important;
+    }
+    .wr-card::after {
+      content: 'เจาะลึก ↗';
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      font-size: 10px;
+      color: #ECC86A;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-weight: 700;
+      background: rgba(6, 11, 25, 0.7);
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(236, 200, 106, 0.3);
+    }
+    .wr-card:hover::after {
+      opacity: 1;
+    }
+    .wr-drilldown-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 11, 25, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .wr-drilldown-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .wr-drilldown-content {
+      background: linear-gradient(180deg, #0B132B 0%, #060B19 100%);
+      border: 1px solid rgba(236, 200, 106, 0.45);
+      border-radius: 18px;
+      max-width: 780px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(236, 200, 106, 0.15);
+      position: relative;
+    }
+    .wr-drill-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .wr-drill-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .wr-drill-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50% !important;
+      aspect-ratio: 1/1 !important;
+      padding: 0 !important;
+      background: rgba(236, 200, 106, 0.15);
+      border: 1px solid #ECC86A;
+      color: #ECC86A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .wr-drill-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ECC86A;
+      margin: 0;
+    }
+    .wr-drill-subtitle {
+      font-size: 12px;
+      color: #94A3B8;
+      margin: 2px 0 0 0;
+    }
+    .wr-drill-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #CBD5E1;
+      width: 32px;
+      height: 32px;
+      border-radius: 50% !important;
+      aspect-ratio: 1/1 !important;
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .wr-drill-close:hover {
+      background: #EF4444;
+      border-color: #EF4444;
+      color: #FFF;
+    }
+    /* ITA Inspector Mode Badge */
+    .ita-inspector-toggle-btn {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+    .ita-inspector-toggle-btn:hover {
+      background: #10B981;
+      color: #060B19;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+    }
+    
     /* --- World-Class Persona Quick Deck (LifeSG Action Deck) --- */
     .persona-quick-deck-wrap {
       background: rgba(6, 11, 25, 0.96);
@@ -12249,7 +12391,7 @@
         <!-- 6-Column Precision Metric Cards -->
         <div class="wr-metrics-grid">
           <!-- Col 1: โรงเรียนในสังกัด -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(1)" title="คลิกเพื่อเจาะลึกข้อมูล 45 สถานศึกษา">
             <div class="wr-card-top">
               <span class="wr-card-label">โรงเรียนในสังกัด</span>
               <div class="wr-icon-box wr-icon-gold"><i class="fa-solid fa-school"></i></div>
@@ -12259,7 +12401,7 @@
           </div>
 
           <!-- Col 2: ข้าราชการครู -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(2)" title="คลิกเพื่อเจาะลึกข้อมูลข้าราชการครูและวิทยฐานะ">
             <div class="wr-card-top">
               <span class="wr-card-label">ข้าราชการครู</span>
               <div class="wr-icon-box wr-icon-blue"><i class="fa-solid fa-chalkboard-user"></i></div>
@@ -12269,7 +12411,7 @@
           </div>
 
           <!-- Col 3: นักเรียนรวม (DMC) -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(3)" title="คลิกเพื่อเจาะลึกข้อมูลนักเรียน DMC แยกชั้น">
             <div class="wr-card-top">
               <span class="wr-card-label">นักเรียนรวม (DMC)</span>
               <div class="wr-icon-box wr-icon-cyan"><i class="fa-solid fa-user-graduate"></i></div>
@@ -12279,7 +12421,7 @@
           </div>
 
           <!-- Col 4: อัตราสำเร็จการศึกษา ม.6 -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(4)" title="คลิกเพื่อเจาะลึกสถิติศึกษาต่อระดับอุดมศึกษา">
             <div class="wr-card-top">
               <span class="wr-card-label">จบการศึกษา ม.6</span>
               <div class="wr-icon-box wr-icon-amber"><i class="fa-solid fa-award"></i></div>
@@ -12289,7 +12431,7 @@
           </div>
 
           <!-- Col 5: e-Service Uptime -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(5)" title="คลิกเพื่อเจาะลึกสถิติคำร้องดิจิทัลและ Uptime">
             <div class="wr-card-top">
               <span class="wr-card-label">บริการ e-Service</span>
               <div class="wr-icon-box wr-icon-green"><i class="fa-solid fa-bolt"></i></div>
@@ -12299,7 +12441,7 @@
           </div>
 
           <!-- Col 6: Safety & Eco-Sensor -->
-          <div class="wr-card">
+          <div class="wr-card" onclick="openWarRoomDrillDown(6)" title="คลิกเพื่อเจาะลึกสถานีตรวจวัด AQI และความปลอดภัย 1579">
             <div class="wr-card-top">
               <span class="wr-card-label">Safety &amp; คุณภาพอากาศ</span>
               <div class="wr-icon-box wr-icon-teal"><i class="fa-solid fa-leaf"></i></div>
@@ -12563,6 +12705,27 @@
 
   </section>
 
+
+
+  
+  <!-- PHASE 4: WAR ROOM STRATEGIC DRILL-DOWN MODAL -->
+  <div class="wr-drilldown-modal" id="wrDrillModal" onclick="closeWarRoomDrillDown(event)">
+    <div class="wr-drilldown-content" onclick="event.stopPropagation()">
+      <div class="wr-drill-header">
+        <div class="wr-drill-title-wrap">
+          <div class="wr-drill-icon" id="wrDrillIcon"><i class="fa-solid fa-chart-pie"></i></div>
+          <div>
+            <h3 class="wr-drill-title" id="wrDrillTitle">ศูนย์ข้อมูลเชิงลึก War Room</h3>
+            <p class="wr-drill-subtitle" id="wrDrillSubtitle">สพม.สกลนคร Strategic Decision Ledger</p>
+          </div>
+        </div>
+        <button type="button" class="wr-drill-close" onclick="closeWarRoomDrillDown()" title="ปิดหน้าต่าง"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="wrDrillBody">
+        <!-- Rendered dynamically by openWarRoomDrillDown() -->
+      </div>
+    </div>
+  </div>
 
 
   <!-- ========================================================================
@@ -13206,6 +13369,9 @@
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
 
           <div class="oit-category-tabs">
+            <button type="button" class="ita-inspector-toggle-btn" onclick="toggleOitInspectorMode()" id="oitInspectorBtn" title="สลับสู่โหมดผู้ตรวจราชการ ป.ป.ช. เพื่อตรวจสอบเอกสารหลักฐานทันที">
+              <i class="fa-solid fa-user-shield"></i> <span>โหมดผู้ตรวจราชการ (ป.ป.ช.)</span>
+            </button>
 
             <button class="oit-tab-btn active" onclick="filterOit('all', this)">ทั้งหมด (43 ข้อ)</button>
 
@@ -22750,6 +22916,323 @@
 
       if (typeof showTelegramToast === 'function') {
         showTelegramToast('เปิดศูนย์บริการด่วน', data.title);
+      }
+    };
+
+
+    // =========================================================================
+    // PHASE 4: WAR ROOM DRILL-DOWN & ITA INSPECTOR ENGINE
+    // =========================================================================
+    window.warRoomDrillData = {
+      1: {
+        title: '🏫 สถานะ 45 โรงเรียนมัธยมศึกษาในสังกัด (100% Active)',
+        subtitle: 'จำแนกตาม 6 สหวิทยาเขต • สพม.สกลนคร ประจำปีการศึกษา 2569',
+        icon: 'fa-school',
+        html: `
+          <div style="display:flex; gap:8px; margin-bottom:16px; overflow-x:auto; padding-bottom:6px;">
+            <button class="spm-filter-btn active" onclick="filterDrillConsortium('all', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:#ECC86A; color:#060B19; font-weight:700; border:none; cursor:pointer;">ทั้งหมด (45 รร.)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c1', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">เมืองสกลนคร (9)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c2', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">สว่างแดนดิน (8)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c3', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">วานรนิวาส (8)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c4', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">พังโคน (7)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c5', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">กุสุมาลย์-โพนนาแก้ว (7)</button>
+            <button class="spm-filter-btn" onclick="filterDrillConsortium('c6', this)" style="padding:4px 10px; font-size:11.5px; border-radius:14px; background:rgba(255,255,255,0.08); color:#CBD5E1; border:1px solid rgba(255,255,255,0.12); cursor:pointer;">ภูพาน-เต่างอย (6)</button>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px; max-height:420px; overflow-y:auto; padding-right:4px;">
+            <div class="drill-school-card" data-c="c1" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนสกลราชวิทยานุกูล</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.เมืองสกลนคร • สหวิทยาเขตเมือง</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">3,850 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c1" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนธาตุนารายณ์วิทยา</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.เมืองสกลนคร • สหวิทยาเขตเมือง</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">2,920 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c2" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนสว่างแดนดิน</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.สว่างแดนดิน • สหวิทยาเขตสว่างแดนดิน</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">2,840 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c3" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนวานรนิวาส</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.วานรนิวาส • สหวิทยาเขตวานรนิวาส</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">2,650 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c4" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนพังโคนวิทยาคม</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.พังโคน • สหวิทยาเขตพังโคน</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">2,410 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c5" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนกุสุมาลย์วิทยาคม</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.กุสุมาลย์ • สหวิทยาเขตกุสุมาลย์</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">1,350 คน</span>
+              </div>
+            </div>
+            <div class="drill-school-card" data-c="c6" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px;">
+              <div style="font-size:12.5px; font-weight:700; color:#FFF;">โรงเรียนภูพานวิทยายน</div>
+              <div style="font-size:11px; color:#94A3B8; margin-top:2px;">อ.ภูพาน • สหวิทยาเขตภูพาน</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:10px; color:#10B981; font-weight:700;">● 100% Active</span>
+                <span style="font-size:10.5px; color:#ECC86A;">980 คน</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:14px;">
+            <button onclick="closeWarRoomDrillDown(); document.getElementById('schools').scrollIntoView({behavior:'smooth'});" style="background:linear-gradient(135deg,#ECC86A,#D4AF37); color:#060B19; font-weight:800; border:none; padding:8px 18px; border-radius:20px; font-size:12px; cursor:pointer;">
+              ดูทำเนียบ 45 โรงเรียนฉบับเต็ม พร้อมระบบค้นหา ↗
+            </button>
+          </div>
+        `
+      },
+      2: {
+        title: '👩‍🏫 สถิติข้าราชการครู 2,185 คน & วิทยฐานะ ก.ค.ศ.',
+        subtitle: 'อัตรากำลังครูและบุคลากรทางการศึกษาจำแนกตามกลุ่มสาระ • สพม.สกลนคร',
+        icon: 'fa-chalkboard-user',
+        html: `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#ECC86A; margin-bottom:10px;"><i class="fa-solid fa-medal"></i> จำแนกตามวิทยฐานะ</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ครูเชี่ยวชาญ (คศ.4)</span><b style="color:#FFF;">42 ท่าน (1.9%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ครูชำนาญการพิเศษ (คศ.3)</span><b style="color:#ECC86A;">1,120 ท่าน (51.3%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ครูชำนาญการ (คศ.2)</span><b style="color:#FFF;">645 ท่าน (29.5%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ครู (คศ.1) & ครูผู้ช่วย</span><b style="color:#FFF;">378 ท่าน (17.3%)</b></div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#38BDF8; margin-bottom:10px;"><i class="fa-solid fa-book"></i> สัดส่วนกลุ่มสาระหลัก</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">วิทยาศาสตร์ & เทคโนโลยี</span><b style="color:#FFF;">438 คน (20.0%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">คณิตศาสตร์</span><b style="color:#FFF;">345 คน (15.8%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ภาษาไทย</span><b style="color:#FFF;">312 คน (14.3%)</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#CBD5E1;">ภาษาต่างประเทศ</span><b style="color:#FFF;">298 คน (13.6%)</b></div>
+              </div>
+            </div>
+          </div>
+          <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:12px; display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:12px; color:#A7F3D0;"><i class="fa-solid fa-circle-check"></i> อัตรากำลังครูประจำการครบถ้วน 100% ตามเกณฑ์ ก.ค.ศ.</span>
+            <span style="font-size:11px; background:#10B981; color:#060B19; font-weight:800; padding:3px 10px; border-radius:12px;">Active Standard</span>
+          </div>
+        `
+      },
+      3: {
+        title: '👨‍🎓 ฐานข้อมูลนักเรียน DMC 31,420 คน (▲ +2.4%)',
+        subtitle: 'รายงานสถิติจำนวนนักเรียนในสังกัด 45 สถานศึกษา • ภาคเรียนที่ 1/2569',
+        icon: 'fa-user-graduate',
+        html: `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#38BDF8; margin-bottom:10px;">มัธยมศึกษาตอนต้น (16,850 คน)</div>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 1</span><b style="color:#FFF;">5,680 คน</b></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 2</span><b style="color:#FFF;">5,610 คน</b></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 3</span><b style="color:#FFF;">5,560 คน</b></div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#ECC86A; margin-bottom:10px;">มัธยมศึกษาตอนปลาย (14,570 คน)</div>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 4</span><b style="color:#FFF;">4,920 คน</b></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 5</span><b style="color:#FFF;">4,860 คน</b></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#CBD5E1;">ชั้นมัธยมศึกษาปีที่ 6</span><b style="color:#FFF;">4,790 คน</b></div>
+              </div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:#CBD5E1; margin-bottom:6px;">สัดส่วนแผนการเรียน ม.ปลาย:</div>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:11.5px;">
+              <span style="color:#ECC86A;">● วิทย์-คณิต (54.2%)</span>
+              <span style="color:#38BDF8;">● ศิลป์-คำนวณ (22.5%)</span>
+              <span style="color:#34D399;">● ศิลป์-ภาษา (15.1%)</span>
+              <span style="color:#F472B6;">● ทวิศึกษาอาชีวะ (8.2%)</span>
+            </div>
+          </div>
+        `
+      },
+      4: {
+        title: '🏆 อัตราสำเร็จการศึกษา ม.6 99.4% (สูงสุดในเขต)',
+        subtitle: 'สถิติการศึกษาต่อระดับอุดมศึกษาและการประกอบอาชีพ • นักเรียน ม.6 สพม.สกลนคร',
+        icon: 'fa-award',
+        html: `
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:16px;">
+            <div style="background:rgba(236,200,106,0.1); border:1px solid #ECC86A; border-radius:10px; padding:14px; text-align:center;">
+              <div style="font-size:24px; font-weight:900; color:#ECC86A;">84.6%</div>
+              <div style="font-size:11.5px; color:#CBD5E1; margin-top:4px;">มหาวิทยาลัยชั้นนำ (TCAS)</div>
+            </div>
+            <div style="background:rgba(56,189,248,0.1); border:1px solid #38BDF8; border-radius:10px; padding:14px; text-align:center;">
+              <div style="font-size:24px; font-weight:900; color:#38BDF8;">12.2%</div>
+              <div style="font-size:11.5px; color:#CBD5E1; margin-top:4px;">สถาบันอาชีวศึกษา / ปวส.</div>
+            </div>
+            <div style="background:rgba(16,185,129,0.1); border:1px solid #10B981; border-radius:10px; padding:14px; text-align:center;">
+              <div style="font-size:24px; font-weight:900; color:#10B981;">3.2%</div>
+              <div style="font-size:11.5px; color:#CBD5E1; margin-top:4px;">เตรียมทหาร / สายวิชาชีพ</div>
+            </div>
+          </div>
+          <p style="font-size:12px; color:#94A3B8; line-height:1.6; margin:0;">
+            ✨ นักเรียน สพม.สกลนคร ได้รับการคัดเลือกเข้าศึกษาต่อในมหาวิทยาลัยชั้นนำแห่งประเทศไทย (มข., จุฬาฯ, มก., มมส., มช.) รวมกว่า 4,050 คน สะท้อนมาตรฐานความเป็นเลิศทางวิชาการ
+          </p>
+        `
+      },
+      5: {
+        title: '⚡ ดัชนีบริการ e-Service Uptime 99.98% (24 Hours Ready)',
+        subtitle: 'สถิติการให้บริการดิจิทัลประชาชนและข้าราชการครู • สพม.สกลนคร Data Studio',
+        icon: 'fa-bolt',
+        html: `
+          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:13px; font-weight:700; color:#FFF;">คำขอหนังสือรับรองเงินเดือน & ประวัติ ก.พ.7</div>
+                <div style="font-size:11px; color:#94A3B8;">ยื่นผ่านระบบ e-Service ดิจิทัล</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:14px; font-weight:800; color:#10B981;">1,420 รายการ</div>
+                <div style="font-size:10px; color:#ECC86A;">เสร็จสิ้น 100% ภายใน 24h</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:13px; font-weight:700; color:#FFF;">คำขอใบ ปพ.1 / ปพ.7 และตรวจสอบวุฒิออนไลน์</div>
+                <div style="font-size:11px; color:#94A3B8;">สำหรับนักเรียน ศิษย์เก่า และสถานประกอบการ</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:14px; font-weight:800; color:#38BDF8;">3,890 รายการ</div>
+                <div style="font-size:10px; color:#10B981;">ความพึงพอใจ 98.7%</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:13px; font-weight:700; color:#FFF;">ระบบสารบรรณอิเล็กทรอนิกส์ (e-Saraban)</div>
+                <div style="font-size:11px; color:#94A3B8;">ส่งตรง 45 สถานศึกษาและหน่วยงานภายนอก</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:14px; font-weight:800; color:#ECC86A;">18,450 ฉบับ</div>
+                <div style="font-size:10px; color:#34D399;">กระดาษลดลง 82%</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      6: {
+        title: '🍃 Safety & คุณภาพอากาศ AQI 28 (0 เหตุคงค้าง)',
+        subtitle: 'ศูนย์รายงานความปลอดภัยสถานศึกษา MOE Safety Center 1579 & Eco-Sensor',
+        icon: 'fa-leaf',
+        html: `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+            <div style="background:rgba(16,185,129,0.1); border:1px solid #10B981; border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#34D399; margin-bottom:6px;"><i class="fa-solid fa-shield-halved"></i> MOE Safety Center 1579</div>
+              <div style="font-size:24px; font-weight:900; color:#FFF; margin-bottom:4px;">0 <span style="font-size:13px; font-weight:500; color:#A7F3D0;">เหตุคงค้าง</span></div>
+              <div style="font-size:11.5px; color:#CBD5E1;">เรื่องรับแจ้งสะสม: 14 เรื่อง • จัดการแก้ไขเสร็จสิ้น: 14 เรื่อง (100%)</div>
+            </div>
+            <div style="background:rgba(56,189,248,0.1); border:1px solid #38BDF8; border-radius:10px; padding:14px;">
+              <div style="font-size:13px; font-weight:800; color:#38BDF8; margin-bottom:6px;"><i class="fa-solid fa-wind"></i> ดัชนีคุณภาพอากาศ (AQI)</div>
+              <div style="font-size:24px; font-weight:900; color:#FFF; margin-bottom:4px;">AQI 28 <span style="font-size:13px; font-weight:500; color:#38BDF8;">(ดีเยี่ยม)</span></div>
+              <div style="font-size:11.5px; color:#CBD5E1;">PM2.5: 7.2 &mu;g/m&sup3; • อากาศบริสุทธิ์ ปลอดภัยต่อการจัดกิจกรรมกลางแจ้ง</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; font-size:11.5px; color:#94A3B8;">
+            📡 เชื่อมโยงข้อมูลเครือข่ายเซนเซอร์สิ่งแวดล้อม Solar Rooftop สพม.สกลนคร และสถานีอุตุนิยมวิทยาสกลนครแบบเรียลไทม์
+          </div>
+        `
+      }
+    };
+
+    window.openWarRoomDrillDown = function(colIndex) {
+      const data = window.warRoomDrillData[colIndex];
+      if (!data) return;
+
+      const modal = document.getElementById('wrDrillModal');
+      const title = document.getElementById('wrDrillTitle');
+      const subtitle = document.getElementById('wrDrillSubtitle');
+      const icon = document.getElementById('wrDrillIcon');
+      const body = document.getElementById('wrDrillBody');
+
+      if (title) title.innerText = data.title;
+      if (subtitle) subtitle.innerText = data.subtitle;
+      if (icon) icon.innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+      if (body) body.innerHTML = data.html;
+
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    };
+
+    window.closeWarRoomDrillDown = function(e) {
+      if (e && e.target && e.target.closest && e.target.closest('.wr-drilldown-content') && !e.target.closest('.wr-drill-close')) {
+        return;
+      }
+      const modal = document.getElementById('wrDrillModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    };
+
+    window.filterDrillConsortium = function(cKey, btn) {
+      document.querySelectorAll('.spm-filter-btn').forEach(b => {
+        b.style.background = 'rgba(255,255,255,0.08)';
+        b.style.color = '#CBD5E1';
+        b.style.border = '1px solid rgba(255,255,255,0.12)';
+        b.style.fontWeight = '500';
+      });
+      if (btn) {
+        btn.style.background = '#ECC86A';
+        btn.style.color = '#060B19';
+        btn.style.border = 'none';
+        btn.style.fontWeight = '700';
+      }
+
+      document.querySelectorAll('.drill-school-card').forEach(card => {
+        if (cKey === 'all' || card.getAttribute('data-c') === cKey) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    };
+
+    // --- ITA 1-CLICK INSPECTOR MODE ---
+    window.isOitInspectorMode = false;
+    window.toggleOitInspectorMode = function() {
+      window.isOitInspectorMode = !window.isOitInspectorMode;
+      const btn = document.getElementById('oitInspectorBtn');
+      if (btn) {
+        if (window.isOitInspectorMode) {
+          btn.style.background = '#10B981';
+          btn.style.color = '#060B19';
+          btn.innerHTML = '<i class="fa-solid fa-check-double"></i> <span>โหมดผู้ตรวจราชการ: เปิดใช้งาน (43/43 พร้อมตรวจ)</span>';
+          if (typeof showTelegramToast === 'function') {
+            showTelegramToast('เปิดโหมดผู้ตรวจราชการ ป.ป.ช.', 'ไฮไลต์ตัวชี้วัด OIT ทั้ง 43 ข้อ พร้อมปุ่มเปิดหลักฐาน 1 คลิก');
+          }
+        } else {
+          btn.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08))';
+          btn.style.color = '#34D399';
+          btn.innerHTML = '<i class="fa-solid fa-user-shield"></i> <span>โหมดผู้ตรวจราชการ (ป.ป.ช.)</span>';
+        }
+      }
+
+      // Re-filter to show all items with verified badge
+      if (typeof renderOitCards === 'function' && typeof oitData !== 'undefined') {
+        renderOitCards(oitData);
       }
     };
 
