@@ -10294,6 +10294,156 @@
       border-color: #ECC86A;
       box-shadow: 0 3px 12px rgba(236, 200, 106, 0.35);
     }
+    
+    /* --- World-Class Persona Quick Deck (LifeSG Action Deck) --- */
+    .persona-quick-deck-wrap {
+      background: rgba(6, 11, 25, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid rgba(236, 200, 106, 0.35);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+    .persona-deck-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 12px;
+    }
+    .persona-deck-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ECC86A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+    }
+    .btn-deck-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94A3B8;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-deck-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #EF4444;
+      color: #FCA5A5;
+    }
+    .persona-deck-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      padding-bottom: 14px;
+    }
+    .persona-deck-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 10px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none !important;
+      position: relative;
+    }
+    .persona-deck-card:hover {
+      background: rgba(236, 200, 106, 0.12);
+      border-color: #ECC86A;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(236, 200, 106, 0.2);
+    }
+    .persona-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50% !important;
+      aspect-ratio: 1/1 !important;
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      background: rgba(236, 200, 106, 0.15);
+      color: #ECC86A;
+      border: 1px solid rgba(236, 200, 106, 0.3);
+      flex-shrink: 0;
+    }
+    .persona-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+    .persona-card-desc {
+      font-size: 10px;
+      color: #94A3B8;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    /* PWA Install Button & Pulse */
+    .btn-pwa-install {
+      background: linear-gradient(135deg, rgba(236, 200, 106, 0.18) 0%, rgba(212, 175, 55, 0.1) 100%);
+      border: 1px solid rgba(236, 200, 106, 0.45);
+      color: #ECC86A;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .btn-pwa-install:hover {
+      background: #ECC86A;
+      color: #060B19;
+      box-shadow: 0 0 16px rgba(236, 200, 106, 0.4);
+    }
+    .pwa-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50% !important;
+      aspect-ratio: 1/1 !important;
+      padding: 0 !important;
+      background: #10B981;
+      display: inline-block;
+      animation: pwaPulse 1.8s infinite;
+    }
+    @keyframes pwaPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    @media (max-width: 1024px) {
+      .persona-deck-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .persona-deck-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .persona-deck-card { padding: 10px 8px; }
+      .persona-card-title { font-size: 11px; }
+      .btn-pwa-install span { display: none; }
+    }
+    
     .btn-persona-pill.active i {
       color: #060B19;
     }
@@ -10809,9 +10959,31 @@
         <button type="button" class="btn-persona-pill" data-persona="exec" onclick="switchUserPersona('exec', this)" role="tab" aria-selected="false">
           <i class="fa-solid fa-chart-line"></i> <span>ผู้บริหาร & สถิติ</span>
         </button>
+        <button type="button" class="btn-pwa-install" id="btnPwaInstall" onclick="triggerPwaInstallModal()" title="ติดตั้งแอปพลิเคชัน สพม.สกลนคร บนอุปกรณ์">
+          <i class="fa-solid fa-mobile-screen-button"></i> <span>ติดตั้งแอป สพม.</span>
+          <span class="pwa-pulse-dot"></span>
+        </button>
       </div>
     </div>
   </div>
+
+  <!-- WORLD-CLASS LIFESG INTERACTIVE PERSONA ACTION DECK -->
+  <div class="persona-quick-deck-wrap" id="personaQuickDeck" style="display: none; max-height: 0; opacity: 0;">
+    <div class="container">
+      <div class="persona-deck-header">
+        <div class="persona-deck-title" id="personaDeckTitle">
+          <i class="fa-solid fa-bolt"></i> <span>ศูนย์บริการด่วนอัจฉริยะ</span>
+        </div>
+        <button type="button" class="btn-deck-close" onclick="switchUserPersona('all', document.querySelector('.btn-persona-pill[data-persona=\'all\']'))">
+          <i class="fa-solid fa-xmark"></i> พอร์ทัลรวม
+        </button>
+      </div>
+      <div class="persona-deck-grid" id="personaDeckGrid">
+        <!-- Rendered dynamically by switchUserPersona() -->
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -15596,6 +15768,10 @@
           <i class="fa-solid fa-video"></i> เปิด/สลับกล้องจริง
         </button>
         <button type="button" onclick="closeQrCameraScannerModal()" class="btn-sso-portal" style="background:var(--bg-canvas); color:var(--text-main); font-size:12px; padding:8px 18px;">ปิดหน้าต่าง</button>
+        <button type="button" class="btn-pwa-install" id="btnPwaInstall" onclick="triggerPwaInstallModal()" title="ติดตั้งแอปพลิเคชัน สพม.สกลนคร บนอุปกรณ์">
+          <i class="fa-solid fa-mobile-screen-button"></i> <span>ติดตั้งแอป สพม.</span>
+          <span class="pwa-pulse-dot"></span>
+        </button>
       </div>
     </div>
   </div>
@@ -15889,6 +16065,10 @@
         <button onclick="closeSmartRequestModal(); openEservicePortal('', 'ศูนย์รวมระบบบริการอิเล็กทรอนิกส์ (DocumantStudio Service Hub)', 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร', 1);" 
                 class="btn-hero-primary" style="width: 100%; justify-content: center; font-size: 14px; padding: 12px 20px;">
           <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดศูนย์บริการ e-Services แบบเต็มรูปแบบ (20 บริการดิจิทัล)
+        </button>
+        <button type="button" class="btn-pwa-install" id="btnPwaInstall" onclick="triggerPwaInstallModal()" title="ติดตั้งแอปพลิเคชัน สพม.สกลนคร บนอุปกรณ์">
+          <i class="fa-solid fa-mobile-screen-button"></i> <span>ติดตั้งแอป สพม.</span>
+          <span class="pwa-pulse-dot"></span>
         </button>
       </div>
     </div>
@@ -22474,6 +22654,46 @@
     // =========================================================================
     // PERSONA WORKSPACE LOGIC (LifeSG GovTech Pattern)
     // =========================================================================
+    
+    // =========================================================================
+    // WORLD-CLASS PERSONA WORKSPACE & LIFESG ACTION DECK ENGINE
+    // =========================================================================
+    window.personaDeckData = {
+      'teacher': {
+        title: '👩‍🏫 ศูนย์ปฏิบัติการด่วน: คุณครู & บุคลากรทางการศึกษา',
+        cards: [
+          { icon: 'fa-graduation-cap', title: 'ระบบ DPA / ว.PA', desc: 'บันทึกข้อตกลงพัฒนางานและประเมินวิทยฐานะ', action: "if(typeof calculateDpa==='function'){document.getElementById('dpa-calculator').scrollIntoView({behavior:'smooth'});}else{window.open('https://dpa-sso.otepc.go.th/','_blank');}" },
+          { icon: 'fa-file-invoice-dollar', title: 'สลิปเงินเดือน e-Slip', desc: 'ดาวน์โหลดสลิปเงินเดือนออนไลน์ตลอด 24 ชม.', action: "if(typeof openServiceModal==='function'){openServiceModal('salary');}else{alert('เข้าสู่ระบบสลิปเงินเดือน สพม.สกลนคร');}" },
+          { icon: 'fa-certificate', title: 'ขอหนังสือรับรอง', desc: 'ยื่นคำขอรับรองเงินเดือนและหนังสือผ่านสิทธิ', action: "document.getElementById('services').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-building-columns', title: 'สหกรณ์ออมทรัพย์ครู', desc: 'ตรวจสอบหุ้น สวัสดิการ และเงินกู้ ช.พ.ค.', action: "window.open('https://www.snk-coop.com/','_blank');" },
+          { icon: 'fa-book-open-reader', title: 'คลังสื่อ & แผนการสอน', desc: 'ดาวน์โหลดสื่อนวัตกรรม OBEC และสื่อ OER', action: "document.getElementById('oer-hub').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-id-card-clip', title: 'ประวัติราชการ ก.พ.7', desc: 'ตรวจสอบประวัติรับราชการและวันลา', action: "document.getElementById('services').scrollIntoView({behavior:'smooth'});" }
+        ]
+      },
+      'student': {
+        title: '👨‍🎓 ศูนย์บริการด่วน: นักเรียน & ผู้ปกครอง',
+        cards: [
+          { icon: 'fa-file-lines', title: 'ขอใบ ปพ.1 / ปพ.7', desc: 'ยื่นคำขอระเบียนแสดงผลการเรียนออนไลน์', action: "document.getElementById('stakeholders').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-stamp', title: 'ตรวจสอบวุฒิการศึกษา', desc: 'ยืนยันและตรวจสอบวุฒิ ม.3 และ ม.6 ดิจิทัล', action: "document.getElementById('stakeholders').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-school-flag', title: 'รับสมัครเรียน ม.1 & ม.4', desc: 'ระบบรับสมัครและประกาศผลสอบ สพฐ.', action: "document.getElementById('stakeholders').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-hand-holding-dollar', title: 'ทุนการศึกษา & กยศ.', desc: 'ยื่นกู้ยืมและตรวจสอบสถานะทุน กสศ.', action: "window.open('https://www.studentloan.or.th/','_blank');" },
+          { icon: 'fa-shield-halved', title: 'MOE Safety 1579', desc: 'ศูนย์แจ้งเหตุด่วนภัยโรงเรียนตลอด 24 ชม.', action: "window.open('tel:1579');" },
+          { icon: 'fa-map-location-dot', title: '45 โรงเรียนมัธยมสังกัด', desc: 'ค้นหาพิกัดและข้อมูลติดต่อโรงเรียน', action: "document.getElementById('schools').scrollIntoView({behavior:'smooth'});" }
+        ]
+      },
+      'exec': {
+        title: '👔 ศูนย์บัญชาการข้อมูล: ผู้บริหาร & สถิติ War Room',
+        cards: [
+          { icon: 'fa-gauge-high', title: 'Live War Room Cockpit', desc: 'ศูนย์ควบคุมสถานการณ์และข้อมูล 6 เสาหลัก', action: "document.getElementById('cockpit').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-school', title: '45 โรงเรียน 100% Active', desc: 'ความพร้อมเปิดสอนและสถานะสถานศึกษา', action: "document.getElementById('cockpit').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-users', title: 'สถิตินักเรียน DMC 31,420', desc: 'รายงานจำนวนนักเรียนและขนาดโรงเรียน', action: "document.getElementById('cockpit').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-bolt', title: 'e-Service 99.98%', desc: 'ดัชนีบริการดิจิทัลและความพร้อม 24 ชม.', action: "document.getElementById('cockpit').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-wind', title: 'Safety & คุณภาพอากาศ AQI', desc: 'ดัชนีมลพิษและสิ่งแวดล้อมโรงเรียน', action: "document.getElementById('cockpit').scrollIntoView({behavior:'smooth'});" },
+          { icon: 'fa-envelopes-bulk', title: 'ติดตามหนังสือ e-Saraban', desc: 'ติดตามหนังสือราชการเร่งด่วนและคำสั่งเขต', action: "document.getElementById('gazette').scrollIntoView({behavior:'smooth'});" }
+        ]
+      }
+    };
+
     window.switchUserPersona = function(persona, btn) {
       window.currentActivePersona = persona;
       try {
@@ -22489,33 +22709,123 @@
         btn.setAttribute('aria-selected', 'true');
       }
 
-      const personaTargets = {
-        'all': null,
-        'teacher': { targetId: 'services', filterKey: 'teacher', name: 'คุณครู & บุคลากร (ว.PA, สลิปเงินเดือน, DPA)' },
-        'student': { targetId: 'stakeholders', filterKey: 'student', name: 'นักเรียน & ผู้ปกครอง (ขอ ปพ.1, ตรวจสอบวุฒิ)' },
-        'exec': { targetId: 'cockpit', filterKey: 'exec', name: 'ผู้บริหาร & สถิติ War Room' }
-      };
+      const deck = document.getElementById('personaQuickDeck');
+      const titleEl = document.getElementById('personaDeckTitle');
+      const gridEl = document.getElementById('personaDeckGrid');
 
-      const target = personaTargets[persona];
-      if (!target) {
-        if (typeof showTelegramToast === 'function') {
+      if (!persona || persona === 'all' || !window.personaDeckData[persona]) {
+        // Collapse Quick Deck
+        if (deck) {
+          deck.style.maxHeight = '0px';
+          deck.style.opacity = '0';
+          setTimeout(() => { deck.style.display = 'none'; }, 300);
+        }
+        if (typeof showTelegramToast === 'function' && persona === 'all') {
           showTelegramToast('โหมดพอร์ทัลรวม', 'แสดงผลครบทุกหมวดหมู่บริการ สพม.สกลนคร');
         }
         return;
       }
 
-      const el = document.getElementById(target.targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        el.style.transition = 'box-shadow 0.6s ease';
-        el.style.boxShadow = '0 0 35px rgba(236, 200, 106, 0.45)';
-        setTimeout(() => { el.style.boxShadow = ''; }, 2000);
+      // Render LifeSG Deck
+      const data = window.personaDeckData[persona];
+      if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-bolt" style="color:#ECC86A;"></i> <span>${data.title}</span>`;
+      if (gridEl) {
+        gridEl.innerHTML = data.cards.map(c => `
+          <div class="persona-deck-card" onclick="${c.action}" role="button" tabindex="0">
+            <div class="persona-card-icon"><i class="fa-solid ${c.icon}"></i></div>
+            <div class="persona-card-title">${c.title}</div>
+            <div class="persona-card-desc">${c.desc}</div>
+          </div>
+        `).join('');
+      }
+
+      // Expand Quick Deck smoothly
+      if (deck) {
+        deck.style.display = 'block';
+        requestAnimationFrame(() => {
+          deck.style.maxHeight = '320px';
+          deck.style.opacity = '1';
+        });
       }
 
       if (typeof showTelegramToast === 'function') {
-        showTelegramToast('สลับโหมดสำเร็จ', `เปิดใช้งานมุมมอง: ${target.name}`);
+        showTelegramToast('เปิดศูนย์บริการด่วน', data.title);
       }
     };
+
+    // --- PWA INSTALLATION PROMPT & GUIDANCE ENGINE ---
+    let deferredPwaPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      const btn = document.getElementById('btnPwaInstall');
+      if (btn) btn.style.display = 'inline-flex';
+    });
+
+    window.triggerPwaInstallModal = function() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        deferredPwaPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            if (typeof showTelegramToast === 'function') {
+              showTelegramToast('ติดตั้งสำเร็จ', 'แอป สพม.สกลนคร ถูกติดตั้งลงในอุปกรณ์เรียบร้อยแล้ว');
+            }
+          }
+          deferredPwaPrompt = null;
+        });
+        return;
+      }
+
+      // Check iOS vs Android vs Desktop
+      const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      let modalContent = '';
+      if (isIos) {
+        modalContent = `
+          <div style="text-align: center; padding: 10px 0;">
+            <div style="font-size: 38px; margin-bottom: 12px; color: #ECC86A;"><i class="fa-brands fa-apple"></i></div>
+            <h3 style="color: #ECC86A; margin-bottom: 8px; font-size: 18px;">วิธีติดตั้งบน iPhone / iPad</h3>
+            <p style="color: #CBD5E1; font-size: 13px; line-height: 1.6; margin-bottom: 16px;">
+              เปิดเว็บไซต์นี้ในเบราว์เซอร์ <b>Safari</b><br>
+              1. กดปุ่มแชร์ <b>[ <i class="fa-solid fa-arrow-up-from-bracket"></i> ]</b> ด้านล่างหน้าจอ<br>
+              2. เลื่อนลงแล้วเลือก <b>"เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)"</b><br>
+              3. กด <b>"เพิ่ม (Add)"</b> มุมขวาบน
+            </p>
+            <div style="background: rgba(236,200,106,0.1); border: 1px solid #ECC86A; border-radius: 8px; padding: 10px; color: #ECC86A; font-size: 12px;">
+              🏛️ เมื่อติดตั้งแล้ว จะสามารถเปิดใช้งานเสมือนแอปพลิเคชันเต็มจอได้ทันที
+            </div>
+          </div>
+        `;
+      } else {
+        modalContent = `
+          <div style="text-align: center; padding: 10px 0;">
+            <div style="font-size: 38px; margin-bottom: 12px; color: #10B981;"><i class="fa-brands fa-android"></i></div>
+            <h3 style="color: #ECC86A; margin-bottom: 8px; font-size: 18px;">วิธีติดตั้งบน Android / Chrome</h3>
+            <p style="color: #CBD5E1; font-size: 13px; line-height: 1.6; margin-bottom: 16px;">
+              1. แตะที่เมนูจุดสามจุด <b>[ ⋮ ]</b> ที่มุมบนขวาของ Chrome<br>
+              2. เลือก <b>"ติดตั้งแอป (Install App)"</b> หรือ <b>"เพิ่มลงในหน้าจอหลัก"</b><br>
+              3. กดยืนยัน <b>"ติดตั้ง"</b>
+            </p>
+            <div style="background: rgba(16,185,129,0.1); border: 1px solid #10B981; border-radius: 8px; padding: 10px; color: #34D399; font-size: 12px;">
+              ⚡ ใช้งานได้รวดเร็วระดับมิลลิวินาที พร้อมรองรับโหมด Offline Caching
+            </div>
+          </div>
+        `;
+      }
+
+      // Show in modal
+      const modal = document.createElement('div');
+      modal.id = 'pwaModalWrap';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(6,11,25,0.85);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
+      modal.innerHTML = `
+        <div style="background:#0B132B;border:1px solid #ECC86A;border-radius:16px;max-width:440px;width:100%;padding:24px;box-shadow:0 16px 48px rgba(0,0,0,0.7);position:relative;">
+          <button onclick="document.getElementById('pwaModalWrap').remove()" style="position:absolute;top:14px;right:14px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;padding:4px;"><i class="fa-solid fa-xmark"></i></button>
+          ${modalContent}
+          <button onclick="document.getElementById('pwaModalWrap').remove()" style="width:100%;margin-top:18px;padding:10px;background:linear-gradient(135deg,#ECC86A,#D4AF37);border:none;border-radius:8px;font-weight:700;color:#060B19;cursor:pointer;">เข้าใจแล้ว</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    };
+
 
     // Register PWA Service Worker (Safely activated when sw.js is deployed)
     if (window.__SPM_ENABLE_SW__ && 'serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
