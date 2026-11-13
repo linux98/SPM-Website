@@ -10004,6 +10004,220 @@
   100% { transform: scale(1.04) rotate(4deg); filter: hue-rotate(15deg); }
 }
 
+
+    /* =========================================================================
+       ASTRA & WORDPRESS CORE CSS OVERRIDE: 100% PERFECT CIRCLE SHIELD
+       Neutralizes Astra / WP button padding: 15px 30px pollution on circular elements
+       ========================================================================= */
+    button.notice-close-btn,
+    .notice-close-btn,
+    button.cal-nav-btn,
+    .cal-nav-btn,
+    button.modal-close-btn,
+    .modal-close-btn,
+    button.chat-mic-btn,
+    .chat-mic-btn,
+    button.chat-send-btn,
+    .chat-send-btn,
+    button.chat-tool-btn,
+    .chat-tool-btn,
+    button.btn-modal-icon,
+    .btn-modal-icon,
+    button.btn-nav-search,
+    .btn-nav-search,
+    .phuphan-fab,
+    .phuphan-avatar-inner,
+    .exec-avatar-circ,
+    .step-circ,
+    .pulse-dot,
+    .typing-dot,
+    .cal-dot,
+    .pill-color-dot {
+      box-sizing: border-box !important;
+      aspect-ratio: 1 / 1 !important;
+      flex-shrink: 0 !important;
+      line-height: 1 !important;
+    }
+
+    /* 1. Emergency Notice Bar Close Button */
+    button.notice-close-btn,
+    .notice-close-btn {
+      width: 24px !important;
+      height: 24px !important;
+      min-width: 24px !important;
+      max-width: 24px !important;
+      min-height: 24px !important;
+      max-height: 24px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      border: none !important;
+      background: rgba(0, 0, 0, 0.18) !important;
+      color: #060B19 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 12px !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      overflow: hidden !important;
+    }
+    button.notice-close-btn:hover,
+    .notice-close-btn:hover {
+      background: rgba(0, 0, 0, 0.35) !important;
+      color: #060B19 !important;
+      transform: scale(1.1) !important;
+    }
+    button.notice-close-btn i,
+    .notice-close-btn i {
+      font-size: 11px !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+
+    /* 2. Calendar Month Navigation Buttons (< and >) */
+    button.cal-nav-btn,
+    .cal-nav-btn {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      max-width: 34px !important;
+      min-height: 34px !important;
+      max-height: 34px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-card) !important;
+      color: var(--text-main) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 13px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+    button.cal-nav-btn:hover,
+    .cal-nav-btn:hover {
+      background: var(--gold-500) !important;
+      color: var(--indigo-950) !important;
+      border-color: var(--gold-500) !important;
+      transform: scale(1.05) !important;
+    }
+
+    /* 3. Modal Close Buttons */
+    button.modal-close-btn,
+    .modal-close-btn {
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 36px !important;
+      max-width: 36px !important;
+      min-height: 36px !important;
+      max-height: 36px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-canvas) !important;
+      color: var(--text-muted) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 14px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+    button.modal-close-btn:hover,
+    .modal-close-btn:hover {
+      background: #EF4444 !important;
+      color: #FFFFFF !important;
+      border-color: #EF4444 !important;
+      transform: rotate(90deg) !important;
+    }
+
+    /* 4. Chat Mic & Send Buttons */
+    button.chat-mic-btn,
+    .chat-mic-btn {
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      max-width: 38px !important;
+      min-height: 38px !important;
+      max-height: 38px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 14px !important;
+    }
+    button.chat-send-btn,
+    .chat-send-btn {
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      max-width: 38px !important;
+      min-height: 38px !important;
+      max-height: 38px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 14px !important;
+    }
+
+    /* 5. Navigation Search Button */
+    button.btn-nav-search,
+    .btn-nav-search {
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      max-width: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* 6. Nong Phu Phan FAB */
+    .phuphan-fab {
+      width: 62px !important;
+      height: 62px !important;
+      min-width: 62px !important;
+      max-width: 62px !important;
+      min-height: 62px !important;
+      max-height: 62px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+    }
+    .phuphan-avatar-inner {
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      max-width: 48px !important;
+      min-height: 48px !important;
+      max-height: 48px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+    }
+
+    /* 7. Modal Icon Action Buttons */
+    button.btn-modal-icon,
+    .btn-modal-icon,
+    button.chat-tool-btn,
+    .chat-tool-btn {
+      padding: 0 !important;
+    }
+
 </style>
 
 </head>
@@ -10113,7 +10327,7 @@
 
       </div>
 
-      <button class="notice-close-btn" onclick="dismissNoticeBar()"><i class="fa-solid fa-xmark"></i></button>
+      <button class="notice-close-btn" onclick="dismissNoticeBar()" aria-label="ปิดแถบประกาศ" style="width:24px!important; height:24px!important; min-width:24px!important; max-width:24px!important; min-height:24px!important; max-height:24px!important; padding:0!important; margin:0!important; border-radius:50%!important; aspect-ratio:1/1!important; flex-shrink:0!important; display:inline-flex!important; align-items:center!important; justify-content:center!important; line-height:1!important; border:none!important;"><i class="fa-solid fa-xmark" style="font-size:11px!important; line-height:1!important; display:block!important; margin:0!important; padding:0!important;"></i></button>
 
     </div>
 
@@ -14340,7 +14554,7 @@
           <!-- Feature 1: SPM Sakon 3D Digital Twin HUD & Weather Sensor -->
           <div class="map-digital-twin-bar">
             <div style="display:flex; align-items:center; gap:8px;">
-              <span style="width:8px; height:8px; border-radius:50%; background:#10B981; display:inline-block; animation:hqRadarPing 1.8s infinite;"></span>
+              <span style="width:8px; height:8px; min-width:8px; min-height:8px; border-radius:50%; background:#10B981; display:inline-block; animation:hqRadarPing 1.8s infinite; aspect-ratio:1/1; flex-shrink:0;"></span>
               <strong>SPM SAKON DIGITAL TWIN 3D GIS</strong>
               <span style="background:rgba(236,200,106,0.25); color:#ECC86A; padding:2px 8px; border-radius:12px; font-size:10.5px; border:1px solid rgba(236,200,106,0.4);">
                 <i class="fa-solid fa-satellite-dish"></i> LIVE PULSE
@@ -22294,7 +22508,7 @@
 
           <span style="font-size:11px; color:#94A3B8; display:flex; align-items:center; gap:5px;">
 
-            <span style="width:6px; height:6px; border-radius:50%; background:#10B981; display:inline-block;"></span> 
+            <span style="width:6px; height:6px; min-width:6px; min-height:6px; border-radius:50%; background:#10B981; display:inline-block; aspect-ratio:1/1; flex-shrink:0;"></span> 
 
             ผู้ช่วยอัจฉริยะ สพม.สกลนคร 24 ชม.
 
