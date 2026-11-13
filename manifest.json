@@ -1,0 +1,47 @@
+{
+  "name": "สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร)",
+  "short_name": "สพม.สกลนคร",
+  "description": "SESAO Sakon Nakhon Smart Data Hub & One-Stop Digital Education Portal",
+  "start_url": "/site/",
+  "scope": "/site/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#060B19",
+  "theme_color": "#060B19",
+  "icons": [
+    {
+      "src": "assets/kram/logo-spm.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/kram/logo-spm.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "บริการ e-Services",
+      "url": "/site/#services",
+      "description": "ศูนย์บริการอิเล็กทรอนิกส์ One-Stop Hub"
+    },
+    {
+      "name": "คำนวณ ว.PA",
+      "url": "/site/#dpa-calculator",
+      "description": "ระบบคำนวณวิทยฐานะ ว.PA / DPA"
+    },
+    {
+      "name": "วารสารดิจิทัล 3D",
+      "url": "/site/#flipbook",
+      "description": "วารสารสกลสาร สพม.สกลนคร"
+    },
+    {
+      "name": "MOE Safety (1579)",
+      "url": "/site/#safety",
+      "description": "ศูนย์ความปลอดภัยสถานศึกษา"
+    }
+  ]
+}

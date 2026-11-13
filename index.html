@@ -9,6 +9,15 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Progressive Web App (PWA) Manifest & Mobile OS Integration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#060B19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="สพม.สกลนคร">
+  <meta name="application-name" content="สพม.สกลนคร">
+  <meta name="msapplication-TileColor" content="#060B19">
+
   <title>สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาสกลนคร (สพม.สกลนคร) | SESAO Sakon Nakhon Data Hub & Portal</title>
 
   
@@ -10218,6 +10227,94 @@
       padding: 0 !important;
     }
 
+
+    /* =========================================================================
+       WORLD-CLASS PERSONA WORKSPACE SWITCHER (LifeSG GovTech Framework)
+       ========================================================================= */
+    .persona-switch-bar-wrap {
+      background: linear-gradient(180deg, #060B19 0%, #0B132B 100%);
+      border-bottom: 1px solid rgba(236, 200, 106, 0.25);
+      padding: 8px 0;
+      position: relative;
+      z-index: 998;
+      box-shadow: 0 4px 16px rgba(6, 11, 25, 0.35);
+    }
+    .persona-switch-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .persona-switch-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .persona-switch-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ECC86A;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .persona-switch-pills {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-persona-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+    }
+    .btn-persona-pill:hover {
+      background: rgba(236, 200, 106, 0.15);
+      color: #FFFFFF;
+      border-color: rgba(236, 200, 106, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-persona-pill.active {
+      background: linear-gradient(135deg, #ECC86A 0%, #D4AF37 100%);
+      color: #060B19;
+      font-weight: 800;
+      border-color: #ECC86A;
+      box-shadow: 0 3px 12px rgba(236, 200, 106, 0.35);
+    }
+    .btn-persona-pill.active i {
+      color: #060B19;
+    }
+    @media (max-width: 768px) {
+      .persona-switch-container {
+        justify-content: center;
+      }
+      .persona-switch-left {
+        width: 100%;
+        justify-content: center;
+      }
+      .persona-switch-pills {
+        justify-content: center;
+        width: 100%;
+      }
+      .btn-persona-pill {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+    }
+
 </style>
 
 </head>
@@ -10690,6 +10787,31 @@
     </div>
 
   </nav>
+
+  <!-- ========================================================================
+       WORLD-CLASS PERSONA WORKSPACE SWITCHER (LifeSG & Gov.uk Framework)
+       ======================================================================== -->
+  <div class="persona-switch-bar-wrap" id="personaSwitchBar">
+    <div class="container persona-switch-container">
+      <div class="persona-switch-left">
+        <span class="persona-switch-badge"><i class="fa-solid fa-users-viewfinder"></i> โหมดมุมมองผู้ใช้ (Persona Workspace):</span>
+      </div>
+      <div class="persona-switch-pills" id="personaSwitchPills" role="tablist" aria-label="เลือกมุมมองผู้ใช้งาน">
+        <button type="button" class="btn-persona-pill active" data-persona="all" onclick="switchUserPersona('all', this)" role="tab" aria-selected="true">
+          <i class="fa-solid fa-layer-group"></i> <span>พอร์ทัลรวม (All)</span>
+        </button>
+        <button type="button" class="btn-persona-pill" data-persona="teacher" onclick="switchUserPersona('teacher', this)" role="tab" aria-selected="false">
+          <i class="fa-solid fa-chalkboard-user"></i> <span>คุณครู & บุคลากร</span>
+        </button>
+        <button type="button" class="btn-persona-pill" data-persona="student" onclick="switchUserPersona('student', this)" role="tab" aria-selected="false">
+          <i class="fa-solid fa-graduation-cap"></i> <span>นักเรียน & ผู้ปกครอง</span>
+        </button>
+        <button type="button" class="btn-persona-pill" data-persona="exec" onclick="switchUserPersona('exec', this)" role="tab" aria-selected="false">
+          <i class="fa-solid fa-chart-line"></i> <span>ผู้บริหาร & สถิติ</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -22348,6 +22470,119 @@
 
        ========================================================================== */
 
+    
+    // =========================================================================
+    // PERSONA WORKSPACE LOGIC (LifeSG GovTech Pattern)
+    // =========================================================================
+    window.switchUserPersona = function(persona, btn) {
+      window.currentActivePersona = persona;
+      try {
+        localStorage.setItem('spm_active_persona', persona);
+      } catch (e) {}
+
+      document.querySelectorAll('.btn-persona-pill').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      if (btn) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      }
+
+      const personaTargets = {
+        'all': null,
+        'teacher': { targetId: 'services', filterKey: 'teacher', name: 'คุณครู & บุคลากร (ว.PA, สลิปเงินเดือน, DPA)' },
+        'student': { targetId: 'stakeholders', filterKey: 'student', name: 'นักเรียน & ผู้ปกครอง (ขอ ปพ.1, ตรวจสอบวุฒิ)' },
+        'exec': { targetId: 'cockpit', filterKey: 'exec', name: 'ผู้บริหาร & สถิติ War Room' }
+      };
+
+      const target = personaTargets[persona];
+      if (!target) {
+        if (typeof showTelegramToast === 'function') {
+          showTelegramToast('โหมดพอร์ทัลรวม', 'แสดงผลครบทุกหมวดหมู่บริการ สพม.สกลนคร');
+        }
+        return;
+      }
+
+      const el = document.getElementById(target.targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.style.transition = 'box-shadow 0.6s ease';
+        el.style.boxShadow = '0 0 35px rgba(236, 200, 106, 0.45)';
+        setTimeout(() => { el.style.boxShadow = ''; }, 2000);
+      }
+
+      if (typeof showTelegramToast === 'function') {
+        showTelegramToast('สลับโหมดสำเร็จ', `เปิดใช้งานมุมมอง: ${target.name}`);
+      }
+    };
+
+    // Register PWA Service Worker (Safely activated when sw.js is deployed)
+    if (window.__SPM_ENABLE_SW__ && 'serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(() => {
+          console.log('🏛️ [SPM PWA]: Service Worker Active & Ready.');
+        }).catch(err => {
+          console.warn('[SPM PWA] Service Worker registration skipped:', err);
+        });
+      });
+    }
+
+    // Lazy Component Hydration Engine
+    window.setupLazyComponentHydration = function() {
+      if (!('IntersectionObserver' in window)) {
+        runAllComponentInits();
+        return;
+      }
+
+      const lazyRegistry = [
+        { selector: '#map', init: () => { if (!window._mapInitDone) { window._mapInitDone = true; initSakonGpsMap(); showCluster('c1'); } } },
+        { selector: '#cockpit', init: () => { if (!window._chartsInitDone) { window._chartsInitDone = true; setTimeout(initAnalyticsCharts, 100); } } },
+        { selector: '#calendar', init: () => { if (!window._calInitDone) { window._calInitDone = true; renderCalendar(); } } },
+        { selector: '#oit', init: () => { if (!window._oitInitDone) { window._oitInitDone = true; renderOitCards(oitData); } } },
+        { selector: '#gazette', init: () => { if (!window._gazInitDone) { window._gazInitDone = true; renderGazetteTable(gazetteData); } } },
+        { selector: '#schools', init: () => { if (!window._schInitDone) { window._schInitDone = true; searchSchoolDirectory(); } } },
+        { selector: '#orgchart', init: () => { if (!window._orgInitDone) { window._orgInitDone = true; renderOrgDepartments(); } } },
+        { selector: '#downloads', init: () => { if (!window._dlInitDone) { window._dlInitDone = true; renderDownloads(downloadsData); } } },
+        { selector: '#oer-hub', init: () => { if (!window._oerInitDone) { window._oerInitDone = true; renderOer(oerData); } } },
+        { selector: '#school-finder', init: () => { if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(sampleSchoolsGps); } } },
+        { selector: '#dpa-calculator', init: () => { if (!window._dpaInitDone) { window._dpaInitDone = true; calculateDpa(); } } },
+        { selector: '#hall-of-fame', init: () => { if (!window._hofInitDone) { window._hofInitDone = true; verifyCertificate(); } } }
+      ];
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const item = lazyRegistry.find(reg => entry.target.matches(reg.selector));
+            if (item && typeof item.init === 'function') {
+              item.init();
+              obs.unobserve(entry.target);
+            }
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+
+      lazyRegistry.forEach(item => {
+        const el = document.querySelector(item.selector);
+        if (el) observer.observe(el);
+      });
+    };
+
+    function runAllComponentInits() {
+      if (!window._mapInitDone) { window._mapInitDone = true; initSakonGpsMap(); showCluster('c1'); }
+      if (!window._chartsInitDone) { window._chartsInitDone = true; setTimeout(initAnalyticsCharts, 100); }
+      if (!window._calInitDone) { window._calInitDone = true; renderCalendar(); }
+      if (!window._oitInitDone) { window._oitInitDone = true; renderOitCards(oitData); }
+      if (!window._gazInitDone) { window._gazInitDone = true; renderGazetteTable(gazetteData); }
+      if (!window._schInitDone) { window._schInitDone = true; searchSchoolDirectory(); }
+      if (!window._orgInitDone) { window._orgInitDone = true; renderOrgDepartments(); }
+      if (!window._dlInitDone) { window._dlInitDone = true; renderDownloads(downloadsData); }
+      if (!window._oerInitDone) { window._oerInitDone = true; renderOer(oerData); }
+      if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(sampleSchoolsGps); }
+      if (!window._dpaInitDone) { window._dpaInitDone = true; calculateDpa(); }
+      if (!window._hofInitDone) { window._hofInitDone = true; verifyCertificate(); }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
 
       // 0. Hydrate WP Settings & News
@@ -22358,67 +22593,23 @@
 
 
 
-      // Phase 6 Bootstrap
-
-      renderDownloads(downloadsData);
-
-      renderOer(oerData);
-
-      renderGpsSchools(sampleSchoolsGps);
-
-
-
-      // Geospatial Google Map Init
-
-      initSakonGpsMap();
-
-
-
-      // Phase 5 Bootstrap
-
-      calculateDpa();
-
-      verifyCertificate();
-
-
-
-      // Phase 4 Inline Tracking Bootstrap
-
+      // Phase 4 Inline Tracking Bootstrap (Immediate)
       executeInlineTicketSearch();
 
+      // World-Class Lazy Hydration Engine: Deferred execution via IntersectionObserver
+      setupLazyComponentHydration();
 
-
-      // Phase 3 Modules Bootstrap
-
-      renderOitCards(oitData);
-
-      renderGazetteTable(gazetteData);
-
-      renderCalendar();
-
-
-
-      // 1. Initial Cluster Map
-
-      showCluster('c1');
-
-
-
-      // 2. Render 45 Schools Directory (Initial Collapsed 6 Schools)
-
-      searchSchoolDirectory();
-
-
-
-      // 3. Render 9 Groups 1 Unit
-
-      renderOrgDepartments();
-
-
-
-      // 4. Init Charts
-
-      setTimeout(initAnalyticsCharts, 300);
+      // Restore saved user persona preference
+      try {
+        const savedPersona = localStorage.getItem('spm_active_persona');
+        if (savedPersona && savedPersona !== 'all') {
+          const pill = document.querySelector(`.btn-persona-pill[data-persona="${savedPersona}"]`);
+          if (pill) {
+            document.querySelectorAll('.btn-persona-pill').forEach(b => b.classList.remove('active'));
+            pill.classList.add('active');
+          }
+        }
+      } catch (e) {}
 
 
 
