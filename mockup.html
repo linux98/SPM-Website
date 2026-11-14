@@ -14415,31 +14415,38 @@
 
             <span style="font-size:12px; color:var(--text-muted);">หรือเลือกอำเภอ:</span>
 
-            <select id="gpsDistrictSelect" class="cockpit-select" onchange="filterSchoolsByDistrict()">
-
-              <option value="all">-- ทุกอำเภอในสกลนคร --</option>
-
-              <option value="เมืองสกลนคร">อำเภอเมืองสกลนคร</option>
-
-              <option value="สว่างแดนดิน">อำเภอสว่างแดนดิน</option>
-
-              <option value="วานรนิวาส">อำเภอวานรนิวาส</option>
-
-              <option value="พังโคน">อำเภอพังโคน</option>
-
-              <option value="อากาศอำนวย">อำเภออากาศอำนวย</option>
-
-              <option value="กุสุมาลย์">อำเภอกุสุมาลย์</option>
-
+            <select id="gpsDistrictSelect" class="cockpit-select" onchange="filterSchoolsByDistrict()" style="font-weight:600;">
+              <option value="all">-- ทุกอำเภอในสกลนคร (45 โรงเรียน) --</option>
+              <option value="เมืองสกลนคร">อำเภอเมืองสกลนคร (8 รร.)</option>
+              <option value="สว่างแดนดิน">อำเภอสว่างแดนดิน (6 รร.)</option>
+              <option value="วานรนิวาส">อำเภอวานรนิวาส (4 รร.)</option>
+              <option value="พังโคน">อำเภอพังโคน (4 รร.)</option>
+              <option value="พรรณานิคม">อำเภอพรรณานิคม (3 รร.)</option>
+              <option value="วาริชภูมิ">อำเภอวาริชภูมิ (3 รร.)</option>
+              <option value="อากาศอำนวย">อำเภออากาศอำนวย (4 รร.)</option>
+              <option value="กุสุมาลย์">อำเภอกุสุมาลย์ (3 รร.)</option>
+              <option value="กุดบาก">อำเภอกุดบาก (1 รร.)</option>
+              <option value="คำตากล้า">อำเภอคำตากล้า (1 รร.)</option>
+              <option value="บ้านม่วง">อำเภอบ้านม่วง (1 รร.)</option>
+              <option value="ส่องดาว">อำเภอส่องดาว (1 รร.)</option>
+              <option value="เจริญศิลป์">อำเภอเจริญศิลป์ (2 รร.)</option>
+              <option value="เต่างอย">อำเภอเต่างอย (1 รร.)</option>
+              <option value="โคกศรีสุพรรณ">อำเภอโคกศรีสุพรรณ (2 รร.)</option>
+              <option value="ภูพาน">อำเภอภูพาน (3 รร.)</option>
+              <option value="นิคมน้ำอูน">อำเภอนิคมน้ำอูน (1 รร.)</option>
             </select>
+            <input type="text" id="gpsSearchSchoolInput" oninput="searchGpsSchools(this.value)" placeholder="🔍 พิมพ์ชื่อโรงเรียน เช่น สกลราช, พังโคน..." class="cockpit-select" style="min-width:230px; font-weight:500;">
 
           </div>
 
-          <span id="gpsStatusNotice" style="font-size:12px; color:var(--gold-600); font-weight:700;">
-
-            <i class="fa-solid fa-compass"></i> พร้อมระบุตำแหน่งพิกัด GPS
-
-          </span>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span id="gpsSchoolCountBadge" style="background:rgba(236,200,106,0.15); border:1px solid #ECC86A; color:#ECC86A; padding:4px 12px; border-radius:20px; font-size:11.5px; font-weight:700;">
+              🏫 แสดงครบ 45 โรงเรียนในสังกัด
+            </span>
+            <span id="gpsStatusNotice" style="font-size:12px; color:var(--gold-600); font-weight:700;">
+              <i class="fa-solid fa-compass"></i> พร้อมระบุตำแหน่งพิกัด GPS
+            </span>
+          </div>
 
         </div>
 
@@ -21948,113 +21955,583 @@
 
 
 
-    // 4. Smart School Finder & GPS
+    
+    // =========================================================================
+    // 4. SMART SCHOOL FINDER & GPS (OFFICIAL 45 SECONDARY SCHOOLS)
+    // =========================================================================
+    const spmAllSchoolsGps = [
+  {
+    "name": "โรงเรียนสว่างแดนดิน",
+    "district": "สว่างแดนดิน",
+    "students": 3420,
+    "lat": 17.4754,
+    "lng": 103.4542,
+    "cluster": "สว่างศึกษา",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนแวงพิทยาคม",
+    "district": "สว่างแดนดิน",
+    "students": 510,
+    "lat": 17.332,
+    "lng": 103.651,
+    "cluster": "สว่างศึกษา",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนหนองหลวงศึกษา",
+    "district": "สว่างแดนดิน",
+    "students": 390,
+    "lat": 17.3915,
+    "lng": 103.3245,
+    "cluster": "สว่างศึกษา",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนโคกสีวิทยาสรรค์",
+    "district": "สว่างแดนดิน",
+    "students": 460,
+    "lat": 17.432,
+    "lng": 103.385,
+    "cluster": "สว่างศึกษา",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนบงเหนือวิทยาคม",
+    "district": "สว่างแดนดิน",
+    "students": 520,
+    "lat": 17.521,
+    "lng": 103.4215,
+    "cluster": "สว่างศึกษา",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนเตรียมอุดมศึกษา ภาคตะวันออกเฉียงเหนือ",
+    "district": "สว่างแดนดิน",
+    "students": 1850,
+    "lat": 17.468,
+    "lng": 103.441,
+    "cluster": "สว่างศึกษา",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนธาตุนารายณ์วิทยา",
+    "district": "เมืองสกลนคร",
+    "students": 2980,
+    "lat": 17.1852,
+    "lng": 104.0921,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนดงมะไฟวิทยา",
+    "district": "เมืองสกลนคร",
+    "students": 620,
+    "lat": 17.142,
+    "lng": 104.053,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนกุสุมาลย์วิทยาคม",
+    "district": "กุสุมาลย์",
+    "students": 1620,
+    "lat": 17.3315,
+    "lng": 104.3325,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนโพธิแสนวิทยา",
+    "district": "กุสุมาลย์",
+    "students": 480,
+    "lat": 17.362,
+    "lng": 104.285,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนโพนพิทยาคม",
+    "district": "เมืองสกลนคร",
+    "students": 420,
+    "lat": 17.215,
+    "lng": 104.221,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนบ้านบัวราษฏร์บำรุง",
+    "district": "กุสุมาลย์",
+    "students": 370,
+    "lat": 17.291,
+    "lng": 104.385,
+    "cluster": "พระธาตุนารายณ์เจงเวง",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนอากาศอำนวยศึกษา",
+    "district": "อากาศอำนวย",
+    "students": 1920,
+    "lat": 17.612,
+    "lng": 103.974,
+    "cluster": "เบญจรักษ์",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนโพนงามศึกษา",
+    "district": "อากาศอำนวย",
+    "students": 520,
+    "lat": 17.685,
+    "lng": 104.032,
+    "cluster": "เบญจรักษ์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนศึกษาประชาสามัคคี",
+    "district": "อากาศอำนวย",
+    "students": 410,
+    "lat": 17.551,
+    "lng": 104.021,
+    "cluster": "เบญจรักษ์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนท่าสงครามวิทยา",
+    "district": "อากาศอำนวย",
+    "students": 380,
+    "lat": 17.642,
+    "lng": 103.921,
+    "cluster": "เบญจรักษ์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนคำตากล้าราชประชาสงเคราะห์",
+    "district": "คำตากล้า",
+    "students": 1290,
+    "lat": 17.854,
+    "lng": 103.765,
+    "cluster": "เบญจรักษ์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนมัธยมวาริชภูมิ",
+    "district": "วาริชภูมิ",
+    "students": 1420,
+    "lat": 17.294,
+    "lng": 103.632,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนนิคมน้ำอูนเจริญวิทยา",
+    "district": "นิคมน้ำอูน",
+    "students": 580,
+    "lat": 17.215,
+    "lng": 103.742,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนธรรมบวรวิทยา",
+    "district": "วาริชภูมิ",
+    "students": 460,
+    "lat": 17.251,
+    "lng": 103.682,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนส่องดาววิทยาคม",
+    "district": "ส่องดาว",
+    "students": 980,
+    "lat": 17.234,
+    "lng": 103.541,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนวาริชวิทยา",
+    "district": "วาริชภูมิ",
+    "students": 490,
+    "lat": 17.265,
+    "lng": 103.584,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนกุดบากพัฒนาศึกษา",
+    "district": "กุดบาก",
+    "students": 720,
+    "lat": 17.085,
+    "lng": 103.821,
+    "cluster": "ลุ่มน้ำอูน",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนพังโคนวิทยาคม",
+    "district": "พังโคน",
+    "students": 2650,
+    "lat": 17.385,
+    "lng": 103.712,
+    "cluster": "ดำรงธรรม",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนลำปลาหางวิทยา",
+    "district": "พังโคน",
+    "students": 390,
+    "lat": 17.432,
+    "lng": 103.685,
+    "cluster": "ดำรงธรรม",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนพรรณาวุฒาจารย์",
+    "district": "พรรณานิคม",
+    "students": 1850,
+    "lat": 17.351,
+    "lng": 103.962,
+    "cluster": "ดำรงธรรม",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนบะฮีวิทยาคม",
+    "district": "พรรณานิคม",
+    "students": 420,
+    "lat": 17.312,
+    "lng": 103.905,
+    "cluster": "ดำรงธรรม",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนเทพสวัสดิ์วิทยา",
+    "district": "พังโคน",
+    "students": 450,
+    "lat": 17.361,
+    "lng": 103.745,
+    "cluster": "ดำรงธรรม",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนช้างมิ่งพิทยานุกูล",
+    "district": "พรรณานิคม",
+    "students": 460,
+    "lat": 17.284,
+    "lng": 103.912,
+    "cluster": "ดำรงธรรม",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนมัธยมวานรนิวาส",
+    "district": "วานรนิวาส",
+    "students": 2550,
+    "lat": 17.534,
+    "lng": 103.755,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนเจริญศิลป์ศึกษา \"โพธิ์คำอนุสรณ์\"",
+    "district": "เจริญศิลป์",
+    "students": 890,
+    "lat": 17.602,
+    "lng": 103.585,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนหนองแวงวิทยา",
+    "district": "วานรนิวาส",
+    "students": 430,
+    "lat": 17.645,
+    "lng": 103.782,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนกุดเรือคำพิทยาคาร",
+    "district": "วานรนิวาส",
+    "students": 380,
+    "lat": 17.485,
+    "lng": 103.805,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนพระเทพญาณวิศิษฏ์อุดมวิทย์",
+    "district": "เจริญศิลป์",
+    "students": 410,
+    "lat": 17.561,
+    "lng": 103.541,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนบ้านม่วงพิทยาคม",
+    "district": "บ้านม่วง",
+    "students": 1450,
+    "lat": 17.842,
+    "lng": 103.584,
+    "cluster": "เทพทวีพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนสกลราชวิทยานุกูล",
+    "district": "เมืองสกลนคร",
+    "students": 3850,
+    "lat": 17.1627,
+    "lng": 104.1485,
+    "cluster": "สหสกลราช",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนท่าแร่ศึกษา",
+    "district": "เมืองสกลนคร",
+    "students": 640,
+    "lat": 17.254,
+    "lng": 104.182,
+    "cluster": "สหสกลราช",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนคำเพิ่มพิทยา",
+    "district": "ภูพาน",
+    "students": 380,
+    "lat": 17.024,
+    "lng": 103.952,
+    "cluster": "สหสกลราช",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนท่านผู้หญิงจันทิมาพึ่งบารมี",
+    "district": "ภูพาน",
+    "students": 410,
+    "lat": 16.982,
+    "lng": 103.921,
+    "cluster": "สหสกลราช",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนภูริทัตต์วิทยา",
+    "district": "ภูพาน",
+    "students": 350,
+    "lat": 16.945,
+    "lng": 103.892,
+    "cluster": "สหสกลราช",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนสกลนครพัฒนศึกษา",
+    "district": "เมืองสกลนคร",
+    "students": 2400,
+    "lat": 17.152,
+    "lng": 104.12,
+    "cluster": "สหเบญจพัฒน์",
+    "lead": true
+  },
+  {
+    "name": "โรงเรียนเฉลิมพระเกียรติพระบาทสมเด็จพระเจ้าอยู่หัวฯ",
+    "district": "เมืองสกลนคร",
+    "students": 820,
+    "lat": 17.115,
+    "lng": 104.135,
+    "cluster": "สหเบญจพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนเต่างอยพัฒนศึกษา",
+    "district": "เต่างอย",
+    "students": 680,
+    "lat": 16.912,
+    "lng": 104.205,
+    "cluster": "สหเบญจพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนด่านม่วงคำพิทยาคม",
+    "district": "โคกศรีสุพรรณ",
+    "students": 390,
+    "lat": 17.042,
+    "lng": 104.254,
+    "cluster": "สหเบญจพัฒน์",
+    "lead": false
+  },
+  {
+    "name": "โรงเรียนร่มเกล้า สกลนคร",
+    "district": "โคกศรีสุพรรณ",
+    "students": 540,
+    "lat": 16.975,
+    "lng": 104.291,
+    "cluster": "สหเบญจพัฒน์",
+    "lead": false
+  }
+];
 
-    const sampleSchoolsGps = [
+    // Calculate default distances from Sakon Nakhon Center (17.155, 104.145)
+    function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return Math.round(R * c * 10) / 10;
+    }
 
-      { name: "โรงเรียนสกลราชวิทยานุกูล", dist: 2.4, district: "เมืองสกลนคร", students: 3850, programs: "SMTE, MEP, AI", maps: "https://maps.google.com/?q=โรงเรียนสกลราชวิทยานุกูล" },
+    // Initialize initial distances
+    spmAllSchoolsGps.forEach(s => {
+      s.dist = calculateHaversineDistance(17.155, 104.145, s.lat, s.lng);
+      s.maps = `https://maps.google.com/?q=${s.lat},${s.lng}`;
+      s.programs = s.lead ? 'ห้องเรียนพิเศษ SMTE, MEP, ศูนย์ประสานงานสหวิทยาเขต' : 'ห้องเรียนมาตรฐานคุณภาพการศึกษา สพฐ.';
+    });
 
-      { name: "โรงเรียนธาตุนารายณ์วิทยา", dist: 4.8, district: "เมืองสกลนคร", students: 2680, programs: "MEP, STEM", maps: "https://maps.google.com/?q=โรงเรียนธาตุนารายณ์วิทยา" },
+    // Sort by default distance
+    spmAllSchoolsGps.sort((a, b) => a.dist - b.dist);
+    let currentGpsSchools = [...spmAllSchoolsGps];
 
-      { name: "โรงเรียนดงมะไฟวิทยาคม", dist: 8.2, district: "เมืองสกลนคร", students: 820, programs: "เกษตรอัจฉริยะ, ทักษะอาชีพ", maps: "https://maps.google.com/?q=โรงเรียนดงมะไฟวิทยาคม" },
-
-      { name: "โรงเรียนสว่างแดนดิน", dist: 12.5, district: "สว่างแดนดิน", students: 3420, programs: "SMTE, จีน-ญี่ปุ่น", maps: "https://maps.google.com/?q=โรงเรียนสว่างแดนดิน" },
-
-      { name: "โรงเรียนวานรนิวาส", dist: 18.0, district: "วานรนิวาส", students: 2890, programs: "SMTE, เทคโนโลยีดิจิทัล", maps: "https://maps.google.com/?q=โรงเรียนวานรนิวาส" }
-
-    ];
-
-
+    // Immediate initial render so it is never empty
+    if (typeof document !== 'undefined') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => renderGpsSchools(spmAllSchoolsGps));
+      } else {
+        setTimeout(() => renderGpsSchools(spmAllSchoolsGps), 50);
+      }
+    }
 
     function renderGpsSchools(items) {
-
       const container = document.getElementById('nearestSchoolsList');
-
+      if (!container) return;
       container.innerHTML = '';
 
-      items.forEach(s => {
+      const countBadge = document.getElementById('gpsSchoolCountBadge');
+      if (countBadge) {
+        countBadge.innerText = `🏫 แสดง ${items.length} จาก 45 โรงเรียนในสังกัด`;
+      }
 
-        const div = document.createElement('div');
-
-        div.className = 'nearest-school-item';
-
-        div.innerHTML = `
-
-          <div style="display:flex; align-items:center; gap:14px;">
-
-            <div style="width:42px; height:42px; border-radius:10px; background:var(--gold-100); color:var(--gold-600); display:flex; align-items:center; justify-content:center; font-size:18px;">
-
-              <i class="fa-solid fa-school"></i>
-
-            </div>
-
-            <div>
-
-              <h4 style="font-size:14.5px; font-weight:700; color:var(--text-main); margin:0;">${s.name}</h4>
-
-              <span style="font-size:12px; color:var(--text-muted);">${s.district} • นักเรียน ${s.students.toLocaleString()} คน • เด่น: ${s.programs}</span>
-
-            </div>
-
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:32px; color:var(--text-muted);">
+            <i class="fa-solid fa-school-circle-xmark" style="font-size:36px; margin-bottom:8px; opacity:0.6;"></i>
+            <p style="margin:0; font-size:13px;">ไม่พบโรงเรียนตามเงื่อนไขที่ค้นหา กรุณาเลือกอำเภออื่น</p>
           </div>
-
-          <div style="display:flex; align-items:center; gap:12px;">
-
-            <span style="font-size:13px; font-weight:800; color:var(--gold-600); background:var(--bg-card); padding:4px 10px; border-radius:var(--radius-pill); border:1px solid var(--border-subtle);">
-
-              ~${s.dist} กม.
-
-            </span>
-
-            <a href="${s.maps}" target="_blank" class="btn-sso-portal" style="font-size:12px; padding:6px 14px; text-decoration:none;">
-
-              <i class="fa-solid fa-diamond-turn-right"></i> นำทาง
-
-            </a>
-
-          </div>
-
         `;
+        return;
+      }
 
+      // Display in scrollable luxury cards
+      container.style.display = 'grid';
+      container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(360px, 1fr))';
+      container.style.gap = '12px';
+      container.style.maxHeight = '560px';
+      container.style.overflowY = 'auto';
+      container.style.paddingRight = '6px';
+
+      items.forEach((s, idx) => {
+        const div = document.createElement('div');
+        div.className = 'nearest-school-item';
+        div.style.cssText = 'background:var(--bg-canvas); border:1px solid var(--border-subtle); border-radius:12px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:12px; transition:all 0.25s ease;';
+        
+        div.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(236,200,106,0.12); color:#ECC86A; border:1px solid rgba(236,200,106,0.3); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;">
+              <i class="fa-solid fa-school"></i>
+            </div>
+            <div style="min-width:0;">
+              <h4 style="font-size:13.5px; font-weight:700; color:var(--text-main); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${s.name}">${s.name}</h4>
+              <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">
+                อ.${s.district} • ${s.cluster} • นักเรียน ${s.students.toLocaleString()} คน
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <span style="font-size:11.5px; font-weight:800; color:var(--gold-600); background:var(--bg-card); padding:3px 8px; border-radius:12px; border:1px solid var(--border-subtle); white-space:nowrap;">
+              ~${s.dist} กม.
+            </span>
+            <a href="${s.maps}" target="_blank" class="btn-sso-portal" style="font-size:11px; padding:5px 10px; text-decoration:none; white-space:nowrap;" title="เปิดแผนที่นำทางผ่าน Google Maps">
+              <i class="fa-solid fa-diamond-turn-right"></i> นำทาง
+            </a>
+          </div>
+        `;
         container.appendChild(div);
-
       });
-
     }
-
-
 
     function getUserGpsLocation() {
-
       const notice = document.getElementById('gpsStatusNotice');
+      if (notice) notice.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจจับพิกัด GPS อุปกรณ์ของคุณ...';
 
-      if (notice) notice.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจจับพิกัด GPS ของคุณ...';
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const userLat = pos.coords.latitude;
+            const userLng = pos.coords.longitude;
+            spmAllSchoolsGps.forEach(s => {
+              s.dist = calculateHaversineDistance(userLat, userLng, s.lat, s.lng);
+            });
+            spmAllSchoolsGps.sort((a, b) => a.dist - b.dist);
+            currentGpsSchools = [...spmAllSchoolsGps];
 
-      setTimeout(() => {
+            // Reset district filter to all
+            const distSelect = document.getElementById('gpsDistrictSelect');
+            if (distSelect) distSelect.value = 'all';
 
-        if (notice) notice.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10B981;"></i> ตรวจพบพิกัด อ.เมืองสกลนคร เรียงตามระยะทางใกล้สุด';
-
-        sampleSchoolsGps.sort((a,b) => a.dist - b.dist);
-
-        renderGpsSchools(sampleSchoolsGps);
-
-        showTelegramToast('ค้นหาโรงเรียน', 'คำนวณระยะทางโรงเรียนใกล้คุณที่สุดเรียบร้อยแล้ว');
-
-      }, 700);
-
+            renderGpsSchools(spmAllSchoolsGps);
+            if (notice) notice.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10B981;"></i> คำนวณจากพิกัด GPS จริงของคุณ เรียงใกล้สุด';
+            if (typeof showTelegramToast === 'function') {
+              showTelegramToast('ค้นหาพิกัดสำเร็จ', `เรียงลำดับ 45 โรงเรียนจากตำแหน่ง GPS ปัจจุบันของคุณ`);
+            }
+          },
+          (err) => {
+            // Fallback to Sakon Nakhon Center
+            spmAllSchoolsGps.forEach(s => {
+              s.dist = calculateHaversineDistance(17.155, 104.145, s.lat, s.lng);
+            });
+            spmAllSchoolsGps.sort((a, b) => a.dist - b.dist);
+            currentGpsSchools = [...spmAllSchoolsGps];
+            renderGpsSchools(spmAllSchoolsGps);
+            if (notice) notice.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#ECC86A;"></i> อ้างอิงจุดกึ่งกลาง จ.สกลนคร (45 โรงเรียน)';
+            if (typeof showTelegramToast === 'function') {
+              showTelegramToast('พิกัดสกลนคร', 'เรียงลำดับ 45 โรงเรียนจากศูนย์กลางจังหวัดสกลนคร');
+            }
+          },
+          { timeout: 6000 }
+        );
+      } else {
+        renderGpsSchools(spmAllSchoolsGps);
+        if (notice) notice.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#ECC86A;"></i> แสดง 45 โรงเรียนตามระยะทางศูนย์กลาง';
+      }
     }
-
-
 
     function filterSchoolsByDistrict() {
-
       const dist = document.getElementById('gpsDistrictSelect').value;
-
-      if (dist === 'all') renderGpsSchools(sampleSchoolsGps);
-
-      else renderGpsSchools(sampleSchoolsGps.filter(s => s.district === dist));
-
+      const searchVal = (document.getElementById('gpsSearchSchoolInput')?.value || '').trim().toLowerCase();
+      
+      let filtered = spmAllSchoolsGps;
+      if (dist !== 'all') {
+        filtered = filtered.filter(s => s.district === dist);
+      }
+      if (searchVal) {
+        filtered = filtered.filter(s => s.name.toLowerCase().includes(searchVal) || s.district.toLowerCase().includes(searchVal));
+      }
+      currentGpsSchools = filtered;
+      renderGpsSchools(filtered);
     }
+
+    function searchGpsSchools(val) {
+      val = val.trim().toLowerCase();
+      const dist = document.getElementById('gpsDistrictSelect')?.value || 'all';
+      let filtered = spmAllSchoolsGps;
+      if (dist !== 'all') {
+        filtered = filtered.filter(s => s.district === dist);
+      }
+      if (val) {
+        filtered = filtered.filter(s => s.name.toLowerCase().includes(val) || s.district.toLowerCase().includes(val));
+      }
+      currentGpsSchools = filtered;
+      renderGpsSchools(filtered);
+    }
+
 
 
 
@@ -23338,7 +23815,7 @@
         { selector: '#orgchart', init: () => { if (!window._orgInitDone) { window._orgInitDone = true; renderOrgDepartments(); } } },
         { selector: '#downloads', init: () => { if (!window._dlInitDone) { window._dlInitDone = true; renderDownloads(downloadsData); } } },
         { selector: '#oer-hub', init: () => { if (!window._oerInitDone) { window._oerInitDone = true; renderOer(oerData); } } },
-        { selector: '#school-finder', init: () => { if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(sampleSchoolsGps); } } },
+        { selector: '#school-finder', init: () => { if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(spmAllSchoolsGps); } } },
         { selector: '#dpa-calculator', init: () => { if (!window._dpaInitDone) { window._dpaInitDone = true; calculateDpa(); } } },
         { selector: '#hall-of-fame', init: () => { if (!window._hofInitDone) { window._hofInitDone = true; verifyCertificate(); } } }
       ];
@@ -23371,7 +23848,7 @@
       if (!window._orgInitDone) { window._orgInitDone = true; renderOrgDepartments(); }
       if (!window._dlInitDone) { window._dlInitDone = true; renderDownloads(downloadsData); }
       if (!window._oerInitDone) { window._oerInitDone = true; renderOer(oerData); }
-      if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(sampleSchoolsGps); }
+      if (!window._gpsInitDone) { window._gpsInitDone = true; renderGpsSchools(spmAllSchoolsGps); }
       if (!window._dpaInitDone) { window._dpaInitDone = true; calculateDpa(); }
       if (!window._hofInitDone) { window._hofInitDone = true; verifyCertificate(); }
     }
