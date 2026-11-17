@@ -5404,6 +5404,74 @@
 
 
 
+    
+    /* --- Phase 5: Smart Collapsible OIT Hub --- */
+    .oit-collapsible-wrap {
+      max-height: 480px;
+      overflow: hidden;
+      position: relative;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .oit-collapsible-wrap.expanded {
+      max-height: 6000px;
+    }
+    .oit-fade-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 160px;
+      background: linear-gradient(180deg, rgba(6, 11, 25, 0) 0%, rgba(6, 11, 25, 0.85) 60%, #060B19 100%);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 5;
+    }
+    .oit-collapsible-wrap.expanded .oit-fade-overlay {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .oit-expand-bar {
+      text-align: center;
+      margin-top: 14px;
+      position: relative;
+      z-index: 10;
+    }
+    .btn-oit-expand-toggle {
+      background: linear-gradient(135deg, rgba(236, 200, 106, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
+      border: 1px solid #ECC86A;
+      color: #ECC86A;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
+    }
+    .btn-oit-expand-toggle:hover {
+      background: #ECC86A;
+      color: #060B19;
+      box-shadow: 0 0 24px rgba(236, 200, 106, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn-oit-expand-toggle:hover .oit-counter-pill {
+      background: #060B19;
+      color: #ECC86A;
+    }
+    .oit-counter-pill {
+      background: rgba(236, 200, 106, 0.2);
+      color: #ECC86A;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 4px;
+      transition: all 0.2s ease;
+    }
+    
     .oit-grid-layout {
 
       display: grid;
@@ -9225,7 +9293,75 @@
       .oit-stage-card {
         padding: 16px 10px !important;
       }
-      .oit-grid-layout {
+      
+    /* --- Phase 5: Smart Collapsible OIT Hub --- */
+    .oit-collapsible-wrap {
+      max-height: 480px;
+      overflow: hidden;
+      position: relative;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .oit-collapsible-wrap.expanded {
+      max-height: 6000px;
+    }
+    .oit-fade-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 160px;
+      background: linear-gradient(180deg, rgba(6, 11, 25, 0) 0%, rgba(6, 11, 25, 0.85) 60%, #060B19 100%);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 5;
+    }
+    .oit-collapsible-wrap.expanded .oit-fade-overlay {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .oit-expand-bar {
+      text-align: center;
+      margin-top: 14px;
+      position: relative;
+      z-index: 10;
+    }
+    .btn-oit-expand-toggle {
+      background: linear-gradient(135deg, rgba(236, 200, 106, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
+      border: 1px solid #ECC86A;
+      color: #ECC86A;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
+    }
+    .btn-oit-expand-toggle:hover {
+      background: #ECC86A;
+      color: #060B19;
+      box-shadow: 0 0 24px rgba(236, 200, 106, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn-oit-expand-toggle:hover .oit-counter-pill {
+      background: #060B19;
+      color: #ECC86A;
+    }
+    .oit-counter-pill {
+      background: rgba(236, 200, 106, 0.2);
+      color: #ECC86A;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 4px;
+      transition: all 0.2s ease;
+    }
+    
+    .oit-grid-layout {
         grid-template-columns: 1fr !important;
         gap: 10px !important;
       }
@@ -13429,12 +13565,21 @@
 
 
 
-        <!-- 43 Indicators Grid -->
+                <!-- 43 Indicators Grid (Smart Collapsible Hub) -->
+        <div class="oit-collapsible-wrap" id="oitCollapsibleWrap">
+          <div class="oit-grid-layout" id="oitGridContainer">
+            <!-- Populated by JS -->
+          </div>
+          <div class="oit-fade-overlay" id="oitFadeOverlay"></div>
+        </div>
 
-        <div class="oit-grid-layout" id="oitGridContainer">
-
-          <!-- Populated by JS -->
-
+        <!-- Collapsible Expand / Collapse Action Bar -->
+        <div class="oit-expand-bar">
+          <button type="button" id="btnToggleOit" onclick="toggleOitCollapsible()" class="btn-oit-expand-toggle">
+            <i class="fa-solid fa-folder-open" id="iconToggleOit"></i>
+            <span id="textToggleOit">เปิดดูศูนย์ข้อมูล OIT ครบทั้ง 43 ตัวชี้วัด (คลิกเพื่อขยาย)</span>
+            <span class="oit-counter-pill" id="pillToggleOit">43 ข้อ ▾</span>
+          </button>
         </div>
 
       </div>
@@ -19712,6 +19857,44 @@
 
 
 
+    
+    // =========================================================================
+    // SMART COLLAPSIBLE OIT HUB ENGINE (OPTION 1)
+    // =========================================================================
+    window.isOitExpanded = false;
+
+    window.toggleOitCollapsible = function() {
+      window.setOitExpanded(!window.isOitExpanded);
+    };
+
+    window.setOitExpanded = function(expandState) {
+      window.isOitExpanded = !!expandState;
+      const wrap = document.getElementById('oitCollapsibleWrap');
+      const text = document.getElementById('textToggleOit');
+      const icon = document.getElementById('iconToggleOit');
+      const pill = document.getElementById('pillToggleOit');
+
+      if (!wrap) return;
+
+      if (window.isOitExpanded) {
+        wrap.classList.add('expanded');
+        if (text) text.innerText = 'ยุบเก็บรายการตัวชี้วัด OIT (พับย่อ)';
+        if (icon) icon.className = 'fa-solid fa-chevron-up';
+        if (pill) pill.innerText = 'พับเก็บ ▴';
+      } else {
+        wrap.classList.remove('expanded');
+        if (text) text.innerText = 'เปิดดูศูนย์ข้อมูล OIT ครบทั้ง 43 ตัวชี้วัด (คลิกเพื่อขยาย)';
+        if (icon) icon.className = 'fa-solid fa-folder-open';
+        if (pill) pill.innerText = '43 ข้อ ▾';
+
+        // Smooth scroll back to OIT section header to prevent jump
+        const oitSec = document.getElementById('oit');
+        if (oitSec) {
+          oitSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    };
+
     let activeOitCat = 'all';
 
     function filterOit(catKey, btn) {
@@ -22478,7 +22661,10 @@
 
             renderGpsSchools(spmAllSchoolsGps);
             if (notice) notice.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10B981;"></i> คำนวณจากพิกัด GPS จริงของคุณ เรียงใกล้สุด';
-            if (typeof showTelegramToast === 'function') {
+                      if (typeof setOitExpanded === 'function' && !window.isOitExpanded) {
+            setOitExpanded(true);
+          }
+          if (typeof showTelegramToast === 'function') {
               showTelegramToast('ค้นหาพิกัดสำเร็จ', `เรียงลำดับ 45 โรงเรียนจากตำแหน่ง GPS ปัจจุบันของคุณ`);
             }
           },
